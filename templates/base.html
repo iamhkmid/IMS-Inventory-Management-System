@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{% block page_title %}
+			
+		{% endblock page_title %}
+	</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free/css/all.min.css' %}">
+	{% include "snippets/styles.html" %}
+</head>
+<body>
+	{% include "snippets/navbar.html" %}
+	
+    {% block contents1 %}
+		
+	{% endblock contents1 %}
+	
+	<div class="container" style="margin-top:100px">
+		{% block contents2 %}
+		
+		{% endblock contents2 %}
+	</div>
+
+	{% include "snippets/scripts.html" %}
+	<!--{% include "snippets/footer.html" %}-->
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% load static %}
+<!-- Datatables bootstrap -->
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/jquery-3.3.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/popper/popper.js' %}" ></script>
+<script type="text/javascript" src="{% static 'vendor/bootstrap/bootstrap.js' %}" ></script>
+<!-- Datatables button -->
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/buttons.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/jszip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tabletools/js/buttons.print.min.js' %}"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  
+    var table = $('#datatables').DataTable( {
+        displayLength: 10,
+        lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
+        scrollX: true,
+        scrollY: false,
+        pagingType: "full_numbers",
+        buttons: [ 'copy', 'csv', 'excel', 'pdf', 'print' ]
+    } );
+ 
+    table.buttons().container()
+        .appendTo( '#datatables_wrapper .col-md-6:eq(0)' );
+} );
+</script>
