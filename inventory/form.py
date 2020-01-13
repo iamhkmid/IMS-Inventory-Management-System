@@ -1,9 +1,12 @@
 from django.forms import ModelForm
-from .models import Barang
-
+from django import forms
+from .models import *
+from bootstrap_datepicker_plus import DateTimePickerInput
 
 class BarangForm(ModelForm):
 
+	jenis = forms.ChoiceField(choices=Barang.JENIS)
+	satuan = forms.ChoiceField(choices=Barang.SATUAN)
 	class Meta:
 		model = Barang
 		fields = [
@@ -16,3 +19,6 @@ class BarangForm(ModelForm):
 			'tgl_pengadaan',
 			'keterangan',
 		]
+		widgets = {
+            'tgl_pengadaan': DateTimePickerInput(),
+		}

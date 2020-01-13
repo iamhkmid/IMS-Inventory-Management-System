@@ -19,15 +19,15 @@ class Barang(models.Model):
         ('Persediaan', 'Persediaan'),
     )
     SATUAN = (
-        ('Persediaan', 'Pak'),
+        ('Pak', 'Pak'),
         ('Buah', 'Buah'),
         ('Kotak', 'Kotak'),
     )
     id_barang = models.CharField(max_length=8, default = incerement_id_barang, primary_key=True, editable = False)
     nama = models.CharField(max_length=35)
-    jenis = models.CharField(max_length=35, choices = JENIS)
+    jenis = models.CharField(max_length=20, choices = JENIS)
     jumlah = models.PositiveIntegerField()
-    satuan = models.CharField(max_length=10, choices = SATUAN)
+    satuan = models.CharField(max_length=20, choices = SATUAN)
     nilai_barang = models.DecimalField(max_digits=20, decimal_places=0)
     satker = models.CharField(max_length=35)
     tgl_pengadaan = models.DateTimeField()
