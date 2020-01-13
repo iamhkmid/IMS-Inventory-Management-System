@@ -20,5 +20,5 @@ class BarangForm(ModelForm):
 			'keterangan',
 		]
 		widgets = {
-            'tgl_pengadaan': DateTimePickerInput(),
+            'tgl_pengadaan': DateTimePickerInput(options={'debug': True}).start_of('event active dtime'),
 		}

@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{{ form.media }}            {# Adds date-picker required JS and CSS #}
+{% load crispy_forms_tags %}
+
 {% block page_title %}
 	Tambah Barang
 {% endblock page_title %}
@@ -13,9 +16,8 @@
         <h4 class="jd1">TAMBAH BARANG</h4>
         <hr align="left" width="350" />
           <form method='POST'>
-          {% csrf_token %}
-          
-          <div class="form-group">
+            {% csrf_token %}
+             <div class="form-group">
               <label for="{{form.nama.id_for_label}}">{{form.nama.label}}:</label>
               <input type="text" class="form-control" name="{{form.nama.name}}" maxlength="{{form.nama.max}}" required id="{{form.nama.id_for_label}}" autofocus>    
           </div>
@@ -26,8 +28,8 @@
              <br>
               {% for select_jenis in form.jenis %}
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="{{form.jenis.name}}" id="{{form.jenis.id_for_label}}" value="{{ select_jenis.0 }}">
-                <label class="form-check-label" for="inlineRadio1">{{ select_jenis }}</label>
+                <input class="form-check-input" type="radio" name="{{form.jenis.name}}" id="{{select_jenis.id_for_label}}" value="{{ select_jenis.0 }}">
+                <label class="form-check-label" for="{{select_jenis.id_for_label}}">{{ select_jenis }}</label>
               </div>
               {% endfor %}
           </div>
@@ -44,8 +46,8 @@
              <br>
               {% for select_satuan in form.satuan %}
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="{{form.satuan.name}}" id="{{form.satuan.id_for_label}}" value="{{ select_satuan. }}">
-                <label class="form-check-label" for="inlineRadio1">{{ select_satuan }}</label>
+                <input class="form-check-input" type="radio" name="{{form.satuan.name}}" id="{{select_satuan.id_for_label}}" value="{{ select_satuan.0 }}">
+                <label class="form-check-label" For="{{select_satuan.id_for_label}}">{{ select_satuan }}</label>
               </div>
               {% endfor %}
           </div>
@@ -64,7 +66,7 @@
 
         <div class="form-group">
               <label for="{{form.satker.id_for_label}}">{{form.satker.label}}:</label>
-              <input type="number" class="form-control" name="{{form.satker.name}}" maxlength="{{form.satker.max}}" required id="{{form.satker.id_for_label}}"> 
+              <input type="text" class="form-control" name="{{form.satker.name}}" maxlength="{{form.satker.max}}" required id="{{form.satker.id_for_label}}"> 
           </div>
           <br>
 
@@ -80,7 +82,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
+          </form>
         </div>
       </div>
 

@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'users',
     'django_select2',
     'bootstrap_datepicker_plus',
+    'crispy_forms',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,5 @@ LOGIN_URL = 'users:login'
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
