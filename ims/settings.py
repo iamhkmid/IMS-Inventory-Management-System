@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'ims.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'inventory_upt',
+        'NAME': 'inv_upt',
         'USER' : 'root',
         'PASSWORD' : 'admin12345',
     }
