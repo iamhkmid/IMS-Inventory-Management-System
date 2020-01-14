@@ -2,7 +2,18 @@
     float: none;
     margin: 0 auto;
 }
-
+.text1{
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    background-color: rgb(209, 209, 209);
+    
+}
+.text2{
+    font-size: 17px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: rgb(233, 233, 233);
+}
 .fixed-top-2 {
     margin-top: 56px;
 }

@@ -1,15 +1,16 @@
 from django.db import models
 
 # Create your models here.
-def incerement_id_barang():
-    last_id_barang = Barang.objects.all().order_by('id_barang').last()
-    if not last_id_barang:
-        return '0000001'
+def auto_increment_id():
+    id_b = '0000001'
     width = 7
-    id_barang_int = int(last_id_barang.id_barang)
-    new_id_barang = str(id_barang_int + 1)
-    print(type(new_id_barang))
-    formated = str((width - len(new_id_barang)) * "0") + new_id_barang
+    for item in Barang.objects.all().order_by('id_barang'):
+        if item.id_barang != id_b:
+            formated = id_b
+        else:
+            id_b = str(int(id_b)+1)
+            formated = str((width - len(id_b)) * "0") + id_b
+            id_b = formated
     return formated
 
 class Barang(models.Model):
@@ -23,7 +24,7 @@ class Barang(models.Model):
         ('Buah', 'Buah'),
         ('Kotak', 'Kotak'),
     )
-    id_barang = models.CharField(max_length=8, default = incerement_id_barang, primary_key=True, editable = False)
+    id_barang = models.CharField(max_length=8, default = auto_increment_id, primary_key=True, editable = False)
     nama = models.CharField(max_length=35)
     jenis = models.CharField(max_length=20, choices = JENIS)
     jumlah = models.PositiveIntegerField()

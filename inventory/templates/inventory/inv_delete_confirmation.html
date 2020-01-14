@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}        
+
+{% block page_title %}
+	Delete Confirmation
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="main-screen">
+      <div class="col-lg-8 centered mb-4 col-centered">
+        <div class="bg-white p-4 rounded shadow h-100">
+            <h4 class="jd1">Delete Confirmation</h4>
+            <hr align="left" width="350" />
+            <table>
+                <tr class="text1">
+                    <td>&emsp;Id</td>
+                    <td>:&emsp;{{barang.id_barang}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Nama</td>
+                    <td>:&emsp;{{barang.nama}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Jenis</td>
+                    <td>:&emsp;{{barang.jenis}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Jumlah</td>
+                    <td>:&emsp;{{barang.jumlah}} {{barang.satuan}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Nilai Barang</td>
+                    <td>:&emsp;Rp.{{barang.nilai_barang}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Satker</td>
+                    <td>:&emsp;{{barang.satker}}&emsp;</td>
+                </tr>
+                <tr class="text2">
+                    <td>&emsp;Tgl Pengadaan</td>
+                    <td>:&emsp;{{barang.tgl_pengadaan}}&emsp;</td>
+                </tr>
+            </table>
+            <hr align="left" width="350" />
+            <form method='POST'>
+                {% csrf_token %}
+                <h6>Yakin ingin hapus?</h6>
+                <button type="submit" class="btn btn-outline-primary">Ya</button>
+                <a class="btn btn-outline-danger" href="{% url 'inventory:manage' %}">Tidak</a>
+	        </form>
+        </div>
+      </div>
+</div>
+
+
+{% endblock contents1 %}

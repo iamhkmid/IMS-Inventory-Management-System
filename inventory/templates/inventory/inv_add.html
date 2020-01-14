@@ -17,6 +17,7 @@
         <hr align="left" width="350" />
           <form method='POST'>
             {% csrf_token %}
+            
              <div class="form-group">
               <label for="{{form.nama.id_for_label}}">{{form.nama.label}}:</label>
               <input type="text" class="form-control" name="{{form.nama.name}}" maxlength="{{form.nama.max}}" required id="{{form.nama.id_for_label}}" autofocus>    
@@ -72,7 +73,14 @@
 
         <div class="form-group">
             <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}}:</label>
-            <input type="text" name="{{form.tgl_pengadaan.name}}" class="form-control" required id="{{form.tgl_pengadaan.id_for_label}}">
+            <div class="input-group date my-custom-class">
+             <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None and widget.value != "" %} value="{{ widget.value }}"{% endif %}{% for name, value in widget.attrs.items %}{% ifnotequal value False %} {{ name }}{% ifnotequal value True %}="{{ value|stringformat:'s' }}"{% endifnotequal %}{% endifnotequal %}{% endfor %}/>
+                <div class="input-group-addon input-group-append">
+                    <div class="input-group-text"><i class="glyphicon glyphicon-calendar"></i></div>
+                </div>
+            </div>
+
+          
           </div>
           <br>
 
