@@ -9,8 +9,11 @@ from .models import (
 )
 
 class BarangAdmin(admin.ModelAdmin):
-    readonly_fields=('updated',)
-	#autocomplete_fields = ['user']
+    readonly_fields=[
+		'id_barang',
+        'slug',
+		'updated',
+	]
 
 admin.site.register(Barang, BarangAdmin)
 admin.site.register(Tempat)

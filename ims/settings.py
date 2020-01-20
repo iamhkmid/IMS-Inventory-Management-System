@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'users',
     'django_select2',
-    'bootstrap_datepicker_plus',
+    'tempus_dominus',
     'crispy_forms',
     'bootstrap4',
 ]

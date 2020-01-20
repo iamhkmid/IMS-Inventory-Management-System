@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{{ form.media }}            {# Adds date-picker required JS and CSS #}
-{% load crispy_forms_tags %}
 
 {% block page_title %}
 	Tambah Barang
@@ -10,91 +8,96 @@
 
 {% block contents1 %}
 <div class="main-screen">
-
-      <div class="col-lg-8 centered mb-4 col-centered">
-        <div class="bg-white p-4 rounded shadow h-100">
-        <h4 class="jd1">TAMBAH BARANG</h4>
-        <hr align="left" width="350" />
-          <form method='POST'>
-            {% csrf_token %}
-            
-             <div class="form-group">
-              <label for="{{form.nama.id_for_label}}">{{form.nama.label}}:</label>
-              <input type="text" class="form-control" name="{{form.nama.name}}" maxlength="{{form.nama.max}}" required id="{{form.nama.id_for_label}}" autofocus>    
-          </div>
-          <br>
-
-          <div class="form-group">
-              <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}}:</label>
-             <br>
-              {% for select_jenis in form.jenis %}
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="{{form.jenis.name}}" id="{{select_jenis.id_for_label}}" value="{{ select_jenis.0 }}">
-                <label class="form-check-label" for="{{select_jenis.id_for_label}}">{{ select_jenis }}</label>
-              </div>
-              {% endfor %}
-          </div>
-          <br>
-
-          <div class="form-group">
-              <label for="{{form.jumlah.id_for_label}}">{{form.jumlah.label}}:</label>
-              <input type="number" class="form-control" name="{{form.jumlah.name}}" maxlength="{{form.jumlah.max}}" required id="{{form.jumlah.id_for_label}}"> 
-          </div>
-          <br>
-
-          <div class="form-group">
-              <label for="{{form.satuan.id_for_label}}">{{form.satuan.label}}:</label>
-             <br>
-              {% for select_satuan in form.satuan %}
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="{{form.satuan.name}}" id="{{select_satuan.id_for_label}}" value="{{ select_satuan.0 }}">
-                <label class="form-check-label" For="{{select_satuan.id_for_label}}">{{ select_satuan }}</label>
-              </div>
-              {% endfor %}
-          </div>
-          <br>
-
-          <div class="form-group">
-              <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}}:</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                  <div class="input-group-text">Rp.</div>
-              </div>
-              <input type="number" class="form-control" name="{{form.nilai_barang.name}}" maxlength="{{form.nilai_barang.max}}" required id="{{form.nilai_barang.id_for_label}}"> 
-            </div>
-          </div>
-          <br>
-
+  <div class="col-lg-8 centered mb-4 col-centered">
+    <div class="bg-white p-5 rounded shadow h-100">
+      <h4 class="jd1">TAMBAH BARANG</h4>
+      <hr align="left" width="350" />
+      <form method='POST'>
+        {% csrf_token %}
+        
         <div class="form-group">
-              <label for="{{form.satker.id_for_label}}">{{form.satker.label}}:</label>
-              <input type="text" class="form-control" name="{{form.satker.name}}" maxlength="{{form.satker.max}}" required id="{{form.satker.id_for_label}}"> 
-          </div>
-          <br>
-
-        <div class="form-group">
-            <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}}:</label>
-            <div class="input-group date my-custom-class">
-             <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None and widget.value != "" %} value="{{ widget.value }}"{% endif %}{% for name, value in widget.attrs.items %}{% ifnotequal value False %} {{ name }}{% ifnotequal value True %}="{{ value|stringformat:'s' }}"{% endifnotequal %}{% endifnotequal %}{% endfor %}/>
-                <div class="input-group-addon input-group-append">
-                    <div class="input-group-text"><i class="glyphicon glyphicon-calendar"></i></div>
-                </div>
-            </div>
-
-          
-          </div>
-          <br>
-
-          <div class="form-group">
-            <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}}:</label>
-            <textarea class="form-control" name="{{form.keterangan.name}}" rows="10" required id="{{form.keterangan.id_for_label}}"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Tambah</button>
-          </form>
+          <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+          <input type="text" class="form-control" name="{{form.nama.name}}" maxlength="{{form.nama.max}}" required id="{{form.nama.id_for_label}}" autofocus>    
         </div>
-      </div>
+        <br>
+
+        <div class="form-group">
+          <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label>
+          <br>
+          {% for x,y in form.fields.jenis.choices %}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="{{form.jenis.name}}" id="{{ x }}" value="{{ y }}">
+            <label class="form-check-label" for="{{ x }}">{{ y }}</label>
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="{{form.jumlah.id_for_label}}">{{form.jumlah.label}} :</label>
+            <input type="number" class="form-control" name="{{form.jumlah.name}}" maxlength="{{form.jumlah.max}}" required id="{{form.jumlah.id_for_label}}"> 
+        </div>
+        <br>
+
+        <div class="form-group">
+          <label for="{{form.satuan.id_for_label}}">{{form.satuan.label}} :</label>
+          <br>
+          {% for x,y in form.fields.satuan.choices %}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="{{form.satuan.name}}" id="{{ x }}" value="{{ y }}">
+            <label class="form-check-label" For="{{ x }}">{{ y }}</label>
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+
+        <div class="form-group" >
+          <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Rp.</div>
+            </div>
+            <input type="number" class="form-control" name="{{form.nilai_barang.name}}" maxlength="{{form.nilai_barang.max}}" required id="{{form.nilai_barang.id_for_label}}"> 
+          </div>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="{{form.satker.id_for_label}}">{{form.satker.label}} :</label>
+            <input type="text" class="form-control" name="{{form.satker.name}}" maxlength="{{form.satker.max}}" required id="{{form.satker.id_for_label}}"> 
+        </div>
+        <br>
+
+        <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
+        <div class="form-group">
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+          <input type="text" name="{{ form.tgl_pengadaan.name }}" class="form-control datepicker datetimepicker-input" data-target=".datepicker" placeholder="YYYY-MM-DD HH:mm:ss.SSS" required id="{{form.tgl_pengadaan.id_for_label}}">
+          <div class="input-group-append" data-target=".datepicker" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div>
+        </div>
+        <br>
+        
+        <div class="form-group">
+          <label for="{{form.tempat.id_for_label}}">{{form.tempat.label}} :</label>
+          <select class="form-control selectpicker" name="{{ form.tempat.name }}"  data-live-search="true" required id="{{form.tempat.id_for_label}}">
+            <option data-tokens="china" name="{{form.tempat.name}}">China</option>
+            <option data-tokens="malayasia">Malayasia</option>
+            <option data-tokens="singapore">Singapore</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} :</label>
+          <textarea class="form-control" name="{{form.keterangan.name}}" rows="10" required id="{{form.keterangan.id_for_label}}"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tambah</button>
+        </form>
+    </div>
+  </div>
 
 </div>
-
 
 {% endblock contents1 %}
