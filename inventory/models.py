@@ -22,32 +22,25 @@ class Tempat(models.Model):
     id_tempat   = models.CharField(max_length=15, primary_key=True)
     nama        = models.CharField(max_length=35)
 
+    def __str__(self):
+        return "{} - {}".format(self.id_tempat, self.nama)
+
 class Users(models.Model):
     id_user     = models.CharField(max_length=15, primary_key=True)
     nama        = models.CharField(max_length=35)
 
 
 class Barang(models.Model):
-    JENIS = (
-        ('Inventaris', 'Inventaris'),
-        ('Modal', 'Modal'),
-        ('Persediaan', 'Persediaan'),
-    )
-    SATUAN = (
-        ('Pak', 'Pak'),
-        ('Buah', 'Buah'),
-        ('Kotak', 'Kotak'),
-    )
     id_barang       = models.CharField(max_length=8, default = auto_increment_id, primary_key=True, editable = False)
     nama            = models.CharField(max_length=35)
-    jenis           = models.CharField(max_length=20, choices = JENIS, blank=False, default='Inventaris')
-    jumlah          = models.PositiveIntegerField()
-    satuan          = models.CharField(max_length=20, choices = SATUAN, blank=False, default='Pak')
+    jenis           = models.CharField(max_length=20)
+    jumlah          = models.IntegerField()
+    satuan          = models.CharField(max_length=20)
     nilai_barang    = models.DecimalField(max_digits=20, decimal_places=0)
     satker          = models.CharField(max_length=35)
     tgl_pengadaan   = models.DateTimeField()
     tempat          = models.ForeignKey(Tempat, on_delete=models.CASCADE)
-    keterangan      = models.CharField(max_length=100, blank=True)
+    keterangan      = models.TextField()
     updated         = models.DateTimeField(auto_now=True)
     slug            = models.SlugField(blank=True, editable=False)
 

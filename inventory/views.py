@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
@@ -16,10 +16,11 @@ class InvManageView(LoginRequiredMixin, ListView):
 class InvAddView(LoginRequiredMixin, CreateView):
     form_class = BarangForm
     template_name = "inventory/inv_add.html"
-    def post(self, request, *args, **kwargs):
-        username = request.POST['nama']
-        password = request.POST['keterangan']
-        print(username, password)
+    
+class InvUpdateView(UpdateView):
+	form_class = BarangForm
+	model = Barang
+	template_name = "inventory/inv_update.html"
 
 class InvDeleteView(LoginRequiredMixin, DeleteView):
     model = Barang

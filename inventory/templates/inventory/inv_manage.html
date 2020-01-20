@@ -42,10 +42,11 @@
                 <td>Rp.{{ barang.nilai_barang|floatformat:2|intcomma }}</td>
                 {% endlanguage %}
                 <td>{{ barang.satker }}</td>
-                <td>{{ barang.updated }}</td>
-                <td>
-                    <a href="" class="btn ink-reaction btn-floating-action btn-secondary"><i class="fa fa-edit"></i></a>
-                    <a class="btn ink-reaction btn-floating-action btn-danger" href="{% url 'inventory:delete' barang.id_barang %}"><i class="fa fa-trash"></i></a>
+                <td>{{ barang.tgl_pengadaan }}</td>
+                <td align="center">
+                    <a class="btn ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:detail' barang.slug %}" title="[Detail] - {{barang.nama}}"><i class="fa fa-info-circle"></i></a>
+                    <a class="btn ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:update' barang.id_barang %}" title="[Update] - {{barang.nama}}"><i class="fa fa-edit"></i></a>
+                    <a class="btn ink-reaction btn-floating-action btn-danger" href="{% url 'inventory:delete' barang.id_barang %}" title="[Delete] - {{barang.nama}}"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         {% endfor %}
