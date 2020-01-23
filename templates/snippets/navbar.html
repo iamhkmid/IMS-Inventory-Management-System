@@ -25,27 +25,48 @@
 
 <nav class="navbar navbar-menu navbar-expand-sm navbar-custom bg-custom fixed-top fixed-top-2 text-center ">
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto mx-auto ">
+    <ul class="navbar-nav ">
+    
       <li class="nav-item">
-        <a class="nav-link" href="#">Dashboard</a>
+        <a class="nav-link" href="#"><i class="fa fa-home"></i> Dashboard</a>
       </li>
+
       {% if request.path == "/inventory/add/" or request.path == "/inventory/manage/" %}
-      <li class="nav-item dropdown active">
+        <li class="nav-item active">
       {% else %}
-      <li class="nav-item dropdown">
+        <li class="nav-item">
+      {% endif %}
+        <a class="nav-link" href="{% url 'inventory:manage' %}"><i class="fa fa-database"></i> Inventory</a>
+      </li>
+      
+      {% if request.path == "/transaksi/list/" or request.path == "/transaksi/form-peminjaman/" or request.path == "/transaksi/form-habis-pakai/" %}
+        <li class="nav-item active">
+      {% else %}
+        <li class="nav-item">
+      {% endif %}
+        <a class="nav-link" href="{% url 'transaksi:list' %}"><i class="fa fa-database"></i> Transaksi</a>
+      </li>
+      
+
+      {% if request.path == "" %}
+        <li class="nav-item dropdown active">
+      {% else %}
+        <li class="nav-item dropdown">
       {% endif %}
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Inventory
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'inventory:add' %}">Add Data</a>
-            <a class="dropdown-item" href="{% url 'inventory:manage' %}">Manage Data</a>
-          </div>
-        </li>
+          <i class="fa fa-bars"></i> Lainnya
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href=""><h7 class="txt2">Manage Pengguna</h7></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="">Manage Tempat</a>
+        </div>
+      </li>
+
       <li class="nav-item">
-        <a class="nav-link" href="#">Reports</a>
+        <a class="nav-link" href="#"><i class="fa fa-print"></i> Reports</a>
       </li>
-      </li>
+      
     </ul>
   </div>
 </nav>

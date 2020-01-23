@@ -17,6 +17,7 @@ class BarangForm(ModelForm):
 	jenis			= forms.TypedChoiceField(required=False, choices=JENIS, widget=forms.RadioSelect)
 	satuan			= forms.TypedChoiceField(required=False, choices=SATUAN, widget=forms.RadioSelect)
 	tgl_pengadaan	= forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
+	keterangan		= forms.CharField(widget=forms.Textarea(), required=False)
 
 	class Meta:
 		model = Barang

@@ -22,5 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls', namespace='users')),
     path('inventory/', include('inventory.urls', namespace='inventory')),
+    path('transaksi/', include('transaksi.urls', namespace='transaksi')),
     path('', RedirectView.as_view(pattern_name='inventory:manage')),
+    path('test/',TemplateView.as_view(template_name='test.html')),
 ]

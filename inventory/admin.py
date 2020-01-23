@@ -1,12 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import (
-    Barang,
-    Tempat,
-    Transaksi,
-    Users,
-)
+from .models import *
+
+class TempatAdmin(admin.ModelAdmin):
+    readonly_fields=[
+		'id_tempat',
+		'updated',
+	]
 
 class BarangAdmin(admin.ModelAdmin):
     readonly_fields=[
@@ -15,7 +16,5 @@ class BarangAdmin(admin.ModelAdmin):
 		'updated',
 	]
 
+admin.site.register(Tempat, TempatAdmin)
 admin.site.register(Barang, BarangAdmin)
-admin.site.register(Tempat)
-admin.site.register(Transaksi)
-admin.site.register(Users)

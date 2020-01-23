@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inventory',
     'django.contrib.humanize',
     'users',
-    'django_select2',
-    'tempus_dominus',
-    'crispy_forms',
+    'dashboard',
+    'inventory',
+    'transaksi',
+    'reports',
     'bootstrap4',
     'widget_tweaks',
 ]
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Jakarta'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -134,8 +134,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = 'users:login'
-BOOTSTRAP4 = {
-    'include_jquery': True,
-}
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
