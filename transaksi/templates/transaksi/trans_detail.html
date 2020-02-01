@@ -2,7 +2,7 @@
 {% load static %}        
 
 {% block page_title %}
-	Delete Confirmation
+	Detail Transaksi {{transaksi.id_transaksi}} - {{transaksi.id_barang.nama}}
 {% endblock page_title %}
 
 
@@ -19,21 +19,37 @@
                         <td>&emsp;{{transaksi.id_transaksi}}&emsp;</td>
                     </tr>
                     <tr>
+                        <td>&emsp;Transaksi</td>
+                        <td>&emsp;{{transaksi.transaksi}}&emsp;</td>
+                    </tr>
+                    <tr>
                         <td>&emsp;Nama Barang</td>
                         <td>&emsp;{{transaksi.id_barang.nama}}&emsp;</td>
                     </tr>
+                    <tr>
+                        <td>&emsp;Jumlah</td>
+                        <td>&emsp;{{transaksi.jumlah}}&emsp;</td>
+                    </tr>
+                    <tr>
                         <td>&emsp;Tgl Pengambilan</td>
                         <td>&emsp;{{transaksi.tgl_pengambilan}}&emsp;</td>
                     </tr>
-                    {% if transaksi.tgl_kembali is not none %}
-                    <tr>
-                        <td>&emsp;Tgl Kembali</td>
-                        <td>&emsp;{{transaksi.tgl_kembali}}&emsp;</td>
-                    </tr>
+                    {% if transaksi.transaksi == "Peminjaman" %}
+                        {% if transaksi.tgl_kembali == None %}
+                            <tr>
+                                <td>&emsp;Tgl Kembali</td>
+                                <td>&emsp;<span class="badge badge-text badge-danger">Belum Kembali</span>&emsp;</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>&emsp;Tgl Kembali</td>
+                                <td>&emsp;{{transaksi.tgl_kembali}} <span class="badge badge-success">Kembali</span>&emsp;</td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
                     <tr>
                         <td>&emsp;Pengguna</td>
-                        <td>&emsp;Rp.{{transaksi.pengguna}}&emsp;</td>
+                        <td>&emsp;{{transaksi.pengguna}}&emsp;</td>
                     </tr>
                     <tr>
                         <td>&emsp;Keterangan</td>
@@ -41,6 +57,9 @@
                     </tr>
                 </tbody>
             </table>
+            <p><small>-- Update Terakhir --<br>
+            User&emsp;: {{transaksi.user_updated}}<br>
+            Waktu : {{transaksi.updated}}</small></p>
             <hr align="left" width="350" />
         </div>
       </div>

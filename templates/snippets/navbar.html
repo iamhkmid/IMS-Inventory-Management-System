@@ -57,14 +57,18 @@
           <i class="fa fa-bars"></i> Lainnya
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href=""><h7 class="txt2">Manage Pengguna</h7></a>
+          <a class="dropdown-item" href="{% url 'reports:mutasi' %}"><h7 class="txt2"><i class="fa fa-angle-double-right"></i> Mutasi List</h7></a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="">Manage Tempat</a>
+          <a class="dropdown-item" href="{% url 'inventory:satker_list' %}"><i class="fa fa-angle-double-right"></i> Manage Satker</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'inventory:ruang_list' %}"><i class="fa fa-angle-double-right"></i> Manage Ruang</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'inventory:tempat_list' %}"><i class="fa fa-angle-double-right"></i> Manage Tempat</a>
         </div>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-print"></i> Reports</a>
+        <a class="nav-link" href="{% url 'report:choose' %}"><i class="fa fa-print"></i> Reports</a>
       </li>
       
     </ul>

@@ -1,0 +1,37 @@
+@media print
+{
+.noprint {display:none;}
+.table thead tr th,.table tbody tr td{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 12px !important;
+    background-color: red;
+    padding:10px;
+    -webkit-print-color-adjust:exact ;
+}
+
+@page {
+      size: landscape; /* DIN A4 standard, Europe */
+      margin:0px;
+    }
+    html, body {
+        margin: 0px;
+    }
+
+}
+
+
+body{
+    background: rgb(234, 236, 240) !important;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.txt1{
+font-weight: bold;
+}
+

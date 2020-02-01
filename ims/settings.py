@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'reports',
     'bootstrap4',
     'widget_tweaks',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

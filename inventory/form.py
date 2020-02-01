@@ -14,10 +14,11 @@ class BarangForm(ModelForm):
 		('Kotak','Kotak')
 	)
 	nama			= forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
-	jenis			= forms.TypedChoiceField(required=False, choices=JENIS, widget=forms.RadioSelect)
-	satuan			= forms.TypedChoiceField(required=False, choices=SATUAN, widget=forms.RadioSelect)
+	jenis			= forms.TypedChoiceField(required=True, choices=JENIS, widget=forms.RadioSelect)
+	satuan			= forms.TypedChoiceField(required=True, choices=SATUAN, widget=forms.RadioSelect)
 	tgl_pengadaan	= forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
 	keterangan		= forms.CharField(widget=forms.Textarea(), required=False)
+	user_updated	= forms.CharField(widget=forms.HiddenInput(),required=False)
 
 	class Meta:
 		model = Barang
@@ -27,9 +28,10 @@ class BarangForm(ModelForm):
 			'jumlah',
 			'satuan',
 			'nilai_barang',
-			'satker',
 			'tgl_pengadaan',
-			'tempat',
-			'keterangan'
+			'id_tempat',
+			'keterangan',
+			'user_updated'
 		]
+		
 		

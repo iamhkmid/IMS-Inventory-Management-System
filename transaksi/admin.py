@@ -8,13 +8,7 @@ class TransaksiAdmin(admin.ModelAdmin):
     readonly_fields=[
 		'id_transaksi',
 		'updated',
+        'slug',
 	]
 
-class UsersAdmin(admin.ModelAdmin):
-    readonly_fields=[
-		'id_user',
-		'updated',
-	]
-
-admin.site.register(Users, UsersAdmin)
 admin.site.register(Transaksi, TransaksiAdmin)

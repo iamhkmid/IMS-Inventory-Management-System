@@ -4,7 +4,7 @@
 {% load i18n %}
 {% load l10n %}
 {% block page_title %}
-	Inventory Managment System
+	Manage Transaksi
 {% endblock page_title %}
 
 
@@ -14,9 +14,11 @@
     <div class="bg-white p-4 rounded shadow h-100 ">
     <h4 class="jd1">TRANSAKSI LIST</h4>
     <hr align="left" width="350" />
+    <h6 class="txt_label">Action :</h6>
     <a class="btn btn-info" href="{% url 'transaksi:form_peminjaman' %}" role="button"><i class="fa fa-plus-circle"></i> Peminjaman</a>
     <a class="btn btn-info" href="{% url 'transaksi:form_habispakai' %}" role="button"><i class="fa fa-plus-circle"></i> Barang Habis Pakai </a>
-    <br><br>
+    <a class="btn btn-success" href="{% url 'transaksi:pengembalian' %}" role="button"><i class="fa fa-check-circle"></i> Pengembalian</a>
+    <hr align="left" width="550" />
  <table id="datatables" class="table table-striped table-bordered" style="width:100%">
         <thead >
             <tr>
@@ -25,6 +27,7 @@
                 <th>Nama Barang</th>
                 <th>Transaksi</th>
                 <th>Jumlah</th>
+                <th>Pengguna</th>
                 <th>Tgl Pengambilan</th>
                 <th>Tgl Kembali</th>
                 <th></th>
@@ -38,12 +41,25 @@
                 <td>{{ trans.id_barang.nama }}</td>
                 <td>{{ trans.transaksi }}</td>
                 <td>{{ trans.jumlah }}</td>
+                <td>{{ trans.pengguna }}</td>
                 <td>{{ trans.tgl_pengambilan }}</td>
-                <td>{{ trans.tgl_kembali }}</td>
+                {% if trans.transaksi == "Peminjaman" %}
+                    {% if trans.tgl_kembali == None %}
+                        <td><span class="badge badge-danger">Belum Kembali</span></td>
+                    {% else %}
+                        <td>{{ trans.tgl_kembali }} <span class="badge badge-success">Kembali</span></td>
+                    {% endif %}
+                {% elif trans.tgl_kembali == None %}
+                    <td><span class="badge badge-secondary">Habis Pakai</span></td>
+                {% endif %}
                 <td align="center">
-                    <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="" title="[Detail] - {{trans.id_transaksi}}"><i class="fa fa-info-circle"></i></a>
-                    <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="" title="[Update] - {{trans.id_transaksi}}"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-sm ink-reaction btn-floating-action btn-danger" href="" title="[Delete] - {{trans.id_transaksi}}"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'transaksi:detail' trans.slug %}" title="[Detail] - {{trans.id_barang.nama}}"><i class="fa fa-info-circle"></i></a>
+                    {% if trans.transaksi == "Peminjaman"%}
+                    <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'transaksi:update1' trans.id_transaksi %}" title="[Update] - {{trans.id_barang.nama}}"><i class="fa fa-edit"></i></a>
+                    {% elif trans.transaksi == "Persediaan"%}
+                     <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'transaksi:update2' trans.id_transaksi %}" title="[Update] - {{trans.id_barang.nama}}"><i class="fa fa-edit"></i></a>
+                    {% endif %}
+                    <a class="btn btn-sm ink-reaction btn-floating-action btn-danger" href="{% url 'transaksi:delete' trans.id_transaksi %}" title="[Delete] - {{trans.id_barang.nama}}"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         {% endfor %}

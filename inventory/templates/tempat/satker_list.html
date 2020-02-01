@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+{% block page_title %}
+	Manage Satker
+{% endblock page_title %}
+
+
+{% block contents1 %}
+
+<div class="col-lg-8 mb-4 rounded col-centered">
+    <div class="bg-white p-4 rounded shadow h-100">
+    <h4 class="jd1">MANAGE SATKER</h4>
+    <hr align="left" width="350" />
+    <a class="btn btn-info" href="{% url 'inventory:add' %}" role="button"><i class="fa fa-plus-circle"></i> Tambah</a>
+    <br><br>
+ <table id="datatables2" class="table table-striped table-bordered" style="width:100%">
+        <thead >
+            <tr>
+                <th>No</th>
+                <th>ID Satker</th>
+                <th>Nama</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in satker_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ item.id_satker }}</td>
+                <td>{{ item.nama }}</td>
+                <td align="center">
+                    <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="" title="[Update] - {{item.nama}}"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm ink-reaction btn-floating-action btn-danger" href="" title="[Delete] - {{item.nama}}"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+        
+    </table>
+</div>
+</div>
+{% endblock contents1 %}

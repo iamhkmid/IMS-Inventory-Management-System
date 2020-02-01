@@ -2,7 +2,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block page_title %}
-	Tambah Barang
+	Form Peminjaman
 {% endblock page_title %}
 
 
@@ -40,18 +40,18 @@
 
         <label for="{{form.tgl_kembali.id_for_label}}">{{form.tgl_kembali.label}} (Optional) :</label>
         <div class="form-group">
-          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-            {{ form.tgl_kembali | add_class:'form-control datepicker datetimepicker-input' }}
-            <div class="input-group-append" data-target=".datepicker" data-toggle="datetimepicker">
+          <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+            {{ form.tgl_kembali | add_class:'form-control datepicker2 datetimepicker-input' }}
+            <div class="input-group-append" data-target=".datepicker2" data-toggle="datetimepicker">
               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
           </div>
         </div>
         <br>
         
-        <label for="pengguna">{{form.pengguna.label}} :</label>
+        <label for="{{form.pengguna.id_for_label}}">{{form.pengguna.label}} :</label>
         <div class="form-group border rounded">
-         {{ form.pengguna | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:pengguna'}}
+         {{ form.pengguna | add_class:'form-control'}}
         </div>
         <br>
 
@@ -59,7 +59,8 @@
           <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} (Optional) :</label>
           {{ form.keterangan| add_class:'form-control'}}
         </div>
-
+        {{ form.transaksi| add_class:'form-control'}}
+        {{ form.user_updated}}
         <button type="submit" class="btn btn-primary">Tambah</button>
         <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
         </form>

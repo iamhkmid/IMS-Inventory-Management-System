@@ -1,0 +1,77 @@
+{% load static %}
+{% load multiply %}
+{% load total %}
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Laporan {{transaksi}} - {{satker}} - {{date_report}}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
+    {% include "snippets/styles.html" %}
+  </head>
+  <body>
+    <br>
+    <div class="col-lg-10 mb-4 col-centered">
+      <div class="bg-white p-5 rounded">
+        <h5 class="txt1" align="center">LAPORAN RINCIAN BARANG PERSEDIAAN</h5>
+        <h6 class="txt2" align="center">UNTUK TANGGAL 1 - {{date_report}}</h6>
+        <h5 ></h5>
+        <hr align="center" width="auto" />
+          <div class="noprint">
+          <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
+          <a class="btn btn-secondary" href="{% url 'reports:choose' %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+          <hr align="left" width="350" />
+          </div>
+        <h7 class="txt3" align="center">SATKER : {{satker}}</h7>
+          <table class="table table-striped table-bordered" style="width:100%">
+                <thead >
+                    <tr>
+                        <th class="text-center align-middle" rowspan="2">Kode</th>
+                        <th class="text-center align-middle" rowspan="2">Nama Barang</th>
+                        <th class="text-center align-middle" rowspan="2">Tgl Mutasi</th>
+                        <th class="text-center align-middle" colspan="2" text-align="center">Mutasi</th>
+                        <th class="text-center align-middle" rowspan="2">Nilai Barang</th>
+                        <th class="text-center align-middle" rowspan="2">Total</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center align-middle">Masuk</th>
+                        <th class="text-center align-middle"> Keluar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in mutasi_list %}
+                    <tr>
+                        <td class="text-right" >{{ item.id_mutasi }}</td>
+                        <td class="text-left" >{{ item.id_barang.nama }}</td>
+                        <td class="text-right" >{{ item.tgl_mutasi }}</td>
+                        {% if item.jenis == "Masuk" %}
+                        <td class="text-right" >{{ item.jumlah }}</td>
+                        <td class="text-right" >0</td>
+                        {% elif item.jenis == "Keluar" %}
+                        <td class="text-right" >0</td>
+                        <td class="text-right" >{{ item.jumlah }}</td>
+                        {% endif %}
+                        <td class="text-right" >{{ item.id_barang.nilai_barang|intcomma }}</td>
+                        {% language 'id' %}
+                        <td class="text-right" >{% multiply item.jumlah item.id_barang.nilai_barang %}</td>
+                    {% endlanguage %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                 <tr>
+                    <th class="text-center align-middle" colspan="3" text-align="center">Total</th>
+                    <th class="text-right align-middle" colspan="4"></th>
+                  </tr>
+                </tfoot>
+          </table>
+      </div>
+    </div>
+    {% include "snippets/scripts.html" %}
+  </body>
+</html>

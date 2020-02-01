@@ -2,7 +2,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block page_title %}
-	Tambah Barang
+	Update {{barang.id_barang}} - {{barang.nama}}
 {% endblock page_title %}
 
 
@@ -91,7 +91,7 @@
           <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} :</label>
           {{ form.keterangan| add_class:'form-control'}}
         </div>
-
+        {{ form.user_updated}}
         <button type="submit" class="btn btn-primary">Tambah</button>
         <a class="btn btn-secondary" href="{% url 'inventory:manage' %}">Batalkan</a>
         </form>
