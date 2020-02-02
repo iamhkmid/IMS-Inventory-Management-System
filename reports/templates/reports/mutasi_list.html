@@ -10,7 +10,7 @@
 
 {% block contents1 %}
 
-<div class="col-lg-10 mb-4 rounded col-centered">
+<div class="col-lg-12 mb-4 rounded col-centered">
     <div class="bg-white p-4 rounded shadow h-100">
     <h4 class="jd1">MUTASI LIST</h4>
     <hr align="left" width="350" />
@@ -22,8 +22,9 @@
                 <th>No</th>
                 <th>ID Mutasi</th>
                 <th>Nama</th>
-                <th>Jenis</th>
-                <th>Jumlah</th>
+                <th>Jumlah Awal</th>
+                <th>Masuk</th>
+                <th>Keluar</th>
                 <th>Tgl Mutasi</th>
                 <th>Nilai Barang</th>
                 <th></th>
@@ -34,9 +35,10 @@
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{ item.id_mutasi }}</td>
-                <td>{{ item.id_barang.nama }}</td>
-                <td>{{ item.jenis }}</td>
-                <td>{{ item.jumlah }}</td>
+                <td>{{ item.nama_barang }}</td>
+                <td>{{ item.jumlah_awal }}</td>
+                <td>{{ item.masuk }}</td>
+                <td>{{ item.keluar }}</td>
                 <td>{{ item.tgl_mutasi }}</td>
                 <td>{{ item.nilai_barang }}</td>
                 <td align="center">

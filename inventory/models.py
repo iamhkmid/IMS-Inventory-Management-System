@@ -92,7 +92,7 @@ class Satker(models.Model):
 
     def get_absolute_url(self):
         url_slug = {'slug': self.slug}
-        return reverse('inventory:tempat_list', kwargs=url_slug)
+        return reverse('inventory:satker_detail', kwargs=url_slug)
 
     def __str__(self):
         return self.nama
@@ -113,7 +113,7 @@ class Ruang(models.Model):
 
     def get_absolute_url(self):
         url_slug = {'slug': self.slug}
-        return reverse('inventory:tempat_list', kwargs=url_slug)
+        return reverse('inventory:ruang_detail', kwargs=url_slug)
 
     def __str__(self):
         return "{} | {}".format(self.id_satker.nama, self.nama)
@@ -134,7 +134,7 @@ class Tempat(models.Model):
 
     def get_absolute_url(self):
         url_slug = {'slug': self.slug}
-        return reverse('inventory:tempat_list', kwargs=url_slug)
+        return reverse('inventory:tempat_detail', kwargs=url_slug)
 
     def __str__(self):
         return "{}  |  {}  |  {}".format(self.id_ruang.id_satker.nama, self.id_ruang.nama, self.nama)

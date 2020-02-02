@@ -4,12 +4,15 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse
-# Create your views here.
+from django.utils.dateparse import parse_datetime
+from django.conf import settings
+import pytz
 from .models import *
 from inventory.models import Barang
 from .form import PeminjamanForm, HabispakaiForm
 from datetime import datetime
 from reports.models import Mutasi
+
 
 def user_updated(self):
     if self.request.user.get_full_name() == "":
@@ -46,29 +49,66 @@ class FormHabispakaiView(LoginRequiredMixin, CreateView):
     form_class = HabispakaiForm
     template_name = "transaksi/form_habispakai.html"
 
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            id_barang = request.POST['id_barang']
+            barang_obj = Barang.objects.get(id_barang=id_barang)
+            jumlah = request.POST['jumlah']
+            tgl = request.POST['tgl_pengambilan']
+            parse_tgl = parse_datetime(tgl)
+            get_tgl = parse_tgl.replace(
+                tzinfo=pytz.timezone(settings.TIME_ZONE))
+            get_bulan = tgl[5:7]
+            get_tahun = tgl[0:4]
+            # cek bulan dan tahun
+            if get_tgl.month == datetime.now().month:
+                try:
+                    # filter bulan dan tahun
+                    mutasi_filter = Mutasi.objects.filter(
+                        id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tahun, tgl_mutasi__month=get_bulan)
+                    mutasi_obj = mutasi_filter.get(
+                        id_barang=barang_obj.id_barang)
+                    if mutasi_obj.id_barang == barang_obj.id_barang:
+                        # update Barang obj
+                        barang_obj.jumlah = barang_obj.jumlah - int(jumlah)
+                        barang_obj.user_updated = user_updated(self)
+                        barang_obj.save()
+                        # update Mutasi obj
+                        mutasi_obj.nama_barang = barang_obj.nama
+                        mutasi_obj.keluar = mutasi_obj.keluar + int(jumlah)
+                        mutasi_obj.tgl_mutasi = get_tgl
+                        mutasi_obj.save()
+                        # jika ditemukan mutasi pada bulan dan tahun yang sama
+                        return super().post(request, *args, **kwargs)
+
+                except Exception as err:
+                    # update Barang obj
+                    barang_obj.jumlah = barang_obj.jumlah - int(jumlah)
+                    barang_obj.user_updated = user_updated(self)
+                    barang_obj.save()
+                    # create Mutasi obj
+                    tempat_obj = Tempat.objects.get(
+                        id_tempat=barang_obj.id_tempat.id_tempat)
+                    mutasi_obj = Mutasi(
+                        id_barang=barang_obj.id_barang,
+                        nama_barang=barang_obj.nama,
+                        id_satker=tempat_obj.id_ruang.id_satker,
+                        tgl_mutasi=get_tgl,
+                        nilai_barang=barang_obj.nilai_barang,
+                        jumlah_awal=barang_obj.jumlah + int(jumlah),
+                        masuk=0,
+                        keluar=jumlah,
+                        user_updated=user_updated(self),
+                    )
+                    mutasi_obj.save()
+                    return super().post(request, *args, **kwargs)
+            else:
+                messages.warning(request, 'Transaksi harus pada bulan ini !')
+        return redirect('transaksi:form_habispakai')
+
     def form_valid(self, form):
         # fill user_updated
         form.instance.user_updated = user_updated(self)
-        # update jumlah barang
-        id_b = str(form.cleaned_data['id_barang'])[0:7]
-        jumlah = form.cleaned_data['jumlah']
-        barang_obj = Barang.objects.get(id_barang=id_b)
-        if jumlah == 0:
-            messages.warning(self.request, 'Jumlah tidak boleh 0 !')
-            return redirect(reverse('transaksi:form_habispakai'))
-        else:
-            barang_obj.jumlah = barang_obj.jumlah - jumlah
-            barang_obj.save()
-        # add mutasi obj
-        mutasi_obj = Mutasi(
-            id_barang = barang_obj,
-            jenis = "Keluar",
-            jumlah = jumlah,
-            id_satker=barang_obj.id_tempat.id_ruang.id_satker,
-            user_updated = user_updated(self),
-            tgl_mutasi = barang_obj.tgl_pengadaan,
-        )
-        mutasi_obj.save()
         return super(FormHabispakaiView, self).form_valid(form)
 
 

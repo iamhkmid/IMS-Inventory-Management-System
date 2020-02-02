@@ -33,7 +33,8 @@
                     </tr>
                     <tr>
                         <td>&emsp;Tgl Pengambilan</td>
-                        <td>&emsp;{{transaksi.tgl_pengambilan}}&emsp;</td>
+                        <td>&emsp;{{trans
+                    PostModel.objects.get(pk=pk)aksi.tgl_pengambilan}}&emsp;</td>
                     </tr>
                     {% if transaksi.transaksi == "Peminjaman" %}
                         {% if transaksi.tgl_kembali == None %}

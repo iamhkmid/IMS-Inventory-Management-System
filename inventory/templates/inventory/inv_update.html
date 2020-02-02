@@ -10,7 +10,7 @@
 <div class="main-screen">
   <div class="col-lg-8 centered mb-4 col-centered">
     <div class="bg-white p-5 rounded shadow h-100">
-      <h4 class="jd1">UPDATE DATA</h4>
+      <h4 class="jd1">UPDATE DATA - {{barang.id_barang}}</h4>
       <hr align="left" width="350" />
       <form method='POST'>
         {% csrf_token %}
@@ -65,11 +65,6 @@
         </div>
         <br>
 
-        <div class="form-group">
-            <label for="{{form.satker.id_for_label}}">{{form.satker.label}} :</label>
-            {{ form.satker| add_class:'form-control'}} 
-        </div>
-        <br>
 
         <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
         <div class="form-group">
@@ -83,8 +78,8 @@
         <br>
         
         <div class="form-group">
-          <label for="tempat">{{form.tempat.label}} :</label>
-          {{ form.tempat | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:tempat'}}
+          <label for="id_tempat">{{form.id_tempat.label}} :</label>
+          {{ form.id_tempat | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
         </div>
 
         <div class="form-group">
@@ -92,7 +87,7 @@
           {{ form.keterangan| add_class:'form-control'}}
         </div>
         {{ form.user_updated}}
-        <button type="submit" class="btn btn-primary">Tambah</button>
+        <button type="submit" class="btn btn-primary">Update</button>
         <a class="btn btn-secondary" href="{% url 'inventory:manage' %}">Batalkan</a>
         </form>
     </div>

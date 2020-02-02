@@ -3,8 +3,6 @@ $(document).ready(function() {
     var table = $('#datatables3').DataTable( {
         displayLength: 10,
         lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
-        scrollX: true,
-        scrollY: false,
     } );
  
     table.buttons().container()

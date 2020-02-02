@@ -78,6 +78,7 @@ class ReportsPersediaanView(LoginRequiredMixin, ListView):
             "11": "November", "12": "Desember",
         }
         lastday = calendar.monthrange(int(get_tahun), int(get_bulan))[1]
+        #total = self.model.objects.values_list('id_satker', 'nama')
         self.kwargs.update({
             'satker': satker_obj.nama,
             'date_report': str(lastday) + ' ' + dict[get_bulan].upper() + ' ' + get_tahun,

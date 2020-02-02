@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block page_title %}
+	Update {{ruang.id_ruang}} - {{ruang.nama}}
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="main-screen">
+  <div class="col-lg-8 centered mb-4 col-centered">
+    <div class="bg-white p-5 rounded shadow h-100">
+      <h4 class="jd1">UPDATE DATA - {{ruang.id_ruang}}</h4>
+      <hr align="left" width="350" />
+      <form method='POST'>
+        {% csrf_token %}
+       
+        <div class="form-group">
+          <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+         {{ form.nama| add_class:'form-control'}}   
+        </div>
+        <br>
+
+        <label for="id_satker">{{form.id_satker.label}} :</label>
+        <div class="form-group border rounded">
+         {{ form.id_satker | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_satker'}}
+        </div>
+        <br>
+        {{ form.user_updated}}
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a class="btn btn-secondary" href="{% url 'inventory:manage' %}">Batalkan</a>
+        </form>
+    </div>
+  </div>
+
+</div>
+
+{% endblock contents1 %}

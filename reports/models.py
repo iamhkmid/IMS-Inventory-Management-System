@@ -32,13 +32,16 @@ def auto_id():
 class Mutasi(models.Model):
     id_mutasi       = models.CharField(
         max_length=13, default=auto_id, primary_key=True, editable=False)
-    id_barang       = models.ForeignKey(Barang, on_delete=models.CASCADE)
-    jenis           = models.CharField(max_length=15)
+    id_barang       = models.CharField(max_length=10)
+    nama_barang     = models.CharField(max_length=30)
     id_satker       = models.ForeignKey(Satker, on_delete=models.CASCADE)
     tgl_mutasi      = models.DateTimeField()
     #tgl_kembali = models.DateTimeField(null=True, blank=True)
     #pengguna = models.ForeignKey(Pengguna, on_delete=models.CASCADE)
-    jumlah          = models.PositiveIntegerField()
+    nilai_barang    = models.PositiveIntegerField()
+    jumlah_awal  = models.PositiveIntegerField()
+    masuk           = models.PositiveIntegerField()
+    keluar          = models.PositiveIntegerField()
     #keterangan = models.TextField(blank=True)
     user_updated    = models.CharField(max_length=35, blank=True)
     updated         = models.DateTimeField(auto_now=True)
@@ -53,4 +56,4 @@ class Mutasi(models.Model):
         return reverse('inventory:detail', kwargs=url_slug)
 
     def __str__(self):
-        return "{} - {}".format(self.id_mutasi, self.id_barang.nama)
+        return "{} - {}".format(self.id_mutasi, self.nama_barang)

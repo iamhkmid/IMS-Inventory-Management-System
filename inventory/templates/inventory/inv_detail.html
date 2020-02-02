@@ -22,6 +22,7 @@
                         <td>&emsp;Nama</td>
                         <td>&emsp;{{barang.nama}}&emsp;</td>
                     </tr>
+                    <tr>
                         <td>&emsp;Jenis</td>
                         <td>&emsp;{{barang.jenis}}&emsp;</td>
                     </tr>
@@ -58,7 +59,7 @@
             <p><small>-- Update Terakhir --<br>
             User&emsp;: {{barang.user_updated}}<br>
             Waktu : {{barang.updated}}</small></p>
-            <hr align="left" width="350" />
+             <a class="btn btn-sm btn-secondary" href="{% url 'inventory:manage' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
         </div>
       </div>
 </div>
