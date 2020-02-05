@@ -12,6 +12,13 @@
     <div class="bg-white p-5 rounded shadow h-100">
       <h4 class="jd1">FORM PEMINJAMAN</h4>
       <hr align="left" width="350" />
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
       <form method='POST'>
         {% csrf_token %}
         
@@ -29,21 +36,20 @@
 
         <label for="{{form.tgl_pengambilan.id_for_label}}">{{form.tgl_pengambilan.label}} :</label>
         <div class="form-group">
-          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-            {{ form.tgl_pengambilan | add_class:'form-control datepicker datetimepicker-input' }}
-            <div class="input-group-append" data-target=".datepicker" data-toggle="datetimepicker">
-              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          <div class="input-group date" id="datepicker4" data-target-input="nearest">
+            {{ form.tgl_pengambilan | add_class:'form-control datetimepicker-input'}}
+            <div class="input-group-append" data-target="#datepicker4" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
           </div>
         </div>
-        <br>
 
         <label for="{{form.tgl_kembali.id_for_label}}">{{form.tgl_kembali.label}} (Optional) :</label>
         <div class="form-group">
-          <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-            {{ form.tgl_kembali | add_class:'form-control datepicker2 datetimepicker-input' }}
-            <div class="input-group-append" data-target=".datepicker2" data-toggle="datetimepicker">
-              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          <div class="input-group date" id="datepicker5" data-target-input="nearest">
+            {{ form.tgl_kembali | add_class:'form-control datetimepicker-input'}}
+            <div class="input-group-append" data-target="#datepicker5" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
           </div>
         </div>

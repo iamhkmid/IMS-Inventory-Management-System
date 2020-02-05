@@ -1,7 +1,7 @@
 @media print
 {
 .noprint {display:none;}
-.table thead tr th,.table tbody tr td{
+.table thead tr th,.table tbody tr td,.table tfoot tr th{
     border-width: 1px !important;
     border-style: solid !important;
     border-color: black !important;
@@ -10,6 +10,7 @@
     padding:10px;
     -webkit-print-color-adjust:exact ;
 }
+
 
 @page {
       size: landscape; /* DIN A4 standard, Europe */

@@ -7,9 +7,9 @@ class PeminjamanForm(ModelForm):
     transaksi = forms.CharField(
         widget=forms.HiddenInput(), initial="Peminjaman")
     tgl_pengambilan = forms.DateTimeField(widget=forms.DateTimeInput(
-        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
+        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS', 'data-target':'#datepicker4'}), required=True)
     tgl_kembali = forms.DateTimeField(widget=forms.DateTimeInput(
-        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=False)
+        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS', 'data-target':'#datepicker5'}), required=False)
     keterangan = forms.CharField(widget=forms.Textarea(), required=False)
     user_updated	= forms.CharField(widget=forms.HiddenInput(),required=False)
 
@@ -31,7 +31,7 @@ class HabispakaiForm(ModelForm):
     transaksi = forms.CharField(
         widget=forms.HiddenInput(), initial="Persediaan")
     tgl_pengambilan = forms.DateTimeField(widget=forms.DateTimeInput(
-        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
+        attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS', 'data-target':'#datepicker4'}), required=True)
     keterangan = forms.CharField(widget=forms.Textarea(), required=False)
     user_updated	= forms.CharField(widget=forms.HiddenInput(),required=False)
 

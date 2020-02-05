@@ -3,6 +3,10 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+import barcode
+from barcode.writer import ImageWriter
+from barcode import generate
+import os
 # Create your models here.
 
 
@@ -77,6 +81,12 @@ def auto_id_barang():
                 id_b = formated
     return formated
 
+def auto_barcode():
+    EAN = barcode.get_barcode_class('ean8')
+    ean = EAN(auto_id_barang(), writer=ImageWriter())
+    fullname = ean.save(os.path.join('static/media/barcodes/' + auto_id_barang()))
+    loc = "media/barcodes/" + auto_id_barang() + ".png"
+    return loc
 
 class Satker(models.Model):
     id_satker       = models.CharField(
@@ -87,7 +97,7 @@ class Satker(models.Model):
     slug            = models.SlugField(blank=True, editable=False)
 
     def save(self):
-        self.slug = slugify(self.nama)
+        self.slug = slugify(self.id_satker)
         super().save()
 
     def get_absolute_url(self):
@@ -108,7 +118,7 @@ class Ruang(models.Model):
     slug            = models.SlugField(blank=True, editable=False)
 
     def save(self):
-        self.slug = slugify(self.nama)
+        self.slug = slugify(self.id_ruang)
         super().save()
 
     def get_absolute_url(self):
@@ -129,7 +139,7 @@ class Tempat(models.Model):
     slug            = models.SlugField(blank=True, editable=False)
 
     def save(self):
-        self.slug = slugify(self.nama)
+        self.slug = slugify(self.id_tempat)
         super().save()
 
     def get_absolute_url(self):
@@ -151,6 +161,7 @@ class Barang(models.Model):
     tgl_pengadaan   = models.DateTimeField()
     id_tempat       = models.ForeignKey(Tempat, on_delete=models.CASCADE)
     keterangan      = models.TextField(blank=True)
+    barcode         = models.CharField(max_length=40, default=auto_barcode,  blank=True)
     user_updated    = models.CharField(max_length=35, blank=True)
     updated         = models.DateTimeField(auto_now=True)
     slug            = models.SlugField(blank=True, editable=False)

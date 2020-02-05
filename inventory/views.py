@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView, TemplateView
-from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView, TemplateView, RedirectView
+from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Barang, Tempat, Ruang, Satker, auto_id_barang
@@ -11,6 +11,21 @@ from reports.models import Mutasi
 from django.utils.dateparse import parse_datetime
 from django.conf import settings
 import pytz
+import barcode
+from barcode.writer import ImageWriter
+from barcode import generate
+import os
+
+
+class BarcodeView(RedirectView):
+    pattern_name = 'detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        barang_obj = Barang.objects.get(id_barang=self.kwargs['pk'])
+        EAN = barcode.get_barcode_class('ean8')
+        ean = EAN(self.kwargs['pk'], writer=ImageWriter())
+        fullname = ean.save(os.path.join('static/media/barcodes/' + self.kwargs['pk']))
+        return reverse_lazy('inventory:detail', kwargs={'slug': barang_obj.slug})
 
 
 def user_updated(self):
@@ -31,48 +46,47 @@ class InvManageView(LoginRequiredMixin, ListView):
 class InvAddView(LoginRequiredMixin, CreateView):
     form_class = BarangForm
     template_name = "inventory/inv_add.html"
-    
+
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             parse_tgl = parse_datetime(request.POST['tgl_pengadaan'])
-            get_tgl = parse_tgl.replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
-            #cek bulan dan tahun
+            get_tgl = parse_tgl.replace(
+                tzinfo=pytz.timezone(settings.TIME_ZONE))
+            # cek bulan dan tahun
             if get_tgl.month == datetime.now().month:
                 try:
                     nama_b = request.POST.get('nama')
                     barang_obj = Barang.objects.get(nama=nama_b)
                 except Exception as err:
-                    #jika nama barang blm ada
+                    # jika nama barang blm ada
                     return super().post(request, *args, **kwargs)
-                #jika nama sudah ada
+                # jika nama sudah ada
                 messages.warning(request, 'Nama Barang Sudah Ada !')
-            #jika bulan dan tahun tidak sama
+            # jika bulan dan tahun tidak sama
             else:
                 messages.warning(request, 'Penambahan harus pada bulan ini !')
         return redirect('inventory:add')
-
-    def form_valid(self, form):
-        # fill user_updated
-        form.instance.user_updated = user_updated(self)
-        self.object = form.save()
-        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         # add Mutasi obj
         tempat_obj = Tempat.objects.get(
             id_tempat=self.object.id_tempat.id_tempat)
         mutasi_obj = Mutasi(
-            id_barang = self.object.id_barang,
-            nama_barang = self.object.nama,
-            id_satker = tempat_obj.id_ruang.id_satker,
-            tgl_mutasi = self.object.tgl_pengadaan,
-            nilai_barang = self.object.nilai_barang,
-            jumlah_awal = 0,
-            masuk = self.object.jumlah,
-            keluar = 0,
-            user_updated = user_updated(self),
+            id_barang=self.object.id_barang,
+            nama_barang=self.object.nama,
+            id_satker=tempat_obj.id_ruang.id_satker,
+            tgl_mutasi=self.object.tgl_pengadaan,
+            nilai_barang=self.object.nilai_barang,
+            jumlah_awal=0,
+            masuk=self.object.jumlah,
+            keluar=0,
+            user_updated=user_updated(self),
         )
         mutasi_obj.save()
+        # save user_updated
+        barang_obj = Barang.objects.get(id_barang=self.object.id_barang)
+        barang_obj.user_updated = user_updated(self)
+        barang_obj.save()
         success_url = reverse_lazy('inventory:detail', kwargs={
                                    'slug': self.object.id_barang})
         return success_url
@@ -83,9 +97,13 @@ class InvUpdateView(UpdateView):
     model = Barang
     template_name = "inventory/inv_update.html"
 
-    def form_valid(self, form):
-        form.instance.user_updated = user_updated(self)
-        return super().form_valid(form)
+    def get_success_url(self):
+        barang_obj = Barang.objects.get(id_barang=self.object.id_barang)
+        barang_obj.user_updated = user_updated(self)
+        barang_obj.save()
+        success_url = reverse_lazy('inventory:detail', kwargs={
+                                   'slug': self.object.id_barang})
+        return success_url
 
 
 class InvDeleteView(LoginRequiredMixin, DeleteView):
@@ -107,21 +125,24 @@ class InvAddExisting(TemplateView):
         if request.method == "POST":
             id_barang = request.POST['id_barang']
             barang_obj = Barang.objects.get(id_barang=id_barang)
-            
+
             jumlah = request.POST['jumlah']
             tgl = request.POST['tgl_pengadaan']
             parse_tgl = parse_datetime(request.POST['tgl_pengadaan'])
-            get_tgl = parse_tgl.replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
+            get_tgl = parse_tgl.replace(
+                tzinfo=pytz.timezone(settings.TIME_ZONE))
             get_bulan = tgl[5:7]
             get_tahun = tgl[0:4]
             # cek tgl penambahan
             if get_tgl.month == datetime.now().month:
                 try:
-                    #filter bulan dan tahun
-                    mutasi_filter = Mutasi.objects.filter(id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tahun, tgl_mutasi__month=get_bulan)
-                    mutasi_obj = mutasi_filter.get(id_barang=barang_obj.id_barang)
+                    # filter bulan dan tahun
+                    mutasi_filter = Mutasi.objects.filter(
+                        id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tahun, tgl_mutasi__month=get_bulan)
+                    mutasi_obj = mutasi_filter.get(
+                        id_barang=barang_obj.id_barang)
                     if mutasi_obj.id_barang == barang_obj.id_barang:
-                        #update Barang obj
+                        # update Barang obj
                         barang_obj.jumlah = barang_obj.jumlah + int(jumlah)
                         barang_obj.user_updated = user_updated(self)
                         barang_obj.save()
@@ -130,34 +151,35 @@ class InvAddExisting(TemplateView):
                         mutasi_obj.masuk = mutasi_obj.masuk + int(jumlah)
                         mutasi_obj.tgl_mutasi = get_tgl
                         mutasi_obj.save()
-                        #jika ditemukan mutasi pada bulan dan tahun yang sama
+                        # jika ditemukan mutasi pada bulan dan tahun yang sama
                         return redirect('inventory:detail', id_barang)
-                    
+
                 except Exception as err:
-                    #update Barang obj
+                    # update Barang obj
                     barang_obj.jumlah = barang_obj.jumlah + int(jumlah)
                     barang_obj.updated = datetime.now()
                     barang_obj.user_updated = user_updated(self)
                     barang_obj.save()
-                    #create Mutasi obj
-                    tempat_obj = Tempat.objects.get(id_tempat=barang_obj.id_tempat.id_tempat)
+                    # create Mutasi obj
+                    tempat_obj = Tempat.objects.get(
+                        id_tempat=barang_obj.id_tempat.id_tempat)
                     mutasi_obj = Mutasi(
-                        id_barang = barang_obj.id_barang,
-                        nama_barang = barang_obj.nama,
-                        id_satker = tempat_obj.id_ruang.id_satker,
-                        tgl_mutasi = get_tgl,
-                        nilai_barang = barang_obj.nilai_barang,
-                        jumlah_awal = barang_obj.jumlah - int(jumlah),
-                        masuk = jumlah,
-                        keluar = 0,
-                        user_updated = user_updated(self),
+                        id_barang=barang_obj.id_barang,
+                        nama_barang=barang_obj.nama,
+                        id_satker=tempat_obj.id_ruang.id_satker,
+                        tgl_mutasi=get_tgl,
+                        nilai_barang=barang_obj.nilai_barang,
+                        jumlah_awal=barang_obj.jumlah - int(jumlah),
+                        masuk=jumlah,
+                        keluar=0,
+                        user_updated=user_updated(self),
                     )
                     mutasi_obj.save()
                     return redirect('inventory:detail', id_barang)
             else:
                 messages.warning(request, 'Penambahan harus pada bulan ini !')
-            
-        return self.render_to_response(context)
+
+        return redirect('inventory:add_existing_good')
 
     def get_context_data(self, **kwargs):
         barang_list = Barang.objects.values_list('id_barang', 'nama')
@@ -167,13 +189,12 @@ class InvAddExisting(TemplateView):
         return context
 
 
-
-
 class TempatListView(LoginRequiredMixin, ListView):
     model = Tempat
     template_name = "tempat/tempat_list.html"
     context_object_name = 'tempat_list'
     ordering = ['id_tempat']
+
 
 class TempatAddView(LoginRequiredMixin, CreateView):
     form_class = TempatForm
@@ -191,7 +212,7 @@ class TempatDetailView(LoginRequiredMixin, DetailView):
     template_name = "tempat/tempat_detail.html"
     context_object_name = 'tempat'
 
-    
+
 class TempatUpdateView(UpdateView):
     form_class = TempatForm
     model = Tempat
@@ -224,6 +245,7 @@ class RuangListView(LoginRequiredMixin, ListView):
     context_object_name = 'ruang_list'
     ordering = ['id_ruang']
 
+
 class RuangAddView(LoginRequiredMixin, CreateView):
     form_class = RuangForm
     template_name = "tempat/ruang_add.html"
@@ -240,7 +262,7 @@ class RuangDetailView(LoginRequiredMixin, DetailView):
     template_name = "tempat/ruang_detail.html"
     context_object_name = 'ruang'
 
-    
+
 class RuangUpdateView(UpdateView):
     form_class = RuangForm
     model = Ruang
@@ -290,7 +312,7 @@ class SatkerDetailView(LoginRequiredMixin, DetailView):
     template_name = "tempat/satker_detail.html"
     context_object_name = 'satker'
 
-    
+
 class SatkerUpdateView(UpdateView):
     form_class = SatkerForm
     model = Satker

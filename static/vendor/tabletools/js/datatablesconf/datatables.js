@@ -1,10 +1,7 @@
 $(document).ready(function() {
   
     var table = $('#datatables').DataTable( {
-        displayLength: 10,
-        lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
-        pagingType: "full_numbers",
-        buttons: [ 'copy', 'csv', 'excel', 'pdf', 'print' ]
+        buttons: [ 'copy', 'excel', 'pdf', 'print','colvis' ],
     } );
  
     table.buttons().container()

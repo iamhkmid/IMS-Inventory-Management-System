@@ -72,17 +72,33 @@ class ReportsPersediaanView(LoginRequiredMixin, ListView):
         get_bulan = get_tgl[5:7]
         get_tahun = get_tgl[0:4]
         get_transaksi = self.request.session['transaksi']
+        mutasi_list = self.model.objects.filter(
+            tgl_mutasi__year=get_tahun, tgl_mutasi__month=get_bulan, id_satker=get_satker).values('jumlah_awal', 'masuk', 'keluar', 'nilai_barang')
+        jumlah_awal = 0
+        masuk = 0
+        keluar = 0
+        nilai_barang = 0
+        total = 0
+        for item in mutasi_list:
+            jumlah_awal = item['jumlah_awal']
+            masuk = item['masuk']
+            keluar = item['keluar']
+            nilai_barang = item['nilai_barang']
+            total = total + ((jumlah_awal + masuk - keluar) * nilai_barang)
+        
+        
         dict = {
             "01": "Januari", "02": "Februari", "03": "Maret", "04": "April", "05": "Mei",
             "06": "Juni", "07": "Juli", "08": "Agustus", "09": "September", "10": "Oktober",
             "11": "November", "12": "Desember",
         }
         lastday = calendar.monthrange(int(get_tahun), int(get_bulan))[1]
-        #total = self.model.objects.values_list('id_satker', 'nama')
+        
         self.kwargs.update({
             'satker': satker_obj.nama,
             'date_report': str(lastday) + ' ' + dict[get_bulan].upper() + ' ' + get_tahun,
             'transaksi': get_transaksi,
+            'total_nilai': total,
         })
         kwargs = self.kwargs
         context = super().get_context_data(**kwargs)

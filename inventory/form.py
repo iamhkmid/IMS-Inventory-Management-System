@@ -31,7 +31,6 @@ class BarangForm(ModelForm):
 			'tgl_pengadaan',
 			'id_tempat',
 			'keterangan',
-			'user_updated'
 		]
 
 

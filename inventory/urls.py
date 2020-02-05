@@ -30,4 +30,7 @@ urlpatterns = [
      path('satker-detail/<slug>', SatkerDetailView.as_view(), name="satker_detail"),
      path('satker-update/<pk>', SatkerUpdateView.as_view(), name="satker_update"),
      path('satker-del/<pk>', SatkerDeleteView.as_view(), name="satker_del"),
+
+
+     path('reload-barcode/<pk>', BarcodeView.as_view(), name="reload_bc"),
 ]

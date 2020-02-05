@@ -1,6 +1,7 @@
 {% load static %}
 {% load multiply %}
 {% load total %}
+{% load jumlah %}
 {% load humanize %}
 {% load i18n %}
 {% load l10n %}
@@ -34,39 +35,45 @@
                         <th class="text-center align-middle" rowspan="2">Kode</th>
                         <th class="text-center align-middle" rowspan="2">Nama Barang</th>
                         <th class="text-center align-middle" rowspan="2">Tgl Mutasi</th>
-                        <th class="text-center align-middle" colspan="2" text-align="center">Mutasi</th>
-                        <th class="text-center align-middle" rowspan="2">Nilai Barang</th>
-                        <th class="text-center align-middle" rowspan="2">Total</th>
+                        <th class="text-center align-middle" rowspan="2">Jml Awal</th>
+                        <th class="text-center align-middle" colspan="3" text-align="center">Mutasi</th>
+                        <th class="text-center align-middle" rowspan="2">Nilai</th>
+                        <th class="text-center align-middle" colspan="2" text-align="center">Nilai Total</th>
                     </tr>
                     <tr>
                         <th class="text-center align-middle">Masuk</th>
-                        <th class="text-center align-middle"> Keluar</th>
+                        <th class="text-center align-middle">Keluar</th>
+                        <th class="text-center align-middle">Jumlah</th>
+
+                        <th class="text-center align-middle">Jumlah</th>
+                        <th class="text-center align-middle">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for item in mutasi_list %}
                     <tr>
                         <td class="text-right" >{{ item.id_mutasi }}</td>
-                        <td class="text-left" >{{ item.id_barang.nama }}</td>
+                        <td class="text-left" >{{ item.nama_barang }}</td>
                         <td class="text-right" >{{ item.tgl_mutasi }}</td>
-                        {% if item.jenis == "Masuk" %}
-                        <td class="text-right" >{{ item.jumlah }}</td>
-                        <td class="text-right" >0</td>
-                        {% elif item.jenis == "Keluar" %}
-                        <td class="text-right" >0</td>
-                        <td class="text-right" >{{ item.jumlah }}</td>
-                        {% endif %}
-                        <td class="text-right" >{{ item.id_barang.nilai_barang|intcomma }}</td>
                         {% language 'id' %}
-                        <td class="text-right" >{% multiply item.jumlah item.id_barang.nilai_barang %}</td>
-                    {% endlanguage %}
+                        <td class="text-right" >{{ item.jumlah_awal }}</td>
+                        <td class="text-right" >{{ item.masuk }}</td>
+                        <td class="text-right" >{{ item.keluar }}</td>
+                        <td class="text-right" >{% jumlah item.masuk item.keluar %}</td>
+                        <td class="text-right" >{{ item.nilai_barang|intcomma }}</td>
+                        <td class="text-right" >{% total_jumlah item.jumlah_awal item.masuk item.keluar %}</td>
+                        
+                        <td class="text-right" >{% total_nilai item.jumlah_awal item.masuk item.keluar item.nilai_barang %}</td>
+                        {% endlanguage %}
                     </tr>
                 {% endfor %}
                 </tbody>
                 <tfoot>
                  <tr>
-                    <th class="text-center align-middle" colspan="3" text-align="center">Total</th>
-                    <th class="text-right align-middle" colspan="4"></th>
+                    {% language 'id' %}
+                    <th class="text-center align-middle" colspan="4" text-align="center">Total</th>
+                    <th class="text-right align-middle" colspan="6">{{total_nilai |intcomma}}</th>
+                    {% endlanguage %}
                   </tr>
                 </tfoot>
           </table>

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView, RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -26,4 +28,4 @@ urlpatterns = [
     path('report/', include('reports.urls', namespace='report')),
     path('', RedirectView.as_view(pattern_name='inventory:manage')),
     path('test/',TemplateView.as_view(template_name='test.html')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

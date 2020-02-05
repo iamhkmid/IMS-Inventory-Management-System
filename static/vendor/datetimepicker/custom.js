@@ -2,19 +2,26 @@ function setDatePicker(){
 $(".datepicker").datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     sideBySide: true,
+    horizontal: 'right',
 })
 $(".datepicker2").datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     sideBySide: true,
+    horizontal: 'right',
 })
 }
 $('#datepicker3').datetimepicker({
     viewMode: 'years',
     format: 'YYYY-MM',
-    sideBySide: true,
 });
 
 $('#datepicker4').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss.SSS',
+    vertical: 'bottom',
+    sideBySide: true,
+    horizontal: 'right',
+});
+$('#datepicker5').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     vertical: 'bottom',
     sideBySide: true,
