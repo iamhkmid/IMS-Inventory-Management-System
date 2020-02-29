@@ -29,7 +29,7 @@
         <br>
         {{ form.user_updated}}
         <button type="submit" class="btn btn-primary">Tambah</button>
-        <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
+        <a class="btn btn-secondary" href="{% url 'inventory:satker_list' %}">Batalkan</a>
         </form>
     </div>
   </div>

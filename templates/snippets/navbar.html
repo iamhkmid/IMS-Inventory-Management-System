@@ -10,14 +10,9 @@
                      <p class="card-text">{{user.get_full_name}}<br><small>login at : {{user.last_login}}</small><br></p>
                 </li>
                 <li class="nav-item nav-btn-set">
-                    <a href="" class="btn ink-reaction btn-floating-action btn-secondary"><i class="fa fa-cog"></i> </a>
+                  <div class="verticalLine"> <a class="btn ink-reaction btn-floating-action btn-dark" href="{% url 'users:logout' %}">Logout</a> 
+                  </div>
                 </li>
-                <li class="nav-item nav-logout">
-                    <div class="verticalLine">
-                        <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
-                    </div>
-                </li>
-                
             </ul>
         </div>
     </div>
@@ -59,6 +54,8 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'reports:mutasi' %}"><h7 class="txt2"><i class="fa fa-angle-double-right"></i> Mutasi List</h7></a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'inventory:kategori_list' %}"><h7 class="txt2"><i class="fa fa-angle-double-right"></i> Manage Kategori</h7></a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'inventory:satker_list' %}"><i class="fa fa-angle-double-right"></i> Manage Satker</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'inventory:ruang_list' %}"><i class="fa fa-angle-double-right"></i> Manage Ruang</a>
@@ -68,7 +65,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'report:choose' %}"><i class="fa fa-print"></i> Reports</a>
+        <a class="nav-link" href="{% url 'report:ReportForm' "report" %}"><i class="fa fa-print"></i> Reports</a>
       </li>
       
     </ul>

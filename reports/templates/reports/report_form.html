@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block page_title %}
+	Report Form
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="row justify-content-center">
+  <div class="col-lg-2 ">
+    <div class="bg-white rounded shadow">
+      <h5 class=" pt-2 pl-2 jd1">Report Type</h5>
+      <hr align="left" width="auto" />
+        <div class="row">
+          <div class="col-sm">
+            {% for item in type_list %}
+            <ul class="list-group list-group-flush">
+                {% if type == item %}
+                <a href="{% url 'report:ReportForm' item %}" class="list-group-item list-group-item-action active">
+                    {{item}}
+                </a>
+                {% else %}
+                <a href="{% url 'report:ReportForm' item %}" class="list-group-item list-group-item-action">{{item}}</a>
+                {% endif %}
+            </ul>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+  </div>
+  {% if type == "Inventaris" %}
+  {% include "reports/form_inventaris.html" %}
+  {% elif type == "Peminjaman" %}
+  {% include "reports/form_peminjaman.html" %}
+  {% elif type == "Persediaan" %}
+  {% include "reports/form_persediaan.html" %}
+  {% else %}
+  {% include "reports/form_blank.html" %}
+  {% endif %}
+ </div>
+{% endblock contents1 %}

@@ -34,6 +34,7 @@ class Mutasi(models.Model):
         max_length=13, default=auto_id, primary_key=True, editable=False)
     id_barang       = models.CharField(max_length=10)
     nama_barang     = models.CharField(max_length=30)
+    kategori        = models.CharField(max_length=30)
     id_satker       = models.ForeignKey(Satker, on_delete=models.CASCADE)
     tgl_mutasi      = models.DateTimeField()
     #tgl_kembali = models.DateTimeField(null=True, blank=True)

@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>
-      Laporan {{transaksi}} - {{satker}} - {{date_report}}
+      Laporan {{report_type}} - {{get_satker}} - {{date_report}}
     </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
@@ -12,18 +12,21 @@
   <body>
     <br>
     <div class="col-lg-10 mb-4 col-centered">
-      <div class="bg-white p-5 rounded">
-        <h5 class="txt1" align="center">LAPORAN RINCIAN PEMINJAMAN BARANG</h5>
-        <h6 class="txt2" align="center">UNTUK TANGGAL 1 - {{date_report}}</h6>
-        <h5 ></h5>
+      <div class="bg-white layout-print rounded">
+        <div align="center">
+        <div style="display: inline-block; text-align: left;">
+          <h5 class="txt1" >LAPORAN RINCIAN PEMINJAMAN BARANG</h5>
+          <h6 class="txt2" >PADA SATKER&emsp;&emsp;: {{get_satker}}</h6>
+          <h6 class="txt2" >KEADAAN PADA&emsp;: {{date_report}}</h6>
+        </div>
+        </div>
         <hr align="center" width="auto" />
           <div class="noprint">
           <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
-          <a class="btn btn-secondary" href="{% url 'reports:choose' %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+          <a class="btn btn-secondary" href="{% url 'reports:ReportForm' report_type %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
           <hr align="left" width="350" /><br>
           </div>
-        <h7 class="txt3" align="center">SATKER : {{satker}}</h7>
-          <table class="table table-striped table-bordered" style="width:100%">
+          <table class="table table-bordered" style="width:100%">
                 <thead >
                     <tr>
                         <th>No</th>
@@ -38,7 +41,7 @@
                 </thead>
                 <tbody>
                 {% for trans in transaksi_list %}
-                    <tr>
+                    <tr class="WithBorder">
                         <td>{{forloop.counter}}</td>
                         <td>{{ trans.id_transaksi }}</td>
                         <td>{{ trans.id_barang.nama }}</td>

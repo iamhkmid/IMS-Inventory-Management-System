@@ -30,6 +30,7 @@
                     <th>Pengguna</th>
                     <th>Tgl Pengambilan</th>
                     <th>Tgl Kembali</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,16 +41,25 @@
                     <td>{{ trans.id_transaksi }}</td>
                     <td>{{ trans.id_barang.nama }}</td>
                     <td>{{ trans.transaksi }}</td>
-                    <td>{{ trans.jumlah }}</td>
+                    <td align="right">{{ trans.jumlah }}</td>
                     <td>{{ trans.pengguna }}</td>
-                    <td>{{ trans.tgl_pengambilan }}</td>
+                    <td>{{ trans.tgl_pengambilan|date:"d M. Y" }}</td>
+                    {% if trans.transaksi == "Peminjaman" %}
+                        {% if trans.tgl_kembali == None %}
+                            <td> - </td>
+                        {% else %}
+                            <td>{{ trans.tgl_kembali|date:"d M. Y" }}</td>
+                        {% endif %}
+                    {% elif trans.transaksi == "Persediaan" %}    
+                        <td> - </td>
+                    {% endif %}
                     {% if trans.transaksi == "Peminjaman" %}
                         {% if trans.tgl_kembali == None %}
                             <td><span class="badge badge-danger">Belum Kembali</span></td>
                         {% else %}
-                            <td>{{ trans.tgl_kembali }} <span class="badge badge-success">Kembali</span></td>
+                            <td><span class="badge badge-success">Kembali</span></td>
                         {% endif %}
-                    {% elif trans.tgl_kembali == None %}
+                    {% elif trans.transaksi == "Persediaan" %}
                         <td><span class="badge badge-secondary">Habis Pakai</span></td>
                     {% endif %}
                     <td align="center">

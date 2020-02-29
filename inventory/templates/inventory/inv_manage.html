@@ -27,7 +27,6 @@
                     <th>Jenis</th>
                     <th>Jumlah</th>
                     <th>Nilai Barang</th>
-                    <th>Satker</th>
                     <th>Tgl Pengadaan</th>
                     <th></th>
                 </tr>
@@ -39,16 +38,26 @@
                     <td>{{ barang.id_barang }}</td>
                     <td>{{ barang.nama }}</td>
                     <td>{{ barang.jenis }}</td>
-                    <td>{{ barang.jumlah }}</td>
+                    <td class="text-right">{{ barang.jumlah }}</td>
                     {% language 'id' %}
-                    <td>Rp.{{ barang.nilai_barang|floatformat:2|intcomma }}</td>
+                    <td class="text-right">{{ barang.nilai_barang|intcomma }}</td>
                     {% endlanguage %}
-                    <td>{{ barang.id_tempat.id_ruang.id_satker.nama }}</td>
-                    <td>{{ barang.tgl_pengadaan }}</td>
+                    <td>{{ barang.tgl_pengadaan|date:"d M. Y" }}</td>
                     <td align="center">
-                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:detail' barang.slug %}" title="[Detail] - {{barang.nama}}"><i class="fa fa-info-circle"></i></a>
+                    {% if barang.in_transaction is True %}
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:detail' barang.slug %}" title="[Detail] - {{barang.nama}}"><i class="fa fa-info-circle"></i> Detail</a>
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary disabled" title="[Update] - {{barang.nama}}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary disabled" title="[Delete] - {{barang.nama}}"><i class="fa fa-trash"></i></a>
+                    {% elif barang.is_past_due %}
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:detail' barang.slug %}" title="[Detail] - {{barang.nama}}"><i class="fa fa-info-circle"></i> Detail</a>
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary disabled" title="[Update] - {{barang.nama}}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary disabled" title="[Delete] - {{barang.nama}}"><i class="fa fa-trash"></i></a>
+                    {% else %}
+                        <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:detail' barang.slug %}" title="[Detail] - {{barang.nama}}"><i class="fa fa-info-circle"></i> Detail</a>
                         <a class="btn btn-sm ink-reaction btn-floating-action btn-secondary" href="{% url 'inventory:update' barang.id_barang %}" title="[Update] - {{barang.nama}}"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-sm ink-reaction btn-floating-action btn-danger" href="{% url 'inventory:delete' barang.id_barang %}" title="[Delete] - {{barang.nama}}"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                       
                     </td>
                 </tr>
             {% endfor %}
@@ -56,4 +65,6 @@
         </table>
     </div>
 </div>
+
+
 {% endblock contents1 %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block page_title %}
+	Tambah Barang
+{% endblock page_title %}
+
+
+{% block contents1 %}
+  <div class="col-lg-7 centered mb-4 col-centered">
+    <div class="bg-white p-5 rounded shadow h-100">
+        <h4 class="jd1">UPDATE KONDISI BARANG - ({{barang.id_barang}})</h4>
+        <hr align="left" width="auto" />
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+         <table class="table table-sm table-bordered" style="width:100%">
+            <tbody>
+                <tr>
+                    <td class="bg-secondary text-white">&emsp;Jumlah Barang : {{barang.jumlah}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form method='POST'>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm">
+                <label for="{{form.jumlah_b.id_for_label}}">Baik :</label>
+                <div class="form-group">
+                    <div class="input-group date" data-target-input="nearest">
+                        {{ form.jumlah_b| add_class:'form-control'}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="{{form.jumlah_rr.id_for_label}}">Rusak Ringan :</label>
+                <div class="form-group">
+                    <div class="input-group date" data-target-input="nearest">
+                        {{ form.jumlah_rr| add_class:'form-control'}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="{{form.jumlah_rb.id_for_label}}">Rusak Berat:</label>
+                <div class="form-group">
+                    <div class="input-group date" data-target-input="nearest">
+                        {{ form.jumlah_rb| add_class:'form-control'}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="{{form.jumlah_hl.id_for_label}}">Hilang :</label>
+                <div class="form-group">
+                    <div class="input-group date" data-target-input="nearest">
+                        {{ form.jumlah_hl| add_class:'form-control'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr align="left" width="auto" />
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
+        </form>
+    </div>
+  </div>
+
+
+{% endblock contents1 %}

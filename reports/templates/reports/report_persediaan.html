@@ -9,7 +9,7 @@
 <html>
   <head>
     <title>
-      Laporan {{transaksi}} - {{satker}} - {{date_report}}
+      Laporan {{report_type}} - {{satker}} - {{date_report}}
     </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
@@ -18,54 +18,66 @@
   <body>
     <br>
     <div class="col-lg-10 mb-4 col-centered">
-      <div class="bg-white p-5 rounded">
+      <div class="bg-white layout-print rounded ">
         <h5 class="txt1" align="center">LAPORAN RINCIAN BARANG PERSEDIAAN</h5>
-        <h6 class="txt2" align="center">UNTUK TANGGAL 1 - {{date_report}}</h6>
+        <h6 class="txt2" align="center">UNTUK PERIODE YANG BERAKHIR TANGGAL {{date_report}}</h6>
+        <h6 class="txt2" align="center">TAHUN ANGGARAN {{get_year}}</h6>
         <h5 ></h5>
         <hr align="center" width="auto" />
           <div class="noprint">
           <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
-          <a class="btn btn-secondary" href="{% url 'reports:choose' %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+          <a class="btn btn-secondary" href="{% url 'reports:ReportForm' report_type %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
           <hr align="left" width="350" />
           </div>
-        <h7 class="txt3" align="center">SATKER : {{satker}}</h7>
-          <table class="table table-striped table-bordered" style="width:100%">
+        <h7 class="txt3" align="center">UAPKPB &emsp;&emsp;&emsp;&emsp;: {{uapkpb}}</h7><br>
+        <h7 class="txt3" align="center">KODE UAPKPB &emsp;: {{kode_uapkpb}}</h7>
+          <table class="table table-bordered" style="width:100%">
                 <thead >
                     <tr>
-                        <th class="text-center align-middle" rowspan="2">Kode</th>
-                        <th class="text-center align-middle" rowspan="2">Nama Barang</th>
-                        <th class="text-center align-middle" rowspan="2">Tgl Mutasi</th>
-                        <th class="text-center align-middle" rowspan="2">Jml Awal</th>
-                        <th class="text-center align-middle" colspan="3" text-align="center">Mutasi</th>
-                        <th class="text-center align-middle" rowspan="2">Nilai</th>
-                        <th class="text-center align-middle" colspan="2" text-align="center">Nilai Total</th>
+                        <th class="text-center align-middle" rowspan="2">KODE</th>
+                        <th class="text-center align-middle " style="width: 30%" rowspan="2">URAIAN</th>
+                        <th class="text-center align-middle" colspan="2">NILAI<br>S/D {{date_report_min}}</th>
+                        <th class="text-center align-middle" colspan="3" text-align="center">MUTASI</th>
+                        <th class="text-center align-middle" colspan="2">NILAI<br>S/D {{date_report}}</th>
                     </tr>
                     <tr>
-                        <th class="text-center align-middle">Masuk</th>
-                        <th class="text-center align-middle">Keluar</th>
-                        <th class="text-center align-middle">Jumlah</th>
+                        <th class="text-center align-middle">JUMLAH</th>
+                        <th class="text-center align-middle">RUPIAH</th>
 
-                        <th class="text-center align-middle">Jumlah</th>
-                        <th class="text-center align-middle">Total</th>
+                        <th class="text-center align-middle">MASUK</th>
+                        <th class="text-center align-middle">KELUAR</th>
+                        <th class="text-center align-middle">JUMLAH</th>
+
+                        <th class="text-center align-middle">JUMLAH</th>
+                        <th class="text-center align-middle">RUPIAH</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for item in mutasi_list %}
-                    <tr>
-                        <td class="text-right" >{{ item.id_mutasi }}</td>
-                        <td class="text-left" >{{ item.nama_barang }}</td>
-                        <td class="text-right" >{{ item.tgl_mutasi }}</td>
-                        {% language 'id' %}
-                        <td class="text-right" >{{ item.jumlah_awal }}</td>
-                        <td class="text-right" >{{ item.masuk }}</td>
-                        <td class="text-right" >{{ item.keluar }}</td>
-                        <td class="text-right" >{% jumlah item.masuk item.keluar %}</td>
-                        <td class="text-right" >{{ item.nilai_barang|intcomma }}</td>
-                        <td class="text-right" >{% total_jumlah item.jumlah_awal item.masuk item.keluar %}</td>
-                        
-                        <td class="text-right" >{% total_nilai item.jumlah_awal item.masuk item.keluar item.nilai_barang %}</td>
-                        {% endlanguage %}
-                    </tr>
+                {% for kategori, jumlah1, jumlah2 in kategori_list %}
+                  <tr class="WithBorderGray">
+                      <td class="text-center" colspan="1"></td>
+                      <td class="text-left txt4" colspan="1">{{ kategori }}</td>
+                      <td class="text-right" colspan="2">{{jumlah1}}</td>
+                      <td class="text-center" colspan="3"></td>
+                      <td class="text-right" colspan="2">{{jumlah2}}</td>
+                  </tr>
+                  {% for item in mutasi_list %}
+                    {% if item.kategori == kategori %}
+                      <tr class="noBorder">
+                          <td class="text-right" >{{ item.id_barang }}</td>
+                          <td class="text-left" >- {{ item.nama_barang }}</td>
+                          {% language 'id' %}
+                          <td class="text-right" >{{ item.jumlah_awal }}</td>
+                          <td class="text-right" >{% total_rupiah_min item.jumlah_awal item.nilai_barang %}</td>
+                          <td class="text-right" >{{ item.masuk }}</td>
+                          <td class="text-right" >{{ item.keluar }}</td>
+                          <td class="text-right" >{% jumlah item.masuk item.keluar %}</td>
+                          <td class="text-right" >{% total_jumlah item.jumlah_awal item.masuk item.keluar %}</td>
+                          <td class="text-right" >{% total_rupiah item.jumlah_awal item.masuk item.keluar item.nilai_barang %}</td>
+                          {% endlanguage %}
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
                 {% endfor %}
                 </tbody>
                 <tfoot>

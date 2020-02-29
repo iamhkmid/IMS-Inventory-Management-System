@@ -56,6 +56,14 @@ class FormPeminjamanView(LoginRequiredMixin, CreateView):
         form.instance.user_updated = user_updated(self)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        barang_obj = Barang.objects.get(id_barang=self.object.id_barang.id_barang)
+        barang_obj.in_transaction = True
+        barang_obj.save()
+        success_url = reverse_lazy('transaksi:detail', kwargs={
+                                   'slug': self.object.id_transaksi})
+        return success_url
+
 
 class FormHabispakaiView(LoginRequiredMixin, CreateView):
     form_class = HabispakaiForm
@@ -126,6 +134,14 @@ class FormHabispakaiView(LoginRequiredMixin, CreateView):
         # fill user_updated
         form.instance.user_updated = user_updated(self)
         return super(FormHabispakaiView, self).form_valid(form)
+    
+    def get_success_url(self):
+        barang_obj = Barang.objects.get(id_barang=self.object.id_barang.id_barang)
+        barang_obj.in_transaction = True
+        barang_obj.save()
+        success_url = reverse_lazy('transaksi:detail', kwargs={
+                                   'slug': self.object.id_transaksi})
+        return success_url
 
 
 class TransDetail(LoginRequiredMixin, DetailView):

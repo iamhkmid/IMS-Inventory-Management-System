@@ -7,91 +7,118 @@
 
 
 {% block contents1 %}
-<div class="main-screen">
-  <div class="col-lg-8 centered mb-4 col-centered">
+ <div class="col-lg-10 centered mb-4 col-centered">
     <div class="bg-white p-5 rounded shadow h-100">
-      <h4 class="jd1">UPDATE DATA - {{barang.id_barang}}</h4>
-      <hr align="left" width="350" />
+      <h4 class="jd1">UPDATE BARANG</h4>
+      <hr align="left" width="auto" />
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       <form method='POST'>
         {% csrf_token %}
-        
-        <div class="form-group">
-          <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
-         {{ form.nama| add_class:'form-control'}}   
-        </div>
-        <br>
-
-        <div class="form-group">
-          <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label>
-          <br>
-          {% for radio in form.jenis %}
-            <div class="form-check form-check-inline">
-              <label class="radio-inline radio-styled">
-                    {{ radio }}
-                </label>
+      <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+              <label for="{{form.id_barang.id_for_label}}">{{form.id_barang.label}} :</label>
+            {{ form.id_barang| add_class:'form-control'}}
             </div>
-          {% endfor %}
-        </div>
-        <br>
+            <br>
+            
+            <div class="form-group">
+              <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+            {{ form.nama| add_class:'form-control'}}   
+            </div>
+            <br>
 
-        <div class="form-group">
+            <div class="form-group">
+              <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label>
+              <br>
+              {% for radio in form.jenis %}
+                <div class="form-check form-check-inline">
+                  <label class="radio-inline radio-styled">
+                        {{ radio }}
+                    </label>
+                </div>
+              {% endfor %}
+            </div>
+            <br>
+
+              
             <label for="{{form.jumlah.id_for_label}}">{{form.jumlah.label}} :</label>
-            {{ form.jumlah| add_class:'form-control'}}
-        </div>
-        <br>
-
-        <div class="form-group">
-          <label for="{{form.satuan.id_for_label}}">{{form.satuan.label}} :</label>
-          <br>
-          {% for radio1 in form.satuan %}
-            <div class="form-check form-check-inline">
-              <label class="radio-inline radio-styled">
-                    {{ radio1 }}
-                </label>
+              <div class="row">
+                <div class="col-sm">
+                <div class="form-group">
+                  <div class="input-group date" data-target-input="nearest">
+                      {{ form.jumlah| add_class:'form-control' | attr:'min:1'}}
+                  </div>
+                </div>
+                </div>
+                <div class="col col-3">
+                <div class="form-group border rounded">
+                  <div class="input-group date" data-target-input="nearest">
+                    {{ form.satuan | add_class:'form-control selectpicker' | attr:'id:satuan'}}
+                  </div>
+                </div>
+                </div>
+              </div>
+            
+            <br>
+            <div class="form-group" >
+              <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Rp.</div>
+                </div>
+                {{ form.nilai_barang| add_class:'form-control' | attr:'min:1'}} 
+              </div>
             </div>
-          {% endfor %}
-          
+            
         </div>
-        <br>
-
-        <div class="form-group" >
-          <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Rp.</div>
+        <div class="col-sm">
+            <label for="{{form.id_kategori.id_for_label}}">Kategori :</label>
+            <div class="form-group border rounded">
+              <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                {{ form.id_kategori | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
+              </div>
             </div>
-            {{ form.nilai_barang| add_class:'form-control'}} 
-          </div>
-        </div>
-        <br>
+            <br>
 
-
-        <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
-        <div class="form-group">
-        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-          {{ form.tgl_pengadaan | add_class:'form-control datepicker datetimepicker-input' }}
-          <div class="input-group-append" data-target=".datepicker" data-toggle="datetimepicker">
-            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-          </div>
+            <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
+            <div class="form-group">
+              <div class="input-group date" id="datepicker4" data-target-input="nearest">
+                {{ form.tgl_pengadaan | add_class:'form-control datetimepicker-input'}}
+                <div class="input-group-append" data-target="#datepicker4" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <label for="{{form.id_tempat.id_for_label}}">Tempat :</label>
+            <div class="form-group border rounded">
+              <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                {{ form.id_tempat | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
+                <div class="input-group-append">
+                  <a class="btn btn-secondary" href="" onclick="return popitup('{% url 'inventory:manage' %}')"><i class="fa fa-plus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} (Optional) :</label>
+              {{ form.keterangan| add_class:'form-control'}}
+            </div>
         </div>
-        </div>
-        <br>
-        
-        <div class="form-group">
-          <label for="id_tempat">{{form.id_tempat.label}} :</label>
-          {{ form.id_tempat | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
-        </div>
-
-        <div class="form-group">
-          <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} :</label>
-          {{ form.keterangan| add_class:'form-control'}}
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a class="btn btn-secondary" href="{% url 'inventory:manage' %}">Batalkan</a>
-        </form>
+      </div>
+      <hr align="left" width="auto" />
+      <button type="submit" class="btn btn-primary">Update</button>
+      <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
+      </form>
     </div>
   </div>
-
-</div>
 
 {% endblock contents1 %}

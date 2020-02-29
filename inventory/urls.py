@@ -12,6 +12,8 @@ urlpatterns = [
      path('update/<pk>', InvUpdateView.as_view(), name="update"),
      path('detail/<slug>', InvDetailView.as_view(), name="detail"),
      path('add-existing-good/', InvAddExisting.as_view(), name="add_existing_good"),
+     path('condition-update/<pk>', InvConditionUpdateView.as_view(), name="condition_update"),
+     path('barcode-print/<pk>', BarcodePrintView.as_view(), name="barcode_print"),
      
      path('tempat-list/', TempatListView.as_view(), name="tempat_list"),
      path('tempat-add/', TempatAddView.as_view(), name="tempat_add"),
@@ -32,5 +34,8 @@ urlpatterns = [
      path('satker-del/<pk>', SatkerDeleteView.as_view(), name="satker_del"),
 
 
-     path('reload-barcode/<pk>', BarcodeView.as_view(), name="reload_bc"),
+     path('kategori-list/', KategoriListView.as_view(), name="kategori_list"),
+     path('kategori-add/', KategoriAddView.as_view(), name="kategori_add"),
+     path('kategori-update/<pk>', KategoriUpdateView.as_view(), name="kategori_update"),
+     path('kategori-del/<pk>', KategoriDeleteView.as_view(), name="kategori_del"),
 ]

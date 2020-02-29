@@ -1,0 +1,155 @@
+@media print
+{
+    body {
+        margin: 0;
+        -webkit-print-color-adjust:exact ;
+    }
+.noprint {display:none;}
+.table thead tr th, td,.table tfoot tr th{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+
+}
+tr.WithBorderGray td {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    color: gray !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+  }
+tr.WithBorder td {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    color: black !important;
+    padding:3px !important;
+    -webkit-print-color-adjust:exact ;
+  }
+tr.noBorder td {
+    border-bottom-width: 0px !important;
+    border-top-width: 0px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+  }
+
+  .table{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+  }
+@page {
+    size: 287mm 210mm;
+    margin: 0;
+    }
+    html, body {
+        margin: 0px;
+        
+    }
+ 
+}
+
+
+body{
+    background: rgb(234, 236, 240) !important;
+    -webkit-print-color-adjust:exact ;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+
+
+.table thead tr th, td,.table tfoot tr th{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+
+}
+tr.WithBorderGray td {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    color: gray !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+  }
+tr.WithBorder td {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    color: black !important;
+    padding:3px !important;
+    -webkit-print-color-adjust:exact ;
+  }
+tr.noBorder td {
+    border-bottom-width: 0px !important;
+    border-top-width: 0px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    font-size: 14px !important;
+    padding:3px;
+    -webkit-print-color-adjust:exact ;
+  }
+  .table{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+  }
+  .txt1{
+    font-weight: bold;
+    font-size: 20px!important;
+  }
+  .txt2{
+      font-weight: bold!important;
+      font-size: 15px!important;
+  }
+  .txt3{
+      font-size: 15px!important;
+  }
+  
+  .logo{
+      width: 150px;
+      height: 150px;
+  }
+
+  .barcode{
+    width: 220px;
+    height: 100px;
+  }
+  .univ{
+    width: auto;
+    height: auto;
+  }
+
+  .tgl_pengadaan{
+    width: auto;
+    height: auto;
+  }
+  .satker{
+    width: auto;
+    height: auto;
+  }
+
+  .layout-print{
+    padding-top: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 50px;
+  }

@@ -1,9 +1,11 @@
 from django.forms import ModelForm
 from django import forms
 from .models import *
+from inventory.models import Barang
 
 
 class PeminjamanForm(ModelForm):
+    id_barang = forms.ModelChoiceField(Barang.objects.filter(jenis='Inventaris'))
     transaksi = forms.CharField(
         widget=forms.HiddenInput(), initial="Peminjaman")
     tgl_pengambilan = forms.DateTimeField(widget=forms.DateTimeInput(
@@ -28,6 +30,7 @@ class PeminjamanForm(ModelForm):
 
 
 class HabispakaiForm(ModelForm):
+    id_barang = forms.ModelChoiceField(Barang.objects.filter(jenis='Persediaan'))
     transaksi = forms.CharField(
         widget=forms.HiddenInput(), initial="Persediaan")
     tgl_pengambilan = forms.DateTimeField(widget=forms.DateTimeInput(

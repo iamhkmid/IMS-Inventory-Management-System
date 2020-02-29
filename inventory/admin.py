@@ -23,8 +23,13 @@ class TempatAdmin(admin.ModelAdmin):
 
 class BarangAdmin(admin.ModelAdmin):
     readonly_fields=[
-		'id_barang',
         'slug',
+		'updated',
+	]
+
+class KategoriAdmin(admin.ModelAdmin):
+    readonly_fields=[
+		'id_kategori',
 		'updated',
 	]
 
@@ -32,3 +37,4 @@ admin.site.register(Satker, SatkerAdmin)
 admin.site.register(Ruang, RuangAdmin)
 admin.site.register(Tempat, TempatAdmin)
 admin.site.register(Barang, BarangAdmin)
+admin.site.register(Kategori, KategoriAdmin)

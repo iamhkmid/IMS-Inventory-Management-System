@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}        
-
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
 {% block page_title %}
 	Detail {{barang.id_barang}} - {{barang.nama}}
 {% endblock page_title %}
@@ -28,11 +30,29 @@
                     </tr>
                     <tr>
                         <td>&emsp;Jumlah</td>
-                        <td>&emsp;{{barang.jumlah}} {{barang.satuan}}&emsp;</td>
+                        <td>&emsp;{{barang.jumlah}} {{barang.satuan}}&emsp;<br></td>
+                    </tr>
+                    {% if barang.jenis == "Inventaris" and barang.is_past_due is False %}
+                    <tr>
+                        <td>&emsp;Kondisi</td>
+                        <td>
+                        &emsp;Baik  : {{barang.jumlah_b}} &emsp;|
+                        &emsp;Rusak Ringan : {{barang.jumlah_rr}} &emsp;|
+                        &emsp;Rusak Berat : {{barang.jumlah_rb}} &emsp;|
+                        &emsp;Hilang : {{barang.jumlah_hl}} &emsp;|
+                        &emsp;<a class="btn btn-sm btn-success" href="{% url 'inventory:condition_update' barang.id_barang %}" role="button"><i class="fa fa-edit"></i> UPDATE</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td>&emsp;Kategori</td>
+                        <td>&emsp;{{barang.id_kategori.nama}}&emsp;</td>
                     </tr>
                     <tr>
                         <td>&emsp;Nilai Barang</td>
-                        <td>&emsp;Rp.{{barang.nilai_barang}}&emsp;</td>
+                        {% language 'id' %}
+                        <td>&emsp;Rp.{{ barang.nilai_barang |floatformat:2 |intcomma }}&emsp;</td>
+                        {% endlanguage %}
                     </tr>
                     <tr>
                         <td>&emsp;Tgl Pengadaan</td>
@@ -57,7 +77,7 @@
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-4">
                     <p><small class="txt_label">-- Update Terakhir --</small><br>
                     -----------------------------------------<br>
                     <small>User&emsp;: {{barang.user_updated}}<br>
@@ -65,10 +85,18 @@
                     -----------------------------------------</p>
                     <a class="btn btn-sm btn-secondary" href="{% url 'inventory:manage' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
                 </div>
-                <div class="col-sm-8" align="right">
-                    <a class="btn btn-sm btn-secondary align-bottom" href="{% url 'inventory:reload_bc' barang.id_barang %}" role="button" ><i class="fa fa-sync-alt"></i></a>
-                    <img src="{% static barang.barcode %}" class="img-thumbnail" width="40%">
+                {% if barang.jenis == "Inventaris" %}
+                <div class="col-8">
+                    <div class="row" >
+                        <div class="col" align="right" >
+                            <a class="btn btn-info" href="{% url 'inventory:barcode_print' barang.id_barang %}" role="button"><i class="fa fa-print"></i> Print Barcode</a>
+                        </div>
+                        <div class="col" align="right">
+                            <img src="{% static barang.barcode %}" class="img-thumbnail" width="100%">
+                        </div>
+                    </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

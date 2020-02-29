@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Barcode {{nama}}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/print_barcode.css' %}">
+    {% include "snippets/styles.html" %}
+  </head>
+  <body>
+    <br>
+    <div class="col-lg-9 mb-4 col-centered">
+      <div class="bg-white rounded layout-print">
+            <div class="noprint">
+            <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
+            <a class="btn btn-secondary" href="{% url 'inventory:detail' id_barang %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+            <hr align="left" width="350" /><br>
+            </div>
+            <table class="table table-bordered" style="width:100%">
+            <tbody>
+                <tr class="WithBorder">
+                    <td align="middle" class="logo" rowspan="4">
+                        <img src="{% static 'img/upn.png' %}"  width="100%">
+                    </td>
+                    <td align="middle" class="align-middle" class="univ" colspan="3">
+                        <h3 class="txt1"><b>UPN "VETERAN" YOGYAKARTA</b></h3>
+                    </td>
+                    <td class="barcode" rowspan="4" >
+                    <img src="{% static barcode %}" width="100%">
+                    </td>
+                </tr>
+                <tr class="WithBorder">
+                    <td align="left" class="align-middle" class="univ">
+                      <h5 class="txt2"><b>&emsp;NAMA</b></h5>
+                    </td>
+                    <td align="left" class="align-middle" class="univ">
+                      <h5 class="txt2"><b>&emsp;{{nama}}</b></h5>
+                    </td>
+                </tr>
+                <tr class="WithBorder">
+                    <td align="left" class="align-middle" class="univ">
+                      <h5 class="txt2"><b>&emsp;SATKER</b></h5>
+                    </td>
+                    <td align="left" class="align-middle" class="univ">
+                      <h5 class="txt2"><b>&emsp;{{satker}}</b></h5>
+                    </td>
+                </tr>
+                <tr class="WithBorder">
+                    <td align="left" class="align-middle" class="univ">
+                    <h5 class="txt2"><b>&emsp;TANGGAL</b></h5>
+                    </td>
+                    <td align="left" class="align-middle" class="univ">
+                    <h5 class="txt2"><b>&emsp;{{tgl_pengadaan}}</b></h5>
+                    </td>
+                </tr>
+            </tbody>
+         </table>
+      </div>
+    </div>
+    {% include "snippets/scripts.html" %}
+  </body>
+</html>
