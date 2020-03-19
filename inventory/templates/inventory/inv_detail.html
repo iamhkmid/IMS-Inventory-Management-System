@@ -10,10 +10,17 @@
 
 {% block contents1 %}
 <div class="main-screen">
-    <div class="col-lg-8 centered mb-4 col-centered">
+    <div class="col-lg-10 centered mb-4 col-centered">
         <div class="bg-white p-4 rounded shadow h-100">
             <h4 class="jd1">DETAIL ( {{barang.id_barang}} )</h4>
             <hr align="left" width="350" />
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
             <table class="table table-bordered" style="width:100%">
                 <tbody>
                     <tr>
@@ -32,7 +39,7 @@
                         <td>&emsp;Jumlah</td>
                         <td>&emsp;{{barang.jumlah}} {{barang.satuan}}&emsp;<br></td>
                     </tr>
-                    {% if barang.jenis == "Inventaris" and barang.is_past_due is False %}
+                    {% if barang.jenis == "Inventaris" or barang.jenis == "Modal"%}
                     <tr>
                         <td>&emsp;Kondisi</td>
                         <td>
@@ -40,7 +47,7 @@
                         &emsp;Rusak Ringan : {{barang.jumlah_rr}} &emsp;|
                         &emsp;Rusak Berat : {{barang.jumlah_rb}} &emsp;|
                         &emsp;Hilang : {{barang.jumlah_hl}} &emsp;|
-                        &emsp;<a class="btn btn-sm btn-success" href="{% url 'inventory:condition_update' barang.id_barang %}" role="button"><i class="fa fa-edit"></i> UPDATE</a>
+                        &emsp;<a class="btn btn-sm btn-rounded btn-mdb-color" href="{% url 'inventory:barang_condition' barang.id_barang %}" role="button"><i class="fa fa-edit"></i> UPDATE</a>
                         </td>
                     </tr>
                     {% endif %}
@@ -56,7 +63,7 @@
                     </tr>
                     <tr>
                         <td>&emsp;Tgl Pengadaan</td>
-                        <td>&emsp;{{barang.tgl_pengadaan}}&emsp;</td>
+                        <td>&emsp;{{ barang.tgl_pengadaan|date:'d F Y' }} ( {{ barang.tgl_pengadaan|date:'H:i T' }} )&emsp;</td>
                     </tr>
                     <tr>
                         <td>&emsp;Satker</td>
@@ -78,21 +85,23 @@
             </table>
             <div class="row">
                 <div class="col-4">
-                    <p><small class="txt_label">-- Update Terakhir --</small><br>
-                    -----------------------------------------<br>
-                    <small>User&emsp;: {{barang.user_updated}}<br>
-                    Waktu : {{barang.updated}}</small><br>
-                    -----------------------------------------</p>
-                    <a class="btn btn-sm btn-secondary" href="{% url 'inventory:manage' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+                    <table cellpadding="0">
+                        <tr>
+                            <td><h6><small class="text-muted">USER</small></h6></td>
+                            <td><h6><small class="text-muted"> : {{barang.user_updated}}</small></h6></td>
+                        </tr>
+                        <tr>
+                            <td><h6><small class="text-muted">UPDATED</small></h6></td>
+                            <td><h6><small class="text-muted"> : {{barang.updated}}</small></h6></td>
+                        </tr>
+                    </table>
+                    <a class="btn btn-sm btn-secondary btn-rounded" href="{% url 'inventory:barang_list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
                 </div>
-                {% if barang.jenis == "Inventaris" %}
+                {% if barang.jenis == "Inventaris" or barang.jenis == "Modal"%}
                 <div class="col-8">
                     <div class="row" >
                         <div class="col" align="right" >
-                            <a class="btn btn-info" href="{% url 'inventory:barcode_print' barang.id_barang %}" role="button"><i class="fa fa-print"></i> Print Barcode</a>
-                        </div>
-                        <div class="col" align="right">
-                            <img src="{% static barang.barcode %}" class="img-thumbnail" width="100%">
+                            <a class="btn btn-sm btn-dark btn-rounded" href="{% url 'inventory:barcode_print' barang.id_barang %}" role="button"><i class="fa fa-print"></i> Print Barcode</a>
                         </div>
                     </div>
                 </div>

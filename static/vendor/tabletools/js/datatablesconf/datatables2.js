@@ -4,6 +4,12 @@ $(document).ready(function() {
         displayLength: 10,
         lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
         pagingType: "full_numbers",
+        "columnDefs": [{
+            "targets": '_all',
+            "createdCell": function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '10px')
+            }
+        }],
     } );
  
     table.buttons().container()

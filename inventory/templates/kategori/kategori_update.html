@@ -7,26 +7,41 @@
 
 
 {% block contents1 %}
-<div class="main-screen">
-  <div class="col-lg-8 centered mb-4 col-centered">
-    <div class="bg-white p-5 rounded shadow h-100">
-      <h4 class="jd1">UPDATE DATA - {{kategori.id_kategori}}</h4>
-      <hr align="left" width="350" />
-      <form method='POST'>
-        {% csrf_token %}
-       
-        <div class="form-group">
-          <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
-         {{ form.nama| add_class:'form-control'}}   
-        </div>
-        <br>
-        {{ form.user_updated}}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a class="btn btn-secondary" href="{% url 'inventory:kategori_list' %}">Batalkan</a>
-        </form>
-    </div>
+<div class="col-lg-8 centered mb-4 col-centered">
+  <div class="bg-white p-5 rounded shadow h-100">
+    <h4 class="jd1">UPDATE KATEGORI ({{kategori.id_kategori}})</h4>
+    <hr align="left" width="auto" />
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method='POST' novalidate>
+      {% csrf_token %}
+      
+      <div class="md-form">
+        {% if form.is_bound %}
+          {% if form.nama.errors %}
+            {% render_field form.nama class="form-control is-invalid"%}
+            {% for error in form.nama.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+          {% else %}
+            {% render_field form.nama class="form-control is-valid" %}
+            <div class="valid-feedback">Ok</div>
+          {% endif %}
+        {% else %}
+          {% render_field form.nama class+="form-control"%}
+        {% endif %}
+        <label  for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+      </div>
+      <hr align="left" width="auto" />
+      <button type="submit" class="btn btn-mdb-color btn-rounded">Update</button>
+      <a class="btn btn-elegant btn-rounded" href="{% url 'inventory:kategori_list' %}">Batalkan</a>
+      </form>
   </div>
-
 </div>
 
 {% endblock contents1 %}

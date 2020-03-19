@@ -11,115 +11,233 @@
     <div class="bg-white p-5 rounded shadow h-100">
       <h4 class="jd1">TAMBAH BARANG</h4>
       <hr align="left" width="auto" />
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-          </div>
-        {% endfor %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
       {% endif %}
-
-      <form method='POST'>
+      <form method='POST' novalidate>
         {% csrf_token %}
-      <div class="row">
-        <div class="col-sm">
-            <div class="form-group">
-              <label for="{{form.id_barang.id_for_label}}">{{form.id_barang.label}} :</label>
-            {{ form.id_barang| add_class:'form-control'}}
+        <div class="row">
+          <div class="col-sm">
+
+            <div class="pb-2">
+              <div class="md-form">
+                {% if form.is_bound %}
+                  {% if form.id_barang.errors %}
+                    {% render_field form.id_barang class="form-control is-invalid"%}
+                    {% for error in form.id_barang.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% else %}
+                    {% render_field form.id_barang class="form-control is-valid"%}
+                    <div class="valid-feedback">Ok</div>
+                  {% endif %}
+                {% else %}
+                  {% render_field form.id_barang class+="form-control"%}
+                {% endif %}
+                <label for="{{form.id_barang.id_for_label}}">{{form.id_barang.label}} :</label>
+              </div>
             </div>
-            <br>
+                  
+            <div class="pb-1">
+              <div class="md-form">
+                {% if form.is_bound %}
+                  {% if form.nama.errors %}
+                    {% render_field form.nama class="form-control is-invalid"%}
+                    {% for error in form.nama.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% else %}
+                    {% render_field form.nama class="form-control is-valid" %}
+                    <div class="valid-feedback">Ok</div>
+                  {% endif %}
+                {% else %}
+                  {% render_field form.nama class+="form-control"%}
+                {% endif %}
+                <label  for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+              </div>
+            </div>
+                
+            <div class="pb-2">
+              <div class="md-form">
+                <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label> <br>
+                {% if form.is_bound %}
+                  {% if form.jenis.errors %}
+                    {% for x, value in form.jenis.field.choices %}
+                      <div class="form-check form-check-inline">
+                        <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input is-invalid" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
+                        <label class="form-check-label" for="{{x}}">{{ value }}</label>
+                      </div>
+                    {% endfor %}
+                    {% for error in form.jenis.errors %}
+                      <div class="invalid-feedback d-block pt-2">{{ error }}</div>
+                    {% endfor %}
+                  {% else %}
+                    {% for x, value in form.jenis.field.choices %}
+                      <div class="form-check form-check-inline">
+                        <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
+                        <label class="form-check-label" for="{{x}}">{{ value }}</label>
+                      </div>
+                    {% endfor %}
+                    <div class="valid-feedback d-block pt-2">Ok</div>
+                  {% endif %}
+                {% else %}
+                  {% for x, value in form.jenis.field.choices %}
+                    <div class="form-check form-check-inline">
+                      <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
+                      <label class="form-check-label" for="{{x}}">{{ value }}</label>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
             
-            <div class="form-group">
-              <label for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
-            {{ form.nama| add_class:'form-control'}}   
-            </div>
-            <br>
-
-            <div class="form-group">
-              <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label>
-              <br>
-              {% for radio in form.jenis %}
-                <div class="form-check form-check-inline">
-                  <label class="radio-inline radio-styled">
-                        {{ radio }}
-                    </label>
-                </div>
-              {% endfor %}
-            </div>
-            <br>
-
-              
-            <label for="{{form.jumlah.id_for_label}}">{{form.jumlah.label}} :</label>
+            <div class="pb-1">
               <div class="row">
                 <div class="col-sm">
-                <div class="form-group">
-                  <div class="input-group date" data-target-input="nearest">
-                      {{ form.jumlah| add_class:'form-control' | attr:'min:1'}}
+                  <div class="md-form">
+                    {% if form.is_bound %}
+                      {% if form.jumlah_b.errors %}
+                        {% render_field form.jumlah_b class+="form-control is-invalid"%}
+                        {% for error in form.jumlah_b.errors %}
+                          <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.jumlah_b class+="form-control is-valid" %}
+                        <div class="valid-feedback">Ok</div>
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.jumlah_b class+="form-control" min=1%}
+                    {% endif %}
+                    <label for="{{form.jumlah_b.id_for_label}}">Jumlah :</label>
                   </div>
-                </div>
                 </div>
                 <div class="col col-3">
-                <div class="form-group border rounded">
-                  <div class="input-group date" data-target-input="nearest">
-                    {{ form.satuan | add_class:'form-control selectpicker' | attr:'id:satuan'}}
+                  <div class="md-form">
+                    {{ form.satuan | add_class:'md-form mdb-select' | attr:'id:satuan'}}
                   </div>
                 </div>
-                </div>
               </div>
-            
-            <br>
-            <div class="form-group" >
+            </div>
+                
+            <div class="md-form">
+              {% if form.is_bound %}
+                {% if form.nilai_barang.errors %}
+                  {% render_field form.nilai_barang class+="form-control is-invalid"%}
+                  {% for error in form.nilai_barang.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field form.nilai_barang class+="form-control is-valid" %}
+                  <div class="valid-feedback">Ok</div>
+                {% endif %}
+              {% else %}
+                {% render_field form.nilai_barang class+="form-control" min=1%}
+              {% endif %}
               <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Rp.</div>
-                </div>
-                {{ form.nilai_barang| add_class:'form-control' | attr:'min:1'}} 
-              </div>
             </div>
+          
+          </div>
+          <div class="col-sm">
             
-        </div>
-        <div class="col-sm">
-            <label for="{{form.id_kategori.id_for_label}}">Kategori :</label>
-            <div class="form-group border rounded">
-              <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                {{ form.id_kategori | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
+            <div class="pb-3">
+              <div class="md-form">
+                {% if form.is_bound %}
+                  {% if form.id_kategori.errors %}
+                    {% render_field form.id_kategori class="mdb-select is-invalid" searchable="Search here.."%}
+                    <div class="invalid-feedback feedback-icon d-block"><i class="fa fa-times"></i></div>
+                    {% for error in form.id_kategori.errors %}
+                      <div class="invalid-feedback d-block pt-2">{{ error }}</div>
+                    {% endfor %}
+                  {% else %}
+                    {% render_field form.id_kategori class="mdb-select is-valid" searchable="Search here.."%}
+                    <div class="valid-feedback feedback-icon d-block"><i class="fa fa-check"></i></div>
+                    <div class="valid-feedback d-block pt-2">Ok</div>
+                  {% endif %}
+                {% else %}
+                  {% render_field form.id_kategori class="mdb-select" searchable="Search here.."%}
+                {% endif %}
+                <label for="{{form.id_kategori.id_for_label}}">Kategori :</label>
               </div>
             </div>
-            <br>
+          
+          <div class="pb-3">
+            <div class="md-form input-group date" id="datetimepicker1" data-target-input="nearest">
+              {% if form.is_bound %}
+                {% if form.tgl_pengadaan.errors %}
+                {% render_field form.tgl_pengadaan class="form-control datetimepicker-input is-invalid" data-target="#datetimepicker1"%}
+                  <div class="input-group-text btn-rounded btn-sm btn-mdb-color" data-target="#datetimepicker1" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                  <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
+                  {% for error in form.tgl_pengadaan.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                {% render_field form.tgl_pengadaan class="form-control datetimepicker-input is-valid" data-target="#datetimepicker1"%}
+                  <div class="input-group-text btn-rounded btn-sm btn-mdb-color" data-target="#datetimepicker1" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                  <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
+                  <div class="valid-feedback">Ok</div>
+                {% endif %}
+              {% else %}
+                {% render_field form.tgl_pengadaan class="form-control datetimepicker-input" data-target="#datetimepicker1"%}
+                  <div class="input-group-text btn-rounded btn-sm btn-mdb-color" data-target="#datetimepicker1" data-toggle="datetimepicker"><i class="fa fa-calendar"></i></div>
+                  <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
+              {% endif %}
+            </div>
+          </div>
 
-            <label for="{{form.tgl_pengadaan.id_for_label}}">{{form.tgl_pengadaan.label}} :</label>
-            <div class="form-group">
-              <div class="input-group date" id="datepicker4" data-target-input="nearest">
-                {{ form.tgl_pengadaan | add_class:'form-control datetimepicker-input'}}
-                <div class="input-group-append" data-target="#datepicker4" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          <div class="pb-3">
+            <div class="md-form">
+              {% if form.is_bound %}
+                {% if form.id_tempat.errors %}
+                  {% render_field form.id_tempat class="mdb-select is-invalid" searchable="Search here.."%}
+                  <div class="invalid-feedback feedback-icon d-block"><i class="fa fa-times"></i></div>
+                  {% for error in form.id_tempat.errors %}
+                    <div class="invalid-feedback d-block pt-2">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field form.id_tempat class="mdb-select is-valid" searchable="Search here.."%}
+                  <div class="valid-feedback feedback-icon d-block"><i class="fa fa-check"></i></div>
+                  <div class="valid-feedback d-block pt-2">Ok</div>
+                {% endif %}
+              {% else %}
+                {% render_field form.id_tempat class="mdb-select" searchable="Search here.."%}
+              {% endif %}
+              <label for="{{form.id_tempat.id_for_label}}">Tempat :</label>
+            </div>
+          </div>
+
+          <div class="md-form pb-2">
+            {% if form.is_bound %}
+              {% if form.keterangan.errors %}
+              {% render_field form.keterangan class+="form-control md-textarea" rows="3"%}
+                {% for error in form.keterangan.errors %}
+                  <div class="invalid-feedback">
+                    {{ error }}
+                  </div>
+                {% endfor %}
+              {% else %}
+              {% render_field form.keterangan class+="form-control md-textarea" rows="3"%}
+              <div class="valid-feedback feedback-icon d-block pt-2"><i class="fa fa-check"></i></div>
+                <div class="valid-feedback d-block">
+                  Ok
                 </div>
-              </div>
-            </div>
-            <br>
-            <label for="{{form.id_tempat.id_for_label}}">Tempat :</label>
-            <div class="form-group border rounded">
-              <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                {{ form.id_tempat | add_class:'form-control selectpicker' | attr:'data-live-search:true' | attr:'id:id_tempat'}}
-                <div class="input-group-append">
-                  <a class="btn btn-secondary" href="" onclick="return popitup('{% url 'inventory:manage' %}')"><i class="fa fa-plus-circle"></i></a>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="form-group">
-              <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}} (Optional) :</label>
-              {{ form.keterangan| add_class:'form-control'}}
-            </div>
+              {% endif %}
+            {% else %}
+              {% render_field form.keterangan class+="form-control md-textarea" rows="3"%}
+            {% endif %}
+            <label for="{{form.keterangan.id_for_label}}">{{form.keterangan.label}}(Optional):</label>
+          </div>
+
+          </div>
         </div>
-      </div>
-      <hr align="left" width="auto" />
-      <button type="submit" class="btn btn-primary">Tambah</button>
-      <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
+        <hr align="left" width="auto" />
+        <button type="submit" class="btn btn-mdb-color btn-rounded">Tambah</button>
+        <a class="btn btn-elegant btn-rounded" href="{% url 'inventory:barang_list' %}">Batalkan</a>
       </form>
     </div>
   </div>
-
 
 {% endblock contents1 %}

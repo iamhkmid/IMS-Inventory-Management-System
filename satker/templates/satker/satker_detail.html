@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}        
+
+{% block page_title %}
+	Detail {{satker.id_satker}} - {{satker.nama}}
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="col-lg-9 centered mb-4 col-centered">
+    <div class="bg-white p-4 rounded shadow h-100">
+        <h4 class="jd1">DETAIL ( {{satker.id_satker}} )</h4>
+        <hr align="left" width="350" />
+        <table class="table table-bordered" style="width:100%">
+            <tbody>
+                <tr>
+                    <td>&emsp;Id</td>
+                    <td>&emsp;{{satker.id_satker}}&emsp;</td>
+                </tr>
+                <tr>
+                    <td>&emsp;Nama</td>
+                    <td>&emsp;{{satker.nama}}&emsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-4">
+                <table cellpadding="0">
+                    <tr>
+                        <td><h6><small class="text-muted">USER</small></h6></td>
+                        <td><h6><small class="text-muted"> : {{satker.user_updated}}</small></h6></td>
+                    </tr>
+                    <tr>
+                        <td><h6><small class="text-muted">UPDATED</small></h6></td>
+                        <td><h6><small class="text-muted"> : {{satker.updated}}</small></h6></td>
+                    </tr>
+                </table>
+                <a class="btn btn-sm btn-rounded btn-secondary" href="{% url 'satker:list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contents1 %}

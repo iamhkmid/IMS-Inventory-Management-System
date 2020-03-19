@@ -183,6 +183,12 @@
         }
       }
 
+      // .fas,
+      // .fab,
+      // .far {
+      //   color: map-get($data, skin-text);
+      // }
+
       .sidenav-bg {
 
         &:after,
@@ -309,6 +315,15 @@
         }
       }
     }
+
+    // Select colors
+    // .dropdown-content {
+    //   li:not(.disabled) {
+    //     span {
+    //       color: map-get($data, skin-accent);
+    //     }
+    //   }
+    // }
 
     .select-wrapper {
       &.colorful-select {

@@ -7,9 +7,9 @@
 
 
 {% block contents1 %}
-  <div class="col-lg-7 centered mb-4 col-centered">
+  <div class="col-lg-9 centered mb-4 col-centered">
     <div class="bg-white p-5 rounded shadow h-100">
-        <h4 class="jd1">UPDATE KONDISI BARANG - ({{barang.id_barang}})</h4>
+        <h4 class="jd1">UPDATE KONDISI BARANG ({{barang.id_barang}} - {{barang.nama}})</h4>
         <hr align="left" width="auto" />
         {% if messages %}
             {% for message in messages %}
@@ -18,52 +18,108 @@
             </div>
             {% endfor %}
         {% endif %}
-         <table class="table table-sm table-bordered" style="width:100%">
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+         <table>
             <tbody>
                 <tr>
-                    <td class="bg-secondary text-white">&emsp;Jumlah Barang : {{barang.jumlah}}</td>
+                    <td class=""><strong>JUMLAH BARANG&emsp;</strong></td>
+                    <td class=""><h5><span class="badge badge-default">{{barang.jumlah}}</span></h5></td>
+                    <td>&emsp;( Baik + Rusak Ringan )</td>
+                </tr>
+                <tr>
+                    <td class=""><strong>TOTAL&emsp;</strong></td>
+                    <td class=""><h5><span class="badge badge-default">{{total}}</span></h5></td>
+                    <td>&emsp;( Baik + Rusak Ringan + Rusak Berat + Hilang )</td>
                 </tr>
             </tbody>
         </table>
-        <form method='POST'>
+        <hr align="left" width="auto" />
+        <form method='POST' novalidate>
         {% csrf_token %}
         <div class="row">
             <div class="col-sm">
-                <label for="{{form.jumlah_b.id_for_label}}">Baik :</label>
-                <div class="form-group">
-                    <div class="input-group date" data-target-input="nearest">
-                        {{ form.jumlah_b| add_class:'form-control'}}
-                    </div>
+                <div class="md-form">
+                    {% if form.is_bound %}
+                      {% if form.jumlah_b.errors %}
+                        {% render_field form.jumlah_b class+="form-control is-invalid"%}
+                        {% for error in form.jumlah_b.errors %}
+                          <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.jumlah_b class+="form-control is-valid" %}
+                        <div class="valid-feedback">Ok</div>
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.jumlah_b class+="form-control" min=1%}
+                    {% endif %}
+                    <label for="{{form.jumlah_b.id_for_label}}">Baik :</label>
                 </div>
             </div>
             <div class="col-sm">
-                <label for="{{form.jumlah_rr.id_for_label}}">Rusak Ringan :</label>
-                <div class="form-group">
-                    <div class="input-group date" data-target-input="nearest">
-                        {{ form.jumlah_rr| add_class:'form-control'}}
-                    </div>
+                <div class="md-form">
+                    {% if form.is_bound %}
+                      {% if form.jumlah_rr.errors %}
+                        {% render_field form.jumlah_rr class+="form-control is-invalid"%}
+                        {% for error in form.jumlah_rr.errors %}
+                          <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.jumlah_rr class+="form-control is-valid" %}
+                        <div class="valid-feedback">Ok</div>
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.jumlah_rr class+="form-control" min=1%}
+                    {% endif %}
+                    <label for="{{form.jumlah_rr.id_for_label}}">Rusak Ringan :</label>
                 </div>
             </div>
             <div class="col-sm">
-                <label for="{{form.jumlah_rb.id_for_label}}">Rusak Berat:</label>
-                <div class="form-group">
-                    <div class="input-group date" data-target-input="nearest">
-                        {{ form.jumlah_rb| add_class:'form-control'}}
-                    </div>
+                <div class="md-form">
+                    {% if form.is_bound %}
+                      {% if form.jumlah_rb.errors %}
+                        {% render_field form.jumlah_rb class+="form-control is-invalid"%}
+                        {% for error in form.jumlah_rb.errors %}
+                          <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.jumlah_rb class+="form-control is-valid" %}
+                        <div class="valid-feedback">Ok</div>
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.jumlah_rb class+="form-control" min=1%}
+                    {% endif %}
+                    <label for="{{form.jumlah_rb.id_for_label}}">Rusak Berat :</label>
                 </div>
             </div>
             <div class="col-sm">
-                <label for="{{form.jumlah_hl.id_for_label}}">Hilang :</label>
-                <div class="form-group">
-                    <div class="input-group date" data-target-input="nearest">
-                        {{ form.jumlah_hl| add_class:'form-control'}}
-                    </div>
+                <div class="md-form">
+                    {% if form.is_bound %}
+                      {% if form.jumlah_hl.errors %}
+                        {% render_field form.jumlah_hl class+="form-control is-invalid"%}
+                        {% for error in form.jumlah_hl.errors %}
+                          <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% render_field form.jumlah_hl class+="form-control is-valid" %}
+                        <div class="valid-feedback">Ok</div>
+                      {% endif %}
+                    {% else %}
+                      {% render_field form.jumlah_hl class+="form-control" min=1%}
+                    {% endif %}
+                    <label for="{{form.jumlah_hl.id_for_label}}">Hilang :</label>
                 </div>
             </div>
         </div>
         <hr align="left" width="auto" />
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a class="btn btn-secondary" href="{{request.META.HTTP_REFERER|escape}}">Batalkan</a>
+        <button type="submit" class="btn btn-mdb-color btn-rounded">Update</button>
+        <a class="btn btn-elegant btn-rounded" href="{% url 'inventory:barang_detail' barang.id_barang%}">Batalkan</a>
         </form>
     </div>
   </div>

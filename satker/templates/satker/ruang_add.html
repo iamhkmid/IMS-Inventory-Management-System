@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block page_title %}
+	Tambah Ruang
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="col-lg-9 centered mb-4 col-centered">
+  <div class="bg-white p-5 rounded shadow h-100">
+    <h4 class="jd1">TAMBAH RUANG</h4>
+    <hr align="left" width="auto" />
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method='POST' novalidate>
+      {% csrf_token %}
+      <div class="pb-3">
+        <div class="md-form">
+          {% if form.is_bound %}
+            {% if form.id_satker.errors %}
+              {% render_field form.id_satker class="mdb-select is-invalid" searchable="Search here.."%}
+              <div class="invalid-feedback feedback-icon d-block"><i class="fa fa-times"></i></div>
+              {% for error in form.id_satker.errors %}
+                <div class="invalid-feedback d-block pt-2">{{ error }}</div>
+              {% endfor %}
+            {% else %}
+              {% render_field form.id_satker class="mdb-select is-valid" searchable="Search here.."%}
+              <div class="valid-feedback feedback-icon d-block"><i class="fa fa-check"></i></div>
+              <div class="valid-feedback d-block pt-2">Ok</div>
+            {% endif %}
+          {% else %}
+            {% render_field form.id_satker class="mdb-select" searchable="Search here.."%}
+          {% endif %}
+          <label for="{{form.id_satker.id_for_label}}">Satker :</label>
+        </div>
+      </div>
+
+      <div class="pb-1">
+        <div class="md-form">
+          {% if form.is_bound %}
+            {% if form.nama.errors %}
+              {% render_field form.nama class="form-control is-invalid"%}
+              {% for error in form.nama.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            {% else %}
+              {% render_field form.nama class="form-control is-valid" %}
+              <div class="valid-feedback">Ok</div>
+            {% endif %}
+          {% else %}
+            {% render_field form.nama class+="form-control"%}
+          {% endif %}
+          <label  for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
+        </div>
+      </div>
+    
+      <hr align="left" width="auto" />
+      <button type="submit" class="btn btn-mdb-color btn-rounded">Tambah</button>
+      <a class="btn btn-elegant btn-rounded" href="{% url 'satker:ruang_list' %}">Batalkan</a>
+      </form>
+  </div>
+</div>
+
+{% endblock contents1 %}

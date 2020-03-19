@@ -218,4 +218,4 @@ class MutasiListView(LoginRequiredMixin, ListView):
     model = Mutasi
     template_name = "report/mutasi_list.html"
     context_object_name = 'mutasi_list'
-    ordering = ['id_mutasi']
+    ordering = ['-tgl_mutasi']

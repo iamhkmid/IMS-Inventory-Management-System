@@ -1,11 +1,23 @@
 $(document).ready(function() {
   
     var table = $('#datatables3').DataTable( {
-        displayLength: 10,
-        lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
-        
+        "columnDefs": [{
+            "targets": '_all',
+            "createdCell": function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '10px')
+            }
+        }],
     } );
- 
+    $('#datatables_wrapper .dataTables_filter').find(
+        'input').each(function () {
+        $('input').attr("placeholder", "Type here ..");
+      });
+      $('#datatables_wrapper .dataTables_filter').addClass(
+        'md-form');
+    
+    $('#datatables_wrapper .dataTables_filter').addClass('align-right');
     table.buttons().container()
-        .appendTo( '#datatables2_wrapper .col-md-6:eq(0)' );
-} );
+        .appendTo( '#datatables_wrapper .col-md-6:eq(0)' );
+        
+    
+} ); 

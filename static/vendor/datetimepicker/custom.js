@@ -1,15 +1,23 @@
-function setDatePicker(){
-$(".datepicker").datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss.SSS',
-    sideBySide: true,
+
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss',
+    vertical: 'bottom',
     horizontal: 'right',
-})
-$(".datepicker2").datetimepicker({
+    });
+    $('#datetimepicker2').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        vertical: 'bottom',
+        horizontal: 'right',
+    });
+});
+
+
+$('#datepicker1').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
-    sideBySide: true,
+    vertical: 'bottom',
     horizontal: 'right',
-})
-}
+});
 $('#datepicker3').datetimepicker({
     viewMode: 'years',
     format: 'YYYY-MM',
@@ -18,10 +26,9 @@ $('#datepicker3').datetimepicker({
 $('#datepicker4').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     vertical: 'bottom',
-    sideBySide: true,
     horizontal: 'right',
 });
-$('#datepicker5').datetimepicker({
+$('#datepicker5').datetimepicker({  
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     vertical: 'bottom',
     sideBySide: true,

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}        
+
+{% block page_title %}
+	Detail {{tempat.id_tempat}} - {{tempat.nama}}
+{% endblock page_title %}
+
+
+{% block contents1 %}
+<div class="col-lg-9 centered mb-4 col-centered">
+    <div class="bg-white p-4 rounded shadow h-100">
+        <h4 class="jd1">DETAIL ( {{tempat.id_tempat}} )</h4>
+        <hr align="left" width="350" />
+        <table class="table table-bordered" style="width:100%">
+            <tbody>
+                <tr>
+                    <td>&emsp;Id</td>
+                    <td>&emsp;{{tempat.id_tempat}}&emsp;</td>
+                </tr>
+                <tr>
+                    <td>&emsp;Nama</td>
+                    <td>&emsp;{{tempat.nama}}&emsp;</td>
+                </tr>
+                <tr>
+                    <td>&emsp;Satker</td>
+                    <td>&emsp;{{tempat.id_ruang.id_satker.nama}}&emsp;</td>
+                </tr>
+                <tr>
+                    <td>&emsp;Ruang</td>
+                    <td>&emsp;{{tempat.id_ruang.nama}}&emsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-4">
+                <table cellpadding="0">
+                    <tr>
+                        <td><h6><small class="text-muted">USER</small></h6></td>
+                        <td><h6><small class="text-muted"> : {{tempat.user_updated}}</small></h6></td>
+                    </tr>
+                    <tr>
+                        <td><h6><small class="text-muted">UPDATED</small></h6></td>
+                        <td><h6><small class="text-muted"> : {{tempat.updated}}</small></h6></td>
+                    </tr>
+                </table>
+                <a class="btn btn-sm btn-rounded btn-secondary" href="{% url 'satker:tempat_list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock contents1 %}

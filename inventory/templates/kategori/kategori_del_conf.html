@@ -28,9 +28,9 @@
             <hr align="left" width="350" />
             <form method='POST'>
                 {% csrf_token %}
-                <h6 class="txt1">Yakin ingin hapus?</h6>
-                <button type="submit" class="btn btn-outline-primary">Ya</button>
-                <a class="btn btn-outline-danger" href="{% url 'inventory:kategori_list' %}">Tidak</a>
+                <h6><strong>Yakin ingin hapus?</strong></h6>
+                <button type="submit" class="btn btn-outline-primary btn-rounded waves-effect">Ya</button>
+                <a class="btn btn-outline-danger btn-rounded waves-effect" href="{% url 'inventory:kategori_list' %}">Tidak</a>
 	        </form>
         </div>
       </div>

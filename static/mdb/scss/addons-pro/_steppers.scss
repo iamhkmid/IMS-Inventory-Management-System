@@ -151,7 +151,7 @@ ul.stepper {
   }
 
   .step-actions {
-    display: flex;
+    display: box;
     -webkit-box-pack: start;
     .btn:not(:last-child),
     .btn-flat:not(:last-child),

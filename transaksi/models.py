@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.utils import timezone
 from inventory.models import Barang
+from datetime import datetime
 
 
 def auto_id():
@@ -35,10 +36,17 @@ class Transaksi(models.Model):
     tgl_kembali         = models.DateTimeField(null=True, blank=True)
     pengguna            = models.CharField(max_length=35)
     jumlah              = models.PositiveIntegerField()
+    satuan              = models.CharField(max_length=20, blank=True)
     keterangan          = models.TextField(blank=True)
     user_updated        = models.CharField(max_length=35, blank=True)
     updated             = models.DateTimeField(auto_now=True)
     slug                = models.SlugField(blank=True, editable=False)
+
+    @property
+    def is_past_due(self):
+        date_check = self.tgl_pengambilan.month != datetime.now(
+        ).month or self.tgl_pengambilan.year != datetime.now().year
+        return date_check
 
     def save(self):
         self.slug = slugify(self.id_transaksi)
@@ -46,7 +54,7 @@ class Transaksi(models.Model):
 
     def get_absolute_url(self):
         url_slug = {'slug': self.slug}
-        return reverse('transaksi:detail', kwargs=url_slug)
+        return reverse('transaksi:transaksi_detail', kwargs={'pk': self.id_transaksi})
 
     def __str__(self):
         return "{} - {} - {}".format(self.id_transaksi, self.id_barang.nama, self.pengguna)

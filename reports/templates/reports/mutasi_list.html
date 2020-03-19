@@ -20,11 +20,10 @@
                 <th>No</th>
                 <th>ID Mutasi</th>
                 <th>Nama</th>
-                <th>Jumlah Awal</th>
+                <th>Jmlh Awal</th>
                 <th>Masuk</th>
                 <th>Keluar</th>
                 <th>Tgl Mutasi</th>
-                <th>Nilai Barang</th>
             </tr>
         </thead>
         <tbody>
@@ -36,8 +35,7 @@
                 <td align="right">{{ item.jumlah_awal }}</td>
                 <td align="right">{{ item.masuk }}</td>
                 <td align="right">{{ item.keluar }}</td>
-                <td>{{ item.tgl_mutasi|date:"d M. Y" }}</td>
-                <td align="right">{{ item.nilai_barang }}</td>
+                <td>{{ item.tgl_mutasi|date:'d F Y' }} ( {{ item.tgl_mutasi|date:'H:i T' }} )</td> 
             </tr>
         {% endfor %}
         

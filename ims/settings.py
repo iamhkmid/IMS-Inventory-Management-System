@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dashboard',
     'inventory',
     'transaksi',
+    'satker',
     'reports',
     'bootstrap4',
     'widget_tweaks',
@@ -113,11 +114,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 1440 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+LANGUAGE_CODE = 'id'
 TIME_ZONE = 'Asia/Jakarta'
-USE_I18N = True
-USE_L10N = True
+#USE_I18N = True
+#USE_L10N = False
 USE_TZ = True
 USE_DECIMAL_SEPARATOR = True
 DECIMAL_SEPARATOR = ","

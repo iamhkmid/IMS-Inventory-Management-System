@@ -6,14 +6,13 @@ from .views import *
 app_name = "transaksi"
 
 urlpatterns = [
-     path('list/', TransaksiListView.as_view(), name="list"),
-     path('form-peminjaman/', FormPeminjamanView.as_view(), name="form_peminjaman"),
-     path('form-habis-pakai/', FormHabispakaiView.as_view(), name="form_habispakai"),
-     path('detail/<slug>', TransDetail.as_view(), name="detail"),
-     path('delete/<pk>', TransDeleteView.as_view(), name="delete"),
-
-     path('update-1/<pk>', PeminjamanUpdateView.as_view(), name="update1"),
-     path('update-2/<pk>', PersediaanUpdateView.as_view(), name="update2"),
-     path('pengembalian/', PengembalianView.as_view(), name="pengembalian"),
+     path('list/', TransaksiListView.as_view(), name="transaksi_list"),
+     path('form/peminjaman/', FormPeminjamanView.as_view(), name="transaksi_form1"),
+     path('form/pengembalian/', PengembalianView.as_view(), name="transaksi_form2"),
+     path('form/habispakai/', FormHabispakaiView.as_view(), name="transaksi_form3"),
+     path('detail/<pk>', TransaksiDetail.as_view(), name="transaksi_detail"),
+     path('delete/<pk>', TransDeleteView.as_view(), name="transaksi_delete"),
+     path('update/peminjaman/<pk>', PeminjamanUpdateView.as_view(), name="transaksi_update1"),
+     path('update/habispakai/<pk>', HabisPakaiUpdateView.as_view(), name="transaksi_update2"),
      
 ]
