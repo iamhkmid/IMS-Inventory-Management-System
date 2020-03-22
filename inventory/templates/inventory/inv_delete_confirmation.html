@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <td>&emsp;Tgl Pengadaan</td>
-                        <td>&emsp;{{barang.tgl_pengadaan}}&emsp;</td>
+                        <td>&emsp;{{ barang.tgl_pengadaan|date:'d F Y' }} ( {{ barang.tgl_pengadaan|date:'H:i T' }} )&emsp;</td>
                     </tr>
                 </tbody>
             </table>

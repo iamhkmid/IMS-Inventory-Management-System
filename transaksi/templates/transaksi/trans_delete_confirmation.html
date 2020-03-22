@@ -33,18 +33,22 @@
                     </tr>
                     <tr>
                         <td>&emsp;Tgl Pengambilan</td>
-                        <td>&emsp;{{transaksi.tgl_pengambilan}}&emsp;</td>
+                        <td>&emsp;{{ transaksi.tgl_pengambilan|date:'d F Y' }} ( {{ transaksi.tgl_pengambilan|date:'H:i T' }} )&emsp;</td>
                     </tr>
                     {% if transaksi.transaksi == "Peminjaman" %}
                         {% if transaksi.tgl_kembali == None %}
                             <tr>
-                                <td>&emsp;Tgl Kembali</td>
+                                <td>&emsp;Status</td>
                                 <td>&emsp;<span class="badge badge-text badge-danger">Belum Kembali</span>&emsp;</td>
                             </tr>
                         {% else %}
                             <tr>
+                                <td>&emsp;Status</td>
+                                <td>&emsp;<span class="badge badge-success">Kembali</span>&emsp;</td>
+                            </tr>
+                            <tr>
                                 <td>&emsp;Tgl Kembali</td>
-                                <td>&emsp;{{transaksi.tgl_kembali}} <span class="badge badge-success">Kembali</span>&emsp;</td>
+                                <td>&emsp;{{ transaksi.tgl_kembali|date:'d F Y' }} ( {{ transaksi.tgl_kembali|date:'H:i T' }} )&emsp;</td>
                             </tr>
                         {% endif %}
                     {% endif %}

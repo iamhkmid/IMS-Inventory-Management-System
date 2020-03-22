@@ -115,16 +115,14 @@ class InvUpdateView(LoginRequiredMixin, UpdateView):
     model = Barang
     template_name = "inventory/inv_update.html"
 
-    def form_valid(self, form):
-        """If the form is valid, redirect to the supplied URL."""
-        self.form = form
-        return HttpResponseRedirect(self.get_success_url())
-
     def dispatch(self, request, *args, **kwargs):
         barang_obj = Barang.objects.get(id_barang=self.kwargs['pk'])
+        self.old_amount = barang_obj.jumlah
+        self.old_date = barang_obj.tgl_pengadaan
+        self.old_id_barang = barang_obj.id_barang
         if check_transaction(self.kwargs['pk']):
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Barang sudah tercatat dalam transaksi</h4>')
-        elif barang_obj.tgl_pengadaan.month != datetime.now().month or barang_obj.tgl_pengadaan.year != datetime.now().year:
+        elif barang_obj.is_past_due:
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Hanya dapat mengedit Barang yang tercatat pada tahun dan bulan ini!</h4>')
         return super().dispatch(request, *args, **kwargs)
 
@@ -133,23 +131,22 @@ class InvUpdateView(LoginRequiredMixin, UpdateView):
         barang_obj.jumlah_b = self.object.jumlah - barang_obj.jumlah_rr
         barang_obj.user_updated = user_updated(self)
         barang_obj.save()
-        id_barang = self.form.cleaned_data['id_barang']
         get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
         
         if self.object.jenis == "Persediaan":
             try:
-                mutasi_obj = Mutasi.objects.all().filter(id_barang=id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=id_barang)
-                mutasi_obj.id_barang = self.object.id_barang
+                mutasi_obj = Mutasi.objects.filter(id_barang=self.object.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=self.object.id_barang)
                 mutasi_obj.nama_barang = self.object.nama
                 mutasi_obj.kategori = self.object.id_kategori.id_kategori
                 mutasi_obj.id_satker = self.object.id_tempat.id_ruang.id_satker
                 mutasi_obj.tgl_mutasi = self.object.tgl_pengadaan
                 mutasi_obj.nilai_barang = self.object.nilai_barang
-                mutasi_obj.masuk = self.object.jumlah
+                mutasi_obj.masuk = mutasi_obj.masuk - (self.old_amount - self.object.jumlah)
                 mutasi_obj.user_updated = user_updated(self)
                 mutasi_obj.save()
                 messages.success(self.request, 'Data barang dan mutasi diperbarui.')
             except Exception as err:
+                print(err)
                 messages.error(self.request, 'Gagal update mutasi, hubungi administrator untuk update manual.')
         else:
             messages.success(self.request, 'Data barang diperbarui.')
@@ -171,6 +168,7 @@ class InvConditionUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         barang_obj = Barang.objects.get(id_barang=self.object.id_barang)
+        barang_obj.in_transaction = True
         barang_obj.user_updated = user_updated(self)
         barang_obj.save()
         messages.success(self.request, 'Kondisi barang diperbarui.')
@@ -197,10 +195,9 @@ class InvDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         barang_obj = Barang.objects.get(id_barang=self.kwargs['pk'])
-        get_date = barang_obj.tgl_pengadaan
         if check_transaction(self.kwargs['pk']):
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Barang sudah tercatat dalam transaksi</h4>')
-        elif get_date.month != datetime.now().month or get_date.year != datetime.now().year:
+        elif barang_obj.is_past_due:
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Hanya dapat menghapus barang yang tercatat pada tahun dan bulan ini!</h4>')
         return super().dispatch(request, *args, **kwargs)
     

@@ -91,7 +91,7 @@ class Barang(models.Model):
 
     def get_absolute_url(self):
         url_slug = {'slug': self.slug}
-        return reverse('inventory:detail', kwargs={'pk': self.id_barang})
+        return reverse('inventory:barang_detail', kwargs={'pk': self.id_barang})
 
     def __str__(self):
         return "{} - {}".format(self.id_barang, self.nama)

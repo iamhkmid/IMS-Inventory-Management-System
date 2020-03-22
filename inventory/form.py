@@ -27,7 +27,6 @@ class BarangForm(ModelForm):
 	jenis			= forms.TypedChoiceField(choices=JENIS, widget=forms.RadioSelect())
 	tgl_pengadaan	= forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
 	keterangan		= forms.CharField(widget=forms.Textarea(), required=False)
-	user_updated	= forms.CharField(widget=forms.HiddenInput(),required=False)
 
 	class Meta:
 		model = Barang
@@ -78,26 +77,16 @@ class UpdateBarangForm(ModelForm):
 		('Unite','Unite'),
 		('Roll','Roll')
 		)
-	
-	JENIS = (
-		('Inventaris', 'Inventaris'),
-		('Modal', 'Modal'),
-		('Persediaan', 'Persediaan')
-    )
-	
-	id_barang		= forms.CharField(required=True, widget=forms.TextInput(attrs={'autofocus': 'autofocus', 'placeholder': 'xxxxxxx (Length=7)', 'minlength' :'7', 'maxlength' :'7'}))
+		
+	nama			= forms.CharField(required=True, widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
 	satuan			= forms.ChoiceField(required=True, choices=SATUAN)
-	jenis			= forms.TypedChoiceField(choices=JENIS, widget=forms.RadioSelect())
 	tgl_pengadaan	= forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': 'YYYY-MM-DD HH:mm:ss.SSS'}), required=True)
 	keterangan		= forms.CharField(widget=forms.Textarea(), required=False)
-	user_updated	= forms.CharField(widget=forms.HiddenInput(),required=False)
 
 	class Meta:
 		model = Barang
 		fields = [
-			'id_barang',
 			'nama',
-			'jenis',
 			'jumlah_b',
 			'satuan',
 			'id_kategori',
@@ -111,12 +100,7 @@ class UpdateBarangForm(ModelForm):
 		id_barang = cleaned_data.get("id_barang")
 		jumlah_b = cleaned_data.get("jumlah_b")
 		nilai_barang = cleaned_data.get("nilai_barang")
-		tgl_pengadaan = cleaned_data.get("tgl_pengadaan")
 		get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
-	
-		if tgl_pengadaan is not None:
-			if get_tgl.year != tgl_pengadaan.year or get_tgl.month != tgl_pengadaan.month:
-				self.add_error('tgl_pengambilan', "Transaksi harus pada tahun dan bulan saat ini.")
 
 		if nilai_barang is not None:
 			if nilai_barang<500:

@@ -22,25 +22,6 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-sm">
-
-            <div class="pb-2">
-              <div class="md-form">
-                {% if form.is_bound %}
-                  {% if form.id_barang.errors %}
-                    {% render_field form.id_barang class="form-control is-invalid"%}
-                    {% for error in form.id_barang.errors %}
-                      <div class="invalid-feedback">{{ error }}</div>
-                    {% endfor %}
-                  {% else %}
-                    {% render_field form.id_barang class="form-control is-valid"%}
-                    <div class="valid-feedback">Ok</div>
-                  {% endif %}
-                {% else %}
-                  {% render_field form.id_barang class+="form-control"%}
-                {% endif %}
-                <label for="{{form.id_barang.id_for_label}}">{{form.id_barang.label}} :</label>
-              </div>
-            </div>
                   
             <div class="pb-1">
               <div class="md-form">
@@ -58,40 +39,6 @@
                   {% render_field form.nama class+="form-control"%}
                 {% endif %}
                 <label  for="{{form.nama.id_for_label}}">{{form.nama.label}} :</label>
-              </div>
-            </div>
-                
-            <div class="pb-2">
-              <div class="md-form">
-                <label for="{{form.jenis.id_for_label}}">{{form.jenis.label}} :</label> <br>
-                {% if form.is_bound %}
-                  {% if form.jenis.errors %}
-                    {% for x, value in form.jenis.field.choices %}
-                      <div class="form-check form-check-inline">
-                        <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input is-invalid" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
-                        <label class="form-check-label" for="{{x}}">{{ value }}</label>
-                      </div>
-                    {% endfor %}
-                    {% for error in form.jenis.errors %}
-                      <div class="invalid-feedback d-block pt-2">{{ error }}</div>
-                    {% endfor %}
-                  {% else %}
-                    {% for x, value in form.jenis.field.choices %}
-                      <div class="form-check form-check-inline">
-                        <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
-                        <label class="form-check-label" for="{{x}}">{{ value }}</label>
-                      </div>
-                    {% endfor %}
-                    <div class="valid-feedback d-block pt-2">Ok</div>
-                  {% endif %}
-                {% else %}
-                  {% for x, value in form.jenis.field.choices %}
-                    <div class="form-check form-check-inline">
-                      <input {% if form.jenis.value == value %} checked {% endif %} type="radio" class="form-check-input" id="{{x}}" name="{{form.jenis.name}}" value="{{value}}" required>
-                      <label class="form-check-label" for="{{x}}">{{ value }}</label>
-                    </div>
-                  {% endfor %}
-                {% endif %}
               </div>
             </div>
             
@@ -122,27 +69,26 @@
                 </div>
               </div>
             </div>
-                
-            <div class="md-form">
-              {% if form.is_bound %}
-                {% if form.nilai_barang.errors %}
-                  {% render_field form.nilai_barang class+="form-control is-invalid"%}
-                  {% for error in form.nilai_barang.errors %}
-                    <div class="invalid-feedback">{{ error }}</div>
-                  {% endfor %}
-                {% else %}
-                  {% render_field form.nilai_barang class+="form-control is-valid" %}
-                  <div class="valid-feedback">Ok</div>
-                {% endif %}
-              {% else %}
-                {% render_field form.nilai_barang class+="form-control" min=1%}
-              {% endif %}
-              <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
-            </div>
-          
-          </div>
-          <div class="col-sm">
             
+            <div class="pb-2">
+              <div class="md-form">
+                {% if form.is_bound %}
+                  {% if form.nilai_barang.errors %}
+                    {% render_field form.nilai_barang class+="form-control is-invalid"%}
+                    {% for error in form.nilai_barang.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% else %}
+                    {% render_field form.nilai_barang class+="form-control is-valid" %}
+                    <div class="valid-feedback">Ok</div>
+                  {% endif %}
+                {% else %}
+                  {% render_field form.nilai_barang class+="form-control" min=1%}
+                {% endif %}
+                <label for="{{form.nilai_barang.id_for_label}}">{{form.nilai_barang.label}} :</label>
+              </div>
+            </div>
+
             <div class="pb-3">
               <div class="md-form">
                 {% if form.is_bound %}
@@ -163,6 +109,9 @@
                 <label for="{{form.id_kategori.id_for_label}}">Kategori :</label>
               </div>
             </div>
+          
+          </div>
+          <div class="col-sm">
           
           <div class="pb-3">
             <div class="md-form input-group date" id="datetimepicker1" data-target-input="nearest">

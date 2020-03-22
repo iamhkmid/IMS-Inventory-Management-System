@@ -37,9 +37,37 @@ class TransDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         transaksi_obj = Transaksi.objects.get(id_transaksi=self.kwargs['pk'])
+        self.old_amount = transaksi_obj.jumlah
+        self.id_barang = transaksi_obj.id_barang.id_barang
         if transaksi_obj.tgl_pengambilan.month != datetime.now().month or transaksi_obj.tgl_pengambilan.year != datetime.now().year:
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Hanya dapat menghapus transaksi yang tercatat pada tahun dan bulan saat ini!</h4>')
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        try:
+            barang_obj = Barang.objects.get(id_barang=self.id_barang)
+            barang_obj.jumlah_b = barang_obj.jumlah_b + self.old_amount
+            barang_obj.save()
+        except Exception as err:
+            messages.error(self.request, 'Gagal update data barang, hubungi administrator untuk update manual.')
+        try:
+            get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
+            mutasi_obj = Mutasi.objects.filter(id_barang=self.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=self.id_barang)
+            # update Mutasi obj
+            mutasi_obj.keluar = mutasi_obj.keluar - self.old_amount
+            mutasi_obj.user_updated = user_updated(self)
+            if mutasi_obj.masuk == 0 and mutasi_obj.keluar == 0:
+                mutasi_obj.delete()
+            else:
+                mutasi_obj.save()
+        except Exception as err:
+            messages.error(self.request, 'Gagal update data mutasi, hubungi administrator untuk update manual.')
+
+        if self.success_url:
+            return self.success_url.format(**self.object.__dict__)
+        else:
+            raise ImproperlyConfigured(
+                "No URL to redirect to. Provide a success_url.")
 
 
 class FormPeminjamanView(LoginRequiredMixin, CreateView):
@@ -75,7 +103,7 @@ class FormHabispakaiView(LoginRequiredMixin, CreateView):
 
         get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
         try:
-            mutasi_obj = Mutasi.objects.all().filter(id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=barang_obj.id_barang)
+            mutasi_obj = Mutasi.objects.filter(id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=barang_obj.id_barang)
             # update Barang obj
             barang_obj.jumlah_b = barang_obj.jumlah_b - jumlah
             barang_obj.in_transaction = True
@@ -160,6 +188,7 @@ class HabisPakaiUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         transaksi_obj = Transaksi.objects.get(id_transaksi=self.kwargs['pk'])
+        self.old_amount = transaksi_obj.jumlah
         if transaksi_obj.tgl_pengambilan.month != datetime.now().month or transaksi_obj.tgl_pengambilan.year != datetime.now().year:
             return HttpResponseNotFound('<h1>Access denied</h1><h4>Hanya dapat mengedit transaksi yang tercatat pada tahun dan bulan saat ini!</h4>')
         return super().dispatch(request, *args, **kwargs)
@@ -172,7 +201,7 @@ class HabisPakaiUpdateView(LoginRequiredMixin, UpdateView):
         get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
         try:
             # update Barang obj
-            barang_obj.jumlah_b = barang_obj.jumlah_b - (jumlah - self.object.jumlah)
+            barang_obj.jumlah_b = barang_obj.jumlah_b - (jumlah - self.old_amount)
             barang_obj.in_transaction = True
             barang_obj.user_updated = user_updated(self)
             barang_obj.save()
@@ -181,15 +210,14 @@ class HabisPakaiUpdateView(LoginRequiredMixin, UpdateView):
 
         try:
             # update Mutasi obj
-            mutasi_obj = Mutasi.objects.all().filter(id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=barang_obj.id_barang)
+            mutasi_obj = Mutasi.objects.filter(id_barang=barang_obj.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=barang_obj.id_barang)
             mutasi_obj.id_barang = barang_obj.id_barang
             mutasi_obj.nama_barang = barang_obj.nama
             mutasi_obj.kategori = barang_obj.id_kategori.id_kategori
             mutasi_obj.id_satker = barang_obj.id_tempat.id_ruang.id_satker
             mutasi_obj.tgl_mutasi = tgl_pengambilan
             mutasi_obj.nilai_barang = barang_obj.nilai_barang
-            mutasi_obj.jumlah_awal = mutasi_obj.jumlah_awal - (jumlah - self.object.jumlah)
-            mutasi_obj.keluar = mutasi_obj.keluar + (jumlah - self.object.jumlah)
+            mutasi_obj.keluar = mutasi_obj.keluar + (jumlah - self.old_amount)
             mutasi_obj.user_updated=user_updated(self)
             mutasi_obj.save()
         except Exception as err:

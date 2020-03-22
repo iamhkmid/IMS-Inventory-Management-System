@@ -37,7 +37,7 @@ body {
   
 
   
-  @media(min-width: 900px) {
+@media(min-width: 990px) {
     .content {
       padding-left: 240px;
     }
@@ -59,4 +59,38 @@ body {
     bottom: 40px;
     right: 10px;
     margin-top: 0;
+}
+
+.fa-angle-left-animated {
+    animation-name: collapse-icon-animation;
+    animation-duration: 0.15s;
+    animation-direction: normal;
+    animation-timing-function: linear;
+    animation-fill-mode:forwards;
+}
+
+.fa-angle-right-animated {
+    animation-name: collapse-icon-animation-reverse;
+    animation-duration: 0.25s;
+    animation-direction: normal;
+    animation-timing-function: linear;
+    animation-fill-mode:forwards;
+}
+
+@keyframes collapse-icon-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes collapse-icon-animation-reverse {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
