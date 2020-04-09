@@ -1,6 +1,9 @@
 <div class="col-lg-8 ">
     <div class="bg-white p-5 rounded shadow h-100">
-      <h4 class="jd1">Form Report Inventaris</h4>
+      <h4 class="jd1 d-inline">Form Report Inventaris</h4>
+      <a href="#" data-activates="slide-out" id="toggler-btn" class="navbar-toggler button-collapse d-inline" type="button">
+    <span id="clpse-icon" class="fas fa-chevron-right "></span>
+    </a>
       <hr align="left" width="auto" />
       {% if messages %}
         {% for message in messages %}
@@ -14,6 +17,25 @@
       {% csrf_token %}
       <div class="row">
         <div class="col-sm">
+            <div class="md-form pb-2">
+              {% if form.is_bound %}
+                {% if form.id_barang.errors %}
+                  {% render_field form.id_barang class="mdb-select is-invalid" searchable="Search here.."%}
+                  <div class="invalid-feedback feedback-icon d-block"><i class="fa fa-times"></i></div>
+                  {% for error in form.id_barang.errors %}
+                    <div class="invalid-feedback d-block pt-2">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field form.id_barang class="mdb-select is-valid" searchable="Search here.."%}
+                  <div class="valid-feedback feedback-icon d-block"><i class="fa fa-check"></i></div>
+                  <div class="valid-feedback d-block pt-2">Ok</div>
+                {% endif %}
+              {% else %}
+                {% render_field form.id_barang class="mdb-select" searchable="Search here.."%}
+              {% endif %}
+              <label for="{{form.id_barang.id_for_label}}">Id barang :</label>
+            </div>
+            
             <label for="id_satker">Satker:</label>
             <div class="form-group border rounded">
             <select name="satker" class="form-control selectpicker" data-live-search="true" id="id_satker">

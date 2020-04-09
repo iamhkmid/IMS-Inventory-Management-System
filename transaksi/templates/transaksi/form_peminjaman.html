@@ -9,7 +9,10 @@
 {% block contents1 %}
 <div class="col-lg-10 centered mb-4 col-centered">
   <div class="bg-white p-5 rounded shadow h-100">
-    <h4 class="jd1">FORM PEMINJAMAN</h4>
+    <h4 class="jd1 d-inline">FORM PEMINJAMAN</h4>
+    <a href="#" data-activates="slide-out" id="toggler-btn" class="navbar-toggler button-collapse d-inline" type="button">
+    <span id="clpse-icon" class="fas fa-chevron-right "></span>
+    </a>
     <hr align="left" width="350" />
     {% if messages %}
       {% for message in messages %}

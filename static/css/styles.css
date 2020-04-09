@@ -94,3 +94,8 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.txt-nav{
+    font-weight: normal;
+    font-size: 15px;
+}
