@@ -25,7 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 #SECRET_KEY = 'h-u7e@4!ldu@x(o=+yc33tdfqmi)x@ihqo8y2(k24(pr5qzdsj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['ims-online.herokuapp.com']
 
