@@ -162,7 +162,7 @@ class ConditionUpdateForm(ModelForm):
         jumlah_rb = cleaned_data.get("jumlah_rb")
         jumlah_hl = cleaned_data.get("jumlah_hl")
 
-        if jumlah_b is not None and jumlah_rr is not None:
+        if jumlah_b is not None and jumlah_rr is not None and jumlah_rb is not None and jumlah_hl is not None:
             total1 = self.instance.jumlah_b + self.instance.jumlah_rr + \
                 self.instance.jumlah_rb + self.instance.jumlah_hl
             total2 = jumlah_b + jumlah_rr + jumlah_rb + jumlah_hl
