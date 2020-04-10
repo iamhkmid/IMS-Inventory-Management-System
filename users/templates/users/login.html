@@ -10,7 +10,10 @@
 	{% include "snippets/styles.html" %}
 </head>
 <body>
-  <div class="col-lg-8 p-5 centered mb-4 col-centered">
+  <div class="loader-wrapper fixed">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <div class="preloader col-lg-8 p-5 centered mb-4 col-centered">
     <div class="bg-white p-4 shadow h-100">
       <h4 class="jd1">LOGIN</h4>
       <hr align="left" width="350" />
@@ -62,20 +65,12 @@
             <label  for="{{form.password.id_for_label}}">{{form.password.label}} :</label>
           </div>
         </div>
-
-
         <div class="col-8 col-centered">
         <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
         </div>
-
-        
-        
-
-              
         </form>
     </div>
   </div>
-
 	{% include "snippets/scripts.html" %}
 </body>
 </html>
