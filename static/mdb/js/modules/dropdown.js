@@ -230,7 +230,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             if (activates.hasClass('active')) {
               $(document).bind("click.".concat(activates.attr('id'), " touchstart.").concat(activates.attr('id')), function (e) {
-                if (!activates.is(e.target) && !origin.is(e.target) && !activates.find(e.target).length) {
+                if (!activates.is(e.target) && !origin.is(e.target) && !origin.find(e.target).length) {
                   hideDropdown();
                   $(document).unbind("click.".concat(activates.attr('id'), " touchstart.").concat(activates.attr('id')));
                 }
