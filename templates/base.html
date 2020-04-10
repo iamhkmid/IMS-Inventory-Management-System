@@ -1,155 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-	<title>
-		{% block page_title %}
-			
-		{% endblock page_title %}
-	</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
-	{% include "snippets/styles.html" %}
-</head>
-<body class="fixed-sn white-skin ">
-      <!-- Sidebar navigation -->
-      <div id="slide-out" class="side-nav fixed bg-sidenav darken-4 ">
-        <ul class="custom-scrollbar">
-          <!-- Logo -->
-          <li class="bg-white ml-2 mr-2 pt-1 pb-1">
-            <div class="logo-wrapper waves-light m-3">
-            <h5 class="text-dark shadow"><b>INVENTORY MANAGEMENT SYSTEM</b></h5>
-              <!--<a href="#"><img src="{% static 'img/logo6.png' %}" class="img-fluid flex-center"></a>-->
-            </div>
-          </li>
+  <head>
+    <title>
+      {% block page_title %}
+        
+      {% endblock page_title %}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    {% include "snippets/styles.html" %}
+  </head>
+  <body>
+    <div class="loader-wrapper fixed">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <div class="preloader fixed-sn white-skin">
+      {% include "snippets/sidebar.html" %}
 
-		  
-          
-          <!-- Side navigation links -->
-          <li>
-            <ul class="collapsible collapsible-accordion">
-              <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if  'barang' in request.path %} active {% endif %}"><i class="fas fa-database"></i> INVENTORY<i
-                    class="fas fa-angle-down rotate-icon"></i></a>
-                <div class="collapsible-body">
-                  <ul class="list-unstyled mr-2">
-                    <li> <a href="{% url 'inventory:barang_list' %}" class="waves-effect bg-dropdown mt-1 {% if  'list/barang' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Inventory</a>
-                    </li>
-                    <li> <a href="{% url 'inventory:barang_add' %}" class="waves-effect bg-dropdown mt-1 {% if  'add/barang' in request.path and 'existing' not in request.path%} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah Data</a>
-                    </li>
-                    <li><a href="{% url 'inventory:barang_add_existing' %}" class="waves-effect bg-dropdown mt-1 {% if  'add-existing/barang' in request.path %} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah yang sudah ada</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if  'transaksi' in request.path %} active {% endif %}"><i class="fas fa-database"></i> TRANSAKSI<i
-                    class="fas fa-angle-down rotate-icon"></i></a>
-                <div class="collapsible-body">
-                  <ul class="list-unstyled mr-2">
-                    <li> <a href="{% url 'transaksi:transaksi_list' %}" class="waves-effect bg-dropdown mt-1 {% if  '/transaksi/list/' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Transaksi</a>
-                    </li>
-                    <li> <a href="{% url 'transaksi:transaksi_form1' %}" class="waves-effect bg-dropdown mt-1 {% if  '/transaksi/form/peminjaman' in request.path %} active {% endif %}"><i class="fas fa-pen"></i>Peminjaman</a>
-                    </li>
-                    <li> <a href="{% url 'transaksi:transaksi_form2' %}" class="waves-effect bg-dropdown mt-1 {% if  '/transaksi/form/pengembalian' in request.path %} active {% endif %}"><i class="fas fa-pen"></i>Pengembalian</a>
-                    </li>
-                    <li> <a href="{% url 'transaksi:transaksi_form3' %}" class="waves-effect bg-dropdown mt-1 {% if  '/transaksi/form/habispakai' in request.path %} active {% endif %}"><i class="fas fa-pen"></i>Habis Pakai</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-			  <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if  'report' in request.path and 'mutasi' not in request.path %} active {% endif %}"><i class="fas fa-file-alt"></i>LAPORAN<i
-                    class="fas fa-angle-down rotate-icon"></i></a>
-                <div class="collapsible-body">
-                  <ul class="list-unstyled mr-2">
-                    <li> <a href="{% url 'report:form_inventaris' %}" class="waves-effect bg-dropdown mt-1 {% if  '/form/inventaris/' in request.path %} active {% endif %}"><i class="fas fa-print"></i>B. Inventaris</a>
-                    </li>
-                    <li> <a href="{% url 'report:form_modal' %}" class="waves-effect bg-dropdown mt-1 {% if  '/form/modal/' in request.path %} active {% endif %}"><i class="fas fa-print"></i>B. Modal</a>
-                    </li>
-                    <li> <a href="{% url 'report:form_inventaris_modal' %}" class="waves-effect bg-dropdown mt-1 {% if  '/form/inventaris&modal/' in request.path %} active {% endif %}"><i class="fas fa-print"></i>B. Inventaris & B. Modal</a>
-                    </li>
-                    <li> <a href="{% url 'report:form_peminjaman' %}" class="waves-effect bg-dropdown mt-1 {% if  '/form/peminjaman' in request.path %} active {% endif %}"><i class="fas fa-print"></i>B. Peminjaman</a>
-                    </li>
-                    <li> <a href="{% url 'report:form_persediaan' %}" class="waves-effect bg-dropdown mt-1 {% if  '/form/persediaan' in request.path %} active {% endif %}"><i class="fas fa-print"></i>B. Persediaan</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-			  <li><a href="{% url 'report:mutasi' %}" class="waves-effect bg-list mt-1 {% if  'list/mutasi' in request.path %} active {% endif %}"><i class="fas fa-list"></i>DATA MUTASI</a>
-                    </li>
-
-        <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if  'kategori' in request.path %} active {% endif %}"><i class="fas fa-layer-group"></i>KELOLA KATEGORI<i
-              class="fas fa-angle-down rotate-icon"></i></a>
-          <div class="collapsible-body">
-            <ul class="list-unstyled mr-2">
-              <li> <a href="{% url 'inventory:kategori_list' %}" class="waves-effect bg-dropdown mt-1 {% if  'list/kategori' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Kategori</a>
-              </li>
-              <li> <a href="{% url 'inventory:kategori_add' %}" class="waves-effect bg-dropdown mt-1 {% if  'add/kategori' in request.path %} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah Kategori</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-			  <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if  'satker' in request.path and 'tempat' not in request.path and 'ruang' not in request.path%} active {% endif %}"><i class="fas fa-briefcase"></i>KELOLA SATUAN KERJA<i
-              class="fas fa-angle-down rotate-icon"></i></a>
-          <div class="collapsible-body">
-            <ul class="list-unstyled mr-2">
-              <li> <a href="{% url 'satker:list' %}" class="waves-effect bg-dropdown mt-1 {% if  'satker/list' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Satker</a>
-              </li>
-              <li> <a href="{% url 'satker:add' %}" class="waves-effect bg-dropdown mt-1 {% if  'satker/add' in request.path %} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah Satker</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <li><a class="collapsible-header bg-list mt-1 waves-effect arrow-r {% if 'ruang' in request.path or 'tempat' in request.path%} active {% endif %}"><i class="fas fa-thumbtack"></i>KELOLA LOKASI INV<i
-              class="fas fa-angle-down rotate-icon"></i></a>
-          <div class="collapsible-body">
-            <ul class="list-unstyled mr-2">
-              <li> <a href="{% url 'satker:ruang_list' %}" class="waves-effect bg-dropdown mt-1 {% if  'list/ruang' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Ruang</a>
-              </li>
-              <li> <a href="{% url 'satker:ruang_add' %}" class="waves-effect bg-dropdown mt-1 {% if  'add/ruang' in request.path %} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah Ruang</a>
-              </li>
-              <li> <a href="{% url 'satker:tempat_list' %}" class="waves-effect bg-dropdown mt-1 {% if  'list/tempat' in request.path %} active {% endif %}"><i class="fas fa-list"></i>Data Lemari/Rak</a>
-              </li>
-              <li> <a href="{% url 'satker:tempat_add' %}" class="waves-effect bg-dropdown mt-1 {% if  'add/tempat' in request.path %} active {% endif %}"><i class="fas fa-plus-circle"></i>Tambah Lemari/Rak</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-              
-			  
-          <!--/. Side navigation links -->
-        </ul>
-        <div class="sidenav-bg mask-strong "></div>
-      </div>
-      <!--/. Sidebar navigation -->
-
-
-  <div id="content" class="content pt-3">
-
-<div class="col pb-2">
-  <div class="bg-white pt-2 pb-2 shadow h-100">
-    <div class="row pr-3">
-      <div class="col-sm-8">
-        <a href="#" data-activates="slide-out" id="toggler-btn" class="navbar-toggler button-collapse" type="button">
-          <span id="clpse-icon" class="fas fa-chevron-right "></span>
-        </a>
-        <h6 class="jd1 text-1 mt-2 d-inline">{{request.path}}</h6>
-      </div>
-      <div class="col-sm-4 text-right">
-        <p class="card-text text-dark d-inline">{% if user.get_full_name %} {{user.get_full_name}} {% else %} {{user.get_username}} {% endif %}</p>
-        <a class="btn ink-reaction btn-rounded btn-sm btn-mdb-color d-inline" href="{% url 'users:logout' %}">Logout</a> 
+      <div id="content" class="content pt-3">
+      {% include "snippets/infobar.html" %}
+      {% block contents1 %}{% endblock contents1 %}
+      {% block contents2 %}{% endblock contents2 %}
       </div>
     </div>
-  </div>
-</div>
-
-{% block contents1 %}
-			
-{% endblock contents1 %}
-{% block contents2 %}
-		
-{% endblock contents2 %}
-  </div>
-
-	{% include "snippets/scripts.html" %}
-</body>
+    {% include "snippets/scripts.html" %}
+  </body>
 </html>

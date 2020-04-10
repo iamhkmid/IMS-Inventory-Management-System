@@ -10,6 +10,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{% static 'mdb/js/mdb.min.js' %}"></script>
 
+
 <!-- Datatables -->
 <script type="text/javascript" src="{% static 'mdb/js/addons/datatables.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'vendor/tabletools/js/dataTables.bootstrap4.min.js' %}"></script>
@@ -37,13 +38,17 @@
 
 <!-- windowpopup -->
 <script type="text/javascript" src="{% static 'js/windowpopup.js' %}"></script>
-
+<script type="text/javascript" >
+  $(window).on("load",function(){
+      $(".loader-wrapper").fadeOut("slow");
+      $(".preloader").fadeIn("slow");
+  });
+</script>
 <!-- mdb_select -->
 <script type="text/javascript" >
 // Material Select Initialization
 $(document).ready(function() {
 $('.mdb-select').materialSelect();
-
 });
 </script>
 
