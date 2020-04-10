@@ -83,7 +83,7 @@ class InvAddView(LoginRequiredMixin, CreateView):
             mutasi_obj = Mutasi(
                 id_barang = self.object.id_barang,
                 nama_barang = self.object.nama,
-                kategori = self.object.id_kategori.nama,
+                kategori = self.object.id_kategori.id_kategori,
                 id_satker = tempat_obj.id_ruang.id_satker,
                 tgl_mutasi = self.object.tgl_pengadaan,
                 nilai_barang = self.object.nilai_barang,

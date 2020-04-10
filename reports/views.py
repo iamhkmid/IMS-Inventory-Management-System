@@ -278,7 +278,7 @@ class ReportsPersediaanView(LoginRequiredMixin, ListView):
         amount2 = []
         print(category_list)
         for category in category_list:
-            mutasi_list = Mutasi.objects.filter(tgl_mutasi__year=get_year, tgl_mutasi__month=get_month, kategori=category).values_list(
+            mutasi_list = Mutasi.objects.filter(tgl_mutasi__year=get_year, tgl_mutasi__month=get_month, id_kategori=category).values_list(
                 'jumlah_awal', 'nilai_barang', 'masuk', 'keluar')
             category_obj = Kategori.objects.get(id_kategori=category)
             total_value = 0
