@@ -350,6 +350,12 @@ class BarcodePrintView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         barang_obj = Barang.objects.get(id_barang=self.kwargs['pk'])
+        EAN = barcode.get_barcode_class('ean8')
+        ean = EAN(barang_obj.id_barang, writer=ImageWriter())
+        ean.save(os.path.join('static/media/barcodes/' + barang_obj.id_barang))
+        barcode_loc = "media/barcodes/" + barang_obj.id_barang + ".png"
+        barang_obj.barcode = barcode_loc
+        barang_obj.save()
         dict = {
             1: "Januari", 2: "Februari", 3: "Maret", 4: "April", 5: "Mei",
             6: "Juni", 7: "Juli", 8: "Agustus", 9: "September", 10: "Oktober",
