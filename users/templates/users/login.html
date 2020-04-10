@@ -90,11 +90,17 @@
       $(".preloader").fadeIn("slow");
   });
 </script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="{% static 'mdb/js/popper.min.js' %}"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="{% static 'mdb/js/bootstrap.js' %}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{% static 'mdb/js/mdb.min.js' %}"></script>
+  <script type="text/javascript" >
+$(document).ready(function() {
+$('.mdb-select').materialSelect();
+});
+</script>
 </body>
 </html>
