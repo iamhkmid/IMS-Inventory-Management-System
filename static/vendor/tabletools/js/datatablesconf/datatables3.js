@@ -1,6 +1,9 @@
 $(document).ready(function() {
   
     var table = $('#datatables3').DataTable( {
+        displayLength: 5,
+        lengthMenu: [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
+        pagingType: "full_numbers",
         "columnDefs": [{
             "targets": '_all',
             "createdCell": function (td, cellData, rowData, row, col) {
@@ -8,16 +11,4 @@ $(document).ready(function() {
             }
         }],
     } );
-    $('#datatables_wrapper .dataTables_filter').find(
-        'input').each(function () {
-        $('input').attr("placeholder", "Type here ..");
-      });
-      $('#datatables_wrapper .dataTables_filter').addClass(
-        'md-form');
-    
-    $('#datatables_wrapper .dataTables_filter').addClass('align-right');
-    table.buttons().container()
-        .appendTo( '#datatables_wrapper .col-md-6:eq(0)' );
-        
-    
-} ); 
+} );

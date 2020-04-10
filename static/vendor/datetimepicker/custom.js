@@ -10,6 +10,11 @@ $(function () {
         vertical: 'bottom',
         horizontal: 'right',
     });
+    $('#datetimepicker3').datetimepicker({
+        format: 'YYYY-MM',
+        vertical: 'bottom',
+        horizontal: 'right',
+    });
 });
 
 

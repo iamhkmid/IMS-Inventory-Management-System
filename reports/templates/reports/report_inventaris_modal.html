@@ -9,7 +9,7 @@
 <html>
   <head>
     <title>
-      Laporan {{report_type}} - {{get_satker}} - {{date_report}}
+      Laporan Inventaris - {{get_satker}} - {{date_report}}
     </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
@@ -21,21 +21,21 @@
       <div class="bg-white layout-print rounded ">
       <div align="center">
       <div style="display: inline-block; text-align: left;">
-        <h5 class="txt1" >DAFTAR INVENTARISASI UPN "VETERAN" YOGYAKARTA</h5>
+        <h5 class="txt1" >DAFTAR {{report_name}} UPN "VETERAN" YOGYAKARTA</h5>
         <h6 class="txt2" >PADA SATKER&emsp;&emsp;: {{get_satker}}</h6>
         <h6 class="txt2" >KEADAAN PADA&emsp;: {{date_report}}</h6>
       </div>
       </div>
         <hr align="center" width="auto" />
           <div class="noprint">
-          <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
-          <a class="btn btn-secondary" href="{% url 'reports:ReportForm' report_type %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+          <a class="btn btn-mdb-color btn-rounded" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
+          <a class="btn btn-elegant btn-rounded" href="{% url url_back %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
           <hr align="left" width="350" />
           </div>
           <table class="table table-bordered" style="width:100%">
                 <thead >
                     <tr>
-                        <th class="text-center align-middle" rowspan="2">NO</th>
+                        <th class="text-center align-middle" width="8%" rowspan="2">ID</th>
                         <th class="text-center align-middle " style="width: 30%" rowspan="2">NAMA BARANG</th>
                         <th class="text-center align-middle" rowspan="2">SATUAN</th>
                         <th class="text-center align-middle" rowspan="2">JUMLAH</th>
@@ -43,10 +43,10 @@
                         <th class="text-center align-middle" colspan="4">KEADAAN</th>
                     </tr>
                     <tr>
-                        <th class="text-center align-middle">B</th>
-                        <th class="text-center align-middle">RR</th>
-                        <th class="text-center align-middle">RB</th>
-                        <th class="text-center align-middle">HL</th>
+                        <th class="text-center align-middle" width="4%">B</th>
+                        <th class="text-center align-middle" width="4%">RR</th>
+                        <th class="text-center align-middle" width="4%">RB</th>
+                        <th class="text-center align-middle" width="4%">HL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,9 +56,9 @@
                       <td class="text-left txt4" colspan="8"><b>{{ ruang }}</b></td>
                   </tr>
                   {% for item in barang_list %}
-                    {% if item.id_tempat.id_tempat == id %}
+                    {% if item.id_tempat.id_ruang.id_ruang == id %}
                       <tr class="WithBorder">
-                          <td class="text-center">{{forloop.counter}}</td>
+                          <td class="text-center">{{ item.id_barang }}</td>
                           <td class="text-left">{{ item.nama }}</td>
                           <td class="text-center">{{item.satuan}}</td> 
                           <td class="text-center">{{item.jumlah}}</td>

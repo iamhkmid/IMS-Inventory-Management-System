@@ -1,9 +1,8 @@
 {% load static %}
-{% load bootstrap4 %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
 <head>
-{% bootstrap_css %}
     <title>Login</title>
 
 	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
@@ -11,11 +10,9 @@
 	{% include "snippets/styles.html" %}
 </head>
 <body>
-<div class="main-screen">
-
-  <div class="col-lg-8 centered mb-4 col-centered">
-    <div class="bg-white p-4 rounded shadow h-100">
-      <h4 class="jd1">Login</h4>
+  <div class="col-lg-8 p-5 centered mb-4 col-centered">
+    <div class="bg-white p-4 shadow h-100">
+      <h4 class="jd1">LOGIN</h4>
       <hr align="left" width="350" />
       {% if messages %}
         {% for message in messages %}
@@ -24,47 +21,60 @@
           </div>
         {% endfor %}
       {% endif %}
-        <form method='POST' action='{% url 'users:login' %}'>
+        <form method='POST' novalidate>
         {% csrf_token %}
-          <div class="form-group row ">
-            <div class="col-md-8 offset-md-2" >
-              <label for="username">Username</label>
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fas fa-user"></i></div>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Masukan Username Anda" name="username">
-                </div>
-              </div>
-            </div>
+        <div class="col-8 col-centered pb-1">
+          <div class="md-form">
+          <i class="fas fa-user fa-lg prefix"></i>
+            {% if form.is_bound %}
+              {% if form.username.errors %}
+                {% render_field form.username class="form-control is-invalid"%}
+                {% for error in form.username.errors %}
+                  <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              {% else %}
+                {% render_field form.username class="form-control is-valid" %}
+                <div class="valid-feedback">Ok</div>
+              {% endif %}
+            {% else %}
+              {% render_field form.username class+="form-control"%}
+            {% endif %}
+            <label  for="{{form.username.id_for_label}}">{{form.username.label}} :</label>
           </div>
-
-          <div class="form-group row ">
-            <div class="col-md-8 offset-md-2" >
-              <label for="username">Password</label>
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fas fa-unlock-alt"></i></div>
-                  </div>
-                  <input type="password" class="form-control" placeholder="Masukan Password Anda" name="password">
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-        <div class="col-md-8 offset-md-2">
-              <button type="submit" class="btn btn-primary">
-                  Login
-              </button>
         </div>
+        
+        <div class="col-8 col-centered">
+          <div class="md-form">
+          <i class="fas fa-unlock-alt prefix"></i>
+            {% if form.is_bound %}
+              {% if form.password.errors %}
+                {% render_field form.password class="form-control is-invalid"%}
+                {% for error in form.password.errors %}
+                  <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              {% else %}
+                {% render_field form.password class="form-control is-valid" %}
+                <div class="valid-feedback">Ok</div>
+              {% endif %}
+            {% else %}
+              {% render_field form.password class+="form-control"%}
+            {% endif %}
+            <label  for="{{form.password.id_for_label}}">{{form.password.label}} :</label>
+          </div>
+        </div>
+
+
+        <div class="col-8 col-centered">
+        <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
+        </div>
+
+        
+        
+
+              
         </form>
     </div>
   </div>
-
-</div>
 
 	{% include "snippets/scripts.html" %}
 </body>

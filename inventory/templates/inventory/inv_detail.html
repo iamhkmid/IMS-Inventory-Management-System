@@ -9,13 +9,10 @@
 
 
 {% block contents1 %}
-<div class="main-screen">
     <div class="col-lg-10 centered mb-4 col-centered">
-        <div class="bg-white p-4 rounded shadow h-100">
+        <div class="bg-white p-4 shadow h-100">
             <h4 class="jd1 d-inline">DETAIL ( {{barang.id_barang}} )</h4>
-            <a href="#" data-activates="slide-out" id="toggler-btn" class="navbar-toggler button-collapse d-inline" type="button">
-    <span id="clpse-icon" class="fas fa-chevron-right "></span>
-    </a>
+       
             <hr align="left" width="350" />
             {% if messages %}
             {% for message in messages %}
@@ -24,7 +21,7 @@
                 </div>
             {% endfor %}
             {% endif %}
-            <table class="table table-bordered" style="width:100%">
+            <table class="table table-sm table-striped table-bordered" style="width:100%">
                 <tbody>
                     <tr>
                         <td>&emsp;Id</td>
@@ -86,6 +83,59 @@
                     </tr>
                 </tbody>
             </table>
+                {% if barang.jenis == "Inventaris" or barang.jenis == "Modal"%}
+                    <div class="col-12">
+                        <div class="row" >
+                            <div class="col" align="right" >
+                                <a class="btn btn-sm btn-secondary btn-rounded" href="{% url 'inventory:barang_list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+                                <a class="btn btn-sm btn-dark btn-rounded" href="{% url 'inventory:barcode_print' barang.id_barang %}" role="button"><i class="fa fa-print"></i> Print Barcode</a>
+                                <button class="btn btn-primary btn-sm btn-rounded" type="button" data-toggle="collapse" data-target="#DataPeminjaman"
+                                    aria-expanded="false" aria-controls="DataPeminjaman">
+                                    Info Peminjaman <i class="fas fa-angle-down rotate-icon"></i>
+                                </button>   
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- / Collapse buttons -->
+
+                    <!-- Collapsible element -->
+                    <div class="collapse" id="DataPeminjaman">
+                    <hr align="left" width="auto" />
+                        <div class="mt-3">
+                            <table id="datatables3" class="table table-sm table-bordered" style="width:100%">
+                                <thead >
+                                    <tr>
+                                        <th width="5%">No</th>
+                                        <th>ID</th>
+                                        <th>Pengguna</th>
+                                        <th>Jumlah</th>
+                                        <th>Tgl Peminjaman</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in Peminjaman %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td> <a href="{% url 'transaksi:transaksi_detail' item.id_transaksi %}">{{ item.id_transaksi }}</a></td>
+                                        <td>{{ item.pengguna }}</td>
+                                        <td>{{ item.jumlah }}</td>
+                                        <td>{{ item.tgl_pengambilan|date:'d F Y' }} ( {{ barang.tgl_pengadaan|date:'H:i T' }} )</td>
+                                        <td align="center">
+                                        <a href="{% url 'transaksi:transaksi_detail' item.id_transaksi %}" role="button"><i class="fa fa-info-circle fa-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr align="left" width="auto" />
+                    </div>
+                    <br>
+                {% else %}
+                <a class="btn btn-sm btn-secondary btn-rounded" href="{% url 'inventory:barang_list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+                {% endif %}
             <div class="row">
                 <div class="col-4">
                     <table cellpadding="0">
@@ -97,22 +147,12 @@
                             <td><h6><small class="text-muted">UPDATED</small></h6></td>
                             <td><h6><small class="text-muted"> : {{barang.updated}}</small></h6></td>
                         </tr>
-                    </table>
-                    <a class="btn btn-sm btn-secondary btn-rounded" href="{% url 'inventory:barang_list' %}" role="button"><i class="fa fa-angle-left"></i> Kembali</a>
+                    </table>  
                 </div>
-                {% if barang.jenis == "Inventaris" or barang.jenis == "Modal"%}
-                <div class="col-8">
-                    <div class="row" >
-                        <div class="col" align="right" >
-                            <a class="btn btn-sm btn-dark btn-rounded" href="{% url 'inventory:barcode_print' barang.id_barang %}" role="button"><i class="fa fa-print"></i> Print Barcode</a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
+                
             </div>
         </div>
     </div>
-</div>
 
 
 {% endblock contents1 %}

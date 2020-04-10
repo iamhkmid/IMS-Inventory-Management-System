@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Barang, Tempat, Ruang, Satker, Kategori
+from transaksi.models import Transaksi
 from .form import *
 from datetime import datetime
 from reports.models import Mutasi
@@ -69,7 +70,7 @@ class InvAddView(LoginRequiredMixin, CreateView):
         satker_obj.save()
 
         #generate barcode if jenis = inventaris
-        if self.object.jenis == "Inventaris" or self.object.jenis == "Model":
+        if self.object.jenis == "Inventaris" or self.object.jenis == "Modal":
             EAN = barcode.get_barcode_class('ean8')
             ean = EAN(self.object.id_barang, writer=ImageWriter())
             ean.save(os.path.join('static/media/barcodes/' + self.object.id_barang))
@@ -202,12 +203,13 @@ class InvDeleteView(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
     
     def get_success_url(self):
-        try:
-            get_date = self.object.tgl_pengadaan
-            mutasi_obj = Mutasi.objects.filter(id_barang=self.object.id_barang, tgl_mutasi__month=get_date.month, tgl_mutasi__year=get_date.year).get(id_barang=self.object.id_barang)
-            mutasi_obj.delete()
-        except Exception as err:
-            messages.error(self.request, 'Gagal hapus mutasi, hubungi administrator untuk hapus manual.')
+        if self.object.jenis == "Persediaan":
+            try:
+                get_date = self.object.tgl_pengadaan
+                mutasi_obj = Mutasi.objects.filter(id_barang=self.object.id_barang, tgl_mutasi__month=get_date.month, tgl_mutasi__year=get_date.year).get(id_barang=self.object.id_barang)
+                mutasi_obj.delete()
+            except Exception as err:
+                messages.error(self.request, 'Gagal hapus mutasi, hubungi administrator untuk hapus manual.')
         success_url = reverse_lazy('inventory:barang_list')
         return success_url
 
@@ -216,6 +218,19 @@ class InvDetailView(LoginRequiredMixin, DetailView):
     model = Barang
     template_name = "inventory/inv_detail.html"
     context_object_name = 'barang'
+
+    def get_context_data(self, **kwargs):
+        """Insert the single object into the context dict."""
+        context = {}
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        transaksi_obj = Transaksi.objects.all().filter(id_barang = self.object, tgl_kembali = None)
+        context['Peminjaman'] = transaksi_obj
+        context.update(kwargs)
+        return super().get_context_data(**context)
 
 
 class InvAddExisting(LoginRequiredMixin, FormView):
@@ -329,8 +344,8 @@ class BarcodePrintView(LoginRequiredMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         barang_obj = Barang.objects.get(id_barang=self.kwargs['pk'])
-        if barang_obj.jenis != "Inventaris":
-            return HttpResponseNotFound('<h1>Access denied</h1><h4>Cetak barcode hanya untuk barang inventaris !</h4>')
+        if barang_obj.jenis != "Inventaris" and barang_obj.jenis != "Modal":
+            return HttpResponseNotFound('<h1>Access denied</h1><h4>Cetak barcode hanya untuk barang inventaris atau Modal.</h4>')
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

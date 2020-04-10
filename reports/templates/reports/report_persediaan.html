@@ -9,7 +9,7 @@
 <html>
   <head>
     <title>
-      Laporan {{report_type}} - {{satker}} - {{date_report}}
+      Laporan Persediaan - {{satker}} - {{date_report}}
     </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/print.css' %}">
@@ -25,8 +25,8 @@
         <h5 ></h5>
         <hr align="center" width="auto" />
           <div class="noprint">
-          <a class="btn btn-success" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
-          <a class="btn btn-secondary" href="{% url 'reports:ReportForm' report_type %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
+          <a class="btn btn-mdb-color btn-rounded" href="javascript:window.print()" title="Print This Page"><i class="fa fa-Print"></i>Print</a>
+          <a class="btn btn-elegant btn-rounded" href="{% url 'reports:form_persediaan' %}" title="Cancel"><i class="fa fa-Print"></i>Kembali</a>
           <hr align="left" width="350" />
           </div>
         <h7 class="txt3" align="center">UAPKPB &emsp;&emsp;&emsp;&emsp;: {{uapkpb}}</h7><br>
@@ -53,10 +53,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for kategori, jumlah1, jumlah2 in kategori_list %}
+                {% for kategori, nama, jumlah1, jumlah2 in kategori_list %}
                   <tr class="WithBorderGray">
                       <td class="text-center" colspan="1"></td>
-                      <td class="text-left txt4" colspan="1">{{ kategori }}</td>
+                      <td class="text-left txt4" colspan="1">{{ nama }}</td>
                       <td class="text-right" colspan="2">{{jumlah1}}</td>
                       <td class="text-center" colspan="3"></td>
                       <td class="text-right" colspan="2">{{jumlah2}}</td>

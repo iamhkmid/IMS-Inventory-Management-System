@@ -50,18 +50,20 @@ class TransDeleteView(LoginRequiredMixin, DeleteView):
             barang_obj.save()
         except Exception as err:
             messages.error(self.request, 'Gagal update data barang, hubungi administrator untuk update manual.')
-        try:
-            get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
-            mutasi_obj = Mutasi.objects.filter(id_barang=self.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=self.id_barang)
-            # update Mutasi obj
-            mutasi_obj.keluar = mutasi_obj.keluar - self.old_amount
-            mutasi_obj.user_updated = user_updated(self)
-            if mutasi_obj.masuk == 0 and mutasi_obj.keluar == 0:
-                mutasi_obj.delete()
-            else:
-                mutasi_obj.save()
-        except Exception as err:
-            messages.error(self.request, 'Gagal update data mutasi, hubungi administrator untuk update manual.')
+
+        if self.object.transaksi == "Persediaan":
+            try:
+                get_tgl = datetime.now().replace(tzinfo=pytz.timezone(settings.TIME_ZONE))
+                mutasi_obj = Mutasi.objects.filter(id_barang=self.id_barang, tgl_mutasi__year=get_tgl.year, tgl_mutasi__month=get_tgl.month).get(id_barang=self.id_barang)
+                # update Mutasi obj
+                mutasi_obj.keluar = mutasi_obj.keluar - self.old_amount
+                mutasi_obj.user_updated = user_updated(self)
+                if mutasi_obj.masuk == 0 and mutasi_obj.keluar == 0:
+                    mutasi_obj.delete()
+                else:
+                    mutasi_obj.save()
+            except Exception as err:
+                messages.error(self.request, 'Gagal update data mutasi, hubungi administrator untuk update manual.')
 
         if self.success_url:
             return self.success_url.format(**self.object.__dict__)

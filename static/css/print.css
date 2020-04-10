@@ -10,7 +10,7 @@
     border-style: solid !important;
     border-color: black !important;
     font-size: 14px !important;
-    padding:3px;
+    padding:3px !important;
     -webkit-print-color-adjust:exact ;
 
 }
@@ -20,7 +20,7 @@ tr.WithBorderGray td {
     border-color: black !important;
     font-size: 14px !important;
     color: gray !important;
-    padding:3px;
+    padding:3px !important;
     -webkit-print-color-adjust:exact ;
   }
 tr.WithBorder td {
@@ -38,7 +38,7 @@ tr.noBorder td {
     border-style: solid !important;
     border-color: black !important;
     font-size: 14px !important;
-    padding:3px;
+    padding:3px !important;
     -webkit-print-color-adjust:exact ;
   }
 
@@ -96,7 +96,7 @@ tr.WithBorderGray td {
     border-color: black !important;
     font-size: 14px !important;
     color: gray !important;
-    padding:3px;
+    padding:3px !important;
     -webkit-print-color-adjust:exact ;
   }
 tr.WithBorder td {
@@ -114,7 +114,7 @@ tr.noBorder td {
     border-style: solid !important;
     border-color: black !important;
     font-size: 14px !important;
-    padding:3px;
+    padding:3px !important;
     -webkit-print-color-adjust:exact ;
   }
   .table{
