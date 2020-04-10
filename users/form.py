@@ -16,12 +16,11 @@ class LoginForm(Form):
         username = cleaned_data.get("username")
         password = cleaned_data.get("password")
         username_list = User.objects.values_list('username', flat=True)
-        for user in username_list:
-            if user == username:
-                check_user = authenticate(username=username, password=password)
-                if check_user is None:
-                    self.add_error('password', "Password salah.")
-            else:
-                self.add_error('username', "Username tidak ditemukan.")
-                self.add_error('password', "")
+        if username in username_list:
+            check_user = authenticate(username=username, password=password)
+            if check_user is None:
+                self.add_error('password', "Password salah.")
+        else:
+            self.add_error('username', "Username tidak ditemukan.")
+            self.add_error('password', "")
                 
