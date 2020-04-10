@@ -5,9 +5,9 @@
 <head>
     <title>Login</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/preloader.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-	{% include "snippets/styles.html" %}
+<link rel="stylesheet" href="{% static 'mdb/css/bootstrap.min.css' %}">
+  <!-- Material Design Bootstrap -->
+<link rel="stylesheet" href="{% static 'mdb/css/mdb.min.css' %}">
 </head>
 <body>
   <div class="loader-wrapper fixed">
@@ -27,56 +27,13 @@
       {% endif %}
         <form method='POST' novalidate>
         {% csrf_token %}
-        
-        <div class="col-8 col-centered pb-1">
         <select class="mdb-select md-form">
           <option value="" disabled selected>Choose your option</option>
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
         </select>
-          <div class="md-form">
-          <i class="fas fa-user fa-lg prefix"></i>
-            {% if form.is_bound %}
-              {% if form.username.errors %}
-                {% render_field form.username class="form-control is-invalid"%}
-                {% for error in form.username.errors %}
-                  <div class="invalid-feedback">{{ error }}</div>
-                {% endfor %}
-              {% else %}
-                {% render_field form.username class="form-control is-valid" %}
-                <div class="valid-feedback">Ok</div>
-              {% endif %}
-            {% else %}
-              {% render_field form.username class+="form-control"%}
-            {% endif %}
-            <label  for="{{form.username.id_for_label}}">{{form.username.label}} :</label>
-          </div>
-        </div>
-        
-        <div class="col-8 col-centered">
-          <div class="md-form">
-          <i class="fas fa-unlock-alt prefix"></i>
-            {% if form.is_bound %}
-              {% if form.password.errors %}
-                {% render_field form.password class="form-control is-invalid"%}
-                {% for error in form.password.errors %}
-                  <div class="invalid-feedback">{{ error }}</div>
-                {% endfor %}
-              {% else %}
-                {% render_field form.password class="form-control is-valid" %}
-                <div class="valid-feedback">Ok</div>
-              {% endif %}
-            {% else %}
-              {% render_field form.password class+="form-control"%}
-            {% endif %}
-            <label  for="{{form.password.id_for_label}}">{{form.password.label}} :</label>
-          </div>
-        </div>
-        <div class="col-8 col-centered">
-        <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
-        </div>
-        
+         
         </form>
     </div>
   </div>
