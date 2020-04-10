@@ -69,10 +69,27 @@
         <div class="col-8 col-centered">
         <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
         </div>
+        <select class="mdb-select md-form">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
         </form>
     </div>
   </div>
   </div>
-	{% include "snippets/scripts.html" %}
+  <script type="text/javascript" >
+  $(window).on("load",function(){
+      $(".loader-wrapper").fadeOut("slow");
+      $(".preloader").fadeIn("slow");
+  });
+</script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'mdb/js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'mdb/js/bootstrap.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'mdb/js/mdb.min.js' %}"></script>
 </body>
 </html>
