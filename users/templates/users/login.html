@@ -27,7 +27,14 @@
       {% endif %}
         <form method='POST' novalidate>
         {% csrf_token %}
+        
         <div class="col-8 col-centered pb-1">
+        <select class="mdb-select md-form">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
           <div class="md-form">
           <i class="fas fa-user fa-lg prefix"></i>
             {% if form.is_bound %}
@@ -69,12 +76,7 @@
         <div class="col-8 col-centered">
         <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
         </div>
-        <select class="mdb-select md-form">
-          <option value="" disabled selected>Choose your option</option>
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
-        </select>
+        
         </form>
     </div>
   </div>
