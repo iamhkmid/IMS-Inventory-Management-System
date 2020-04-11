@@ -19,7 +19,7 @@
       <span class="loader"><span class="loader-inner"></span></span>
       <h6 class="text-white text-loader">. . Tunggu sebentar . .</h6>
     </div>
-    <div class="preloader fixed-sn white-skin">
+    <div class="preloader position fixed-sn white-skin">
       {% include "snippets/sidebar.html" %}
 
       <div id="content" class="content pt-3">
@@ -29,5 +29,14 @@
       </div>
     </div>
     {% include "snippets/scripts.html" %}
+    <script type="text/javascript" >
+      $(".preloader").fadeIn(3000);
+      $("body").css("overflow", "hidden");
+      $(window).on("load",function(){
+        $("body").css("overflow", "auto");
+        $(".preloader").removeClass('position');
+        $(".loader-wrapper").fadeOut("slow");
+      });
+    </script>
   </body>
 </html>

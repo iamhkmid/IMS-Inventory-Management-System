@@ -5,7 +5,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/preloader.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/preloaderlogin.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 	{% include "snippets/styles.html" %}
@@ -76,5 +76,11 @@
   </div>
   </div>
 	{% include "snippets/scripts.html" %}
+  <script type="text/javascript" >
+  $(window).on("load",function(){
+    $(".loader-wrapper").fadeOut("slow");
+    $(".preloader").fadeIn("slow");
+  });
+</script>
 </body>
 </html>
