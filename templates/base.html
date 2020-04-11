@@ -30,10 +30,9 @@
     </div>
     {% include "snippets/scripts.html" %}
     <script type="text/javascript" >
-      $("body").css("overflow", "hidden");
       $(window).on("load",function(){
         $(".loader-wrapper").fadeOut("slow");
-        $("body").css("overflow", "auto");
+        setTimeout(function(){ $("body").css("overflow", "auto"); },0);
         $(".preloader").removeClass('position');
       });
     </script>

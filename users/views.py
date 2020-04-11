@@ -16,6 +16,11 @@ class LoginView(FormView):
     form_class = LoginForm
     success_url = reverse_lazy('inventory:barang_list')
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        return super(LoginView, self).get(request, *args, **kwargs)
+
     def form_valid(self, form):
         self.form = form
         username = form.cleaned_data['username']
