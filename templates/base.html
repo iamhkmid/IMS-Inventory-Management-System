@@ -33,7 +33,7 @@
       $("body").css("overflow", "hidden");
       $(window).on("load",function(){
         $(".loader-wrapper").fadeOut("slow");
-        $("body").css("overflow", "auto");
+        setTimeout(function(){ $("#title").css("overflow", "auto"); },2000);
         $(".preloader").removeClass('position');
       });
     </script>
