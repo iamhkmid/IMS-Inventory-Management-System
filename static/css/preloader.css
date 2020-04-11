@@ -4,6 +4,9 @@
 .position{
   position:relative;
 }
+body{
+  overflow: hidden;
+}
 
 .loader-wrapper {
     width: 100%;
