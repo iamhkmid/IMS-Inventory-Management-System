@@ -96,3 +96,16 @@ body {
     font-size: 15px;
 }
 
+.pb-xs{
+    padding-bottom: 70px;
+}
+
+div.dataTables_scrollHeadInner table { margin-bottom: 0px !important; }
+
+td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}

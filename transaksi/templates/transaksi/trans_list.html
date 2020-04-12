@@ -37,7 +37,7 @@
             <tbody>
             {% for trans in transaksi_list %}
                 <tr>
-                    <td>{{forloop.counter}}</td>
+                    <td class="details-control text-right">{{forloop.counter}}</td>
                     <td>{{ trans.id_transaksi}}</td>
                     <td>{{ trans.id_barang.nama }}</td>
                     <td align="right">{{ trans.jumlah }}</td>
