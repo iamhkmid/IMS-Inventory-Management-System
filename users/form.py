@@ -8,7 +8,7 @@ from django.conf import settings
 import pytz
 
 class LoginForm(Form):
-    username = forms.CharField(required=True, widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
+    username = forms.CharField(required=True, widget=forms.TextInput())
     password = forms.CharField(required=True, widget=forms.PasswordInput())
 
     def clean(self):
