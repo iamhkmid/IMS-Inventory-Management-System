@@ -14,11 +14,10 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #242f3f;
+    background-color: rgba(36, 47, 63, 0.7);
     display:flex;
     justify-content: center;
     align-items: center;
-    opacity: 70%;
     z-index: 1;
   }
   .text-loader{
