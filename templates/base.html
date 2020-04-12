@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     {% include "snippets/styles.html" %}
   </head>
-  <body>
+  <body class="body-overlow">
     <div class="loader-wrapper fixed">
       <span class="loader"><span class="loader-inner"></span></span>
       <div class="text-white text-loader">. . Tunggu Sebentar . .</div>
@@ -34,6 +34,7 @@
         $(".loader-wrapper").fadeOut("slow");
         setTimeout(function(){ $("body").css("overflow", "auto"); },0);
         $(".preloader").removeClass('position');
+        $("body").removeClass('body-overlow');
       });
     </script>
   </body>

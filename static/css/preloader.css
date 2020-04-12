@@ -4,7 +4,7 @@
 .position{
   position:relative;
 }
-body{
+.body-overlow{
   overflow: hidden;
 }
 
