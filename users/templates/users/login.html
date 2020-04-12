@@ -16,65 +16,64 @@
     <div class="text-white text-loader">. . Memuat Konten . .</div>
     <div class="text-white text-loader2"> ~ Gunakan mode dekstop untuk tampilan yang lebih baik. ~</div>
   </div>
-  <div class="preloader">
-  <div class="col-lg-8 p-5 centered mb-4 col-centered">
-    <div class="bg-white p-4 shadow h-100">
-      <h4 class="jd1">LOGIN</h4>
-      <hr align="left" width="350" />
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-        <form method='POST' novalidate>
-        {% csrf_token %}
-        <div class="col-8 col-centered pb-1">
-          <div class="md-form">
-          <i class="fas fa-user fa-lg prefix"></i>
-            {% if form.is_bound %}
-              {% if form.username.errors %}
-                {% render_field form.username class="form-control is-invalid"%}
-                {% for error in form.username.errors %}
-                  <div class="invalid-feedback">{{ error }}</div>
-                {% endfor %}
+  <div class="preloader ml-1 mr-1">
+    <div class="col-sm-12 col-md-7 col-lg-7 mt-5 col-centered bg-white p-4 shadow h-100">
+        <h4 class="jd1">LOGIN</h4>
+        <hr align="left" width="auto" />
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+          <form method='POST' novalidate>
+          {% csrf_token %}
+          <div class="col-sm-12 col-md-8 col-lg-8 col-centered pb-1">
+            <div class="md-form">
+            <i class="fas fa-user fa-lg prefix"></i>
+              {% if form.is_bound %}
+                {% if form.username.errors %}
+                  {% render_field form.username class="form-control is-invalid"%}
+                  {% for error in form.username.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field form.username class="form-control is-valid" %}
+                  <div class="valid-feedback">Ok</div>
+                {% endif %}
               {% else %}
-                {% render_field form.username class="form-control is-valid" %}
-                <div class="valid-feedback">Ok</div>
+                {% render_field form.username class+="form-control"%}
               {% endif %}
-            {% else %}
-              {% render_field form.username class+="form-control"%}
-            {% endif %}
-            <label  for="{{form.username.id_for_label}}">{{form.username.label}} :</label>
+              <label  for="{{form.username.id_for_label}}">{{form.username.label}} :</label>
+            </div>
           </div>
-        </div>
-        
-        <div class="col-8 col-centered">
-          <div class="md-form">
-          <i class="fas fa-unlock-alt prefix"></i>
-            {% if form.is_bound %}
-              {% if form.password.errors %}
-                {% render_field form.password class="form-control is-invalid"%}
-                {% for error in form.password.errors %}
-                  <div class="invalid-feedback">{{ error }}</div>
-                {% endfor %}
+          
+          <div class="col-sm-12 col-md-8 col-lg-8 col-centered pb-1">
+            <div class="md-form">
+            <i class="fas fa-unlock-alt prefix"></i>
+              {% if form.is_bound %}
+                {% if form.password.errors %}
+                  {% render_field form.password class="form-control is-invalid"%}
+                  {% for error in form.password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field form.password class="form-control is-valid" %}
+                  <div class="valid-feedback">Ok</div>
+                {% endif %}
               {% else %}
-                {% render_field form.password class="form-control is-valid" %}
-                <div class="valid-feedback">Ok</div>
+                {% render_field form.password class+="form-control"%}
               {% endif %}
-            {% else %}
-              {% render_field form.password class+="form-control"%}
-            {% endif %}
-            <label  for="{{form.password.id_for_label}}">{{form.password.label}} :</label>
+              <label  for="{{form.password.id_for_label}}">{{form.password.label}} :</label>
+            </div>
           </div>
-        </div>
-        <div class="col-8 col-centered">
-        <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
-        </div>
-        </form>
-    </div>
-  </div>
+          <div class="col-sm-12 col-md-8 col-lg-8 col-centered pb-1">
+          <button type="submit" class="btn btn-rounded btn-mdb-color">Login</button>
+          </div>
+          </form>
+      </div>
+
   </div>
 	{% include "snippets/scripts.html" %}
   <script type="text/javascript" >
