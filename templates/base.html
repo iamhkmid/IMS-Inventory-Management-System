@@ -28,6 +28,14 @@
       {% block contents2 %}{% endblock contents2 %}
       </div>
     </div>
+
+<script src="{% static 'mdb/js/jquery-3.4.1.min.js' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'mdb/js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'mdb/js/bootstrap.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'mdb/js/mdb.min.js' %}"></script>
     {% include "snippets/scripts.html" %}
     <script type="text/javascript" >
       $(window).on("load",function(){
