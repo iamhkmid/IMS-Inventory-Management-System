@@ -27,7 +27,7 @@
             <tbody>
             {% for ruang in ruang_list %}
                 <tr>
-                    <td>{{forloop.counter}}</td>
+                    <td class="details-control text-right">{{forloop.counter}}</td>
                     <td>{{ ruang.id_ruang }}</td>
                     <td>{{ ruang.nama }}</td>
                     <td>{{ ruang.id_satker.nama }}</td>
