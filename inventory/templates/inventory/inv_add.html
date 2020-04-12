@@ -6,9 +6,9 @@
 {% endblock page_title %}
 
 
-{% block contents1 %}
-  <div class="col-lg-10 centered mb-4 col-centered">
-    <div class="bg-white p-5 shadow h-100">
+  {% block contents1 %}
+  <div class="preloader ml-1 mr-1">
+    <div class="col-lg-10 col-centered bg-white p-5 shadow h-100">
       <h4 class="jd1 d-inline">TAMBAH BARANG</h4>
       <hr align="left" width="auto" />
       {% if form.non_field_errors %}
