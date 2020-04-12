@@ -20,7 +20,7 @@ body{
     align-items: center;
     z-index: 1;
   }
-  .text-loader{
+  div.text-loader{
     position: absolute; 
     top: 53%;
     left: 50%;

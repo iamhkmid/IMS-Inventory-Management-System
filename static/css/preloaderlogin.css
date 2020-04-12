@@ -15,14 +15,14 @@
     align-items: center;
     z-index: -1;
   }
-  .text-loader{
+  div.text-loader{
     position: absolute; 
     top: 53%;
     left: 50%;
     transform: translateX(-50%) translateY(50%);
   }
-  .text-loader2{
-    position: absolute; 
+  div.text-loader2{
+    position: absolute;
     font-size: 90%;
     top: 56%;
     left: 50%;
