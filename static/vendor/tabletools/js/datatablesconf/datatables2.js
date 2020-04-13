@@ -1,9 +1,6 @@
 $(document).ready(function() {
   
     var table = $('#datatables2').DataTable( {
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
         responsive: true,
         autoWidth : true,
         displayLength: 10,
@@ -20,16 +17,22 @@ $(document).ready(function() {
     table.buttons().container()
         .appendTo( '#datatables2_wrapper .col-md-6:eq(0)' );
 
-    $('#datatables').on('click', 'button', 'td.details-control', function () {
+    $('#datatables2 tbody tr').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
-
+        var child = table.row( this ).child;
+    
         if (row.child.isShown()) {
             // This row is already open - close it
-            row.child.hide();
+            child.hide();
+            tr.removeClass('shown');
         } else {
             // Open this row
+            child.show();
             tr.addClass('shown');
         }
+    
+        
     });
+    
 } );
